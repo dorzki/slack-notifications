@@ -1,4 +1,4 @@
-<?php 
+<?php
 $core_update = get_option( 'slack_notif_core_update' );
 $theme_update = get_option( 'slack_notif_theme_update' );
 $plugin_update = get_option( 'slack_notif_plugin_update' );
@@ -59,9 +59,9 @@ $admin_logged = get_option( 'slack_notif_admin_logged' );
             <input id="slack_bot_image_button" type="button" class="button" value="<?php _e( 'Upload', 'dorzki-slack' ); ?>" />
             <p class="description" id="slack_bot_image-description"><?php _e( 'Slack Bot image to be displayed in Slack.', 'dorzki-slack' ); ?></p>
             <div id="slack_bot_image_preview">
-              <?php if( get_option( 'slack_bot_image' ) != '' ) : ?>
+				<?php if ( get_option( 'slack_bot_image' ) != '' ) : ?>
                 <img src="<?php echo get_option( 'slack_bot_image' ); ?>">
-              <?php endif; ?>
+				<?php endif; ?>
             </div>
           </td>
         </tr>

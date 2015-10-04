@@ -2,235 +2,230 @@
 /**
  * NOTIFICATIONS CLASS
  */
-if( !class_exists( wpNotifications ) ) {
+if ( ! class_exists( wpNotifications ) ) {
 
-  class wpNotifications {
+	class wpNotifications {
 
-    /**
-     * Slack class handler.
-     */
-    private $slack;
+		/**
+		 * Slack class handler.
+		 */
+		private $slack;
 
 
 
-    /**
-     * Register the SlackBot for internal use.
-     */
-    public function __construct() {
+		/**
+		 * Register the SlackBot for internal use.
+		 */
+		public function __construct() {
 
-      $this->slack = new slackBot();
+			$this->slack = new slackBot();
 
-    }
+		}
 
 
 
-    /**
-     * Core update check & send notification.
-     */
-    public function coreUpdateNotif() {
+		/**
+		 * Core update check & send notification.
+		 */
+		public function coreUpdateNotif() {
 
-      global $wp_version;
+			global $wp_version;
 
-      # Force version check.
-      do_action( 'wp_version_check' );
+			// Force version check.
+			do_action( 'wp_version_check' );
 
-      $versionCheck = get_site_transient( 'update_core' );
+			$versionCheck = get_site_transient( 'update_core' );
 
-      # Is there a new version of WordPress?
-      if( $versionCheck->updates[0]->response == 'upgrade' ) {
+			// Is there a new version of WordPress?
+			if ( $versionCheck->updates[0]->response == 'upgrade' ) {
 
-        $newVersion = $versionCheck->updates[0]->current;
+				$newVersion = $versionCheck->updates[0]->current;
 
-        # Did we already notified the admin?
-        if( get_option( 'slack_notif_core_version' ) != $newVersion ) {
+				// Did we already notified the admin?
+				if ( get_option( 'slack_notif_core_version' ) != $newVersion ) {
 
-          update_option( 'slack_notif_core_version', $newVersion );
+					update_option( 'slack_notif_core_version', $newVersion );
 
-          $this->slack->sendMessage( sprintf( __( ':information_source: There is a new WordPress version available - v%s (current version is v%s).' ), $newVersion, $wp_version ) );
+					$this->slack->sendMessage( sprintf( __( ':information_source: There is a new WordPress version available - v%s (current version is v%s).' ), $newVersion, $wp_version ) );
 
-        }
+				}
+			}
 
-      }
+		}
 
-    }
 
 
+		/**
+		 * Theme udpate check & send notification.
+		 */
+		public function themeUpdateNotif() {
 
-    /**
-     * Theme udpate check & send notification.
-     */
-    public function themeUpdateNotif() {
+			// Force version check.
+			do_action( 'wp_update_themes' );
 
-      # Force version check.
-      do_action( 'wp_update_themes' );
+			$versionCheck   = get_site_transient( 'update_themes' );
+			$currentVersion = wp_get_theme()->get( 'Version' );
+			$currentTheme   = get_option( 'template' );
 
-      $versionCheck   = get_site_transient( 'update_themes' );
-      $currentVersion = wp_get_theme()->get( 'Version' );
-      $currentTheme   = get_option( 'template' );
+			if ( $versionCheck->response[ $currentTheme ]['new_version'] != $currentVersion ) {
 
-      if( $versionCheck->response[$currentTheme]['new_version'] != $currentVersion ) {
+				$newVersion = $versionCheck->response[ $currentTheme ]['new_version'];
 
-        $newVersion = $versionCheck->response[$currentTheme]['new_version'];
+				// Did we already notified the admin?
+				if ( get_option( 'slack_notif_theme_version' ) != $newVersion ) {
 
-        # Did we already notified the admin?
-        if( get_option( 'slack_notif_theme_version' ) != $newVersion ) {
+					update_option( 'slack_notif_theme_version', $newVersion );
 
-          update_option( 'slack_notif_theme_version', $newVersion );
+					$this->slack->sendMessage( sprintf( __( ':information_source: Theme is a new version of the theme *%s* - v%s (current version is v%s).' ), $currentTheme, $newVersion, $currentVersion ) );
 
-          $this->slack->sendMessage( sprintf( __( ':information_source: Theme is a new version of the theme *%s* - v%s (current version is v%s).' ), $currentTheme, $newVersion, $currentVersion ) );
+				}
+			}
 
-        }
+		}
 
-      }
 
-    }
 
+		/**
+		 * Plugins update check & send notification.
+		 */
+		public function pluginUpdateNotif() {
 
+			// Force version check.
+			do_action( 'wp_update_plugins' );
 
-    /**
-     * Plugins update check & send notification.
-     */
-    public function pluginUpdateNotif() {
+			$versionCheck  = get_site_transient( 'update_plugins' );
+			$activePlugins = get_option( 'active_plugins' );
 
-      # Force version check.
-      do_action( 'wp_update_plugins' );
+			$needsUpdate = array_intersect_key( $versionCheck->response, array_flip( $activePlugins ) );
 
-      $versionCheck  = get_site_transient( 'update_plugins' );
-      $activePlugins = get_option( 'active_plugins' );
+			if ( count( $needsUpdate ) > 0 ) {
 
-      $needsUpdate = array_intersect_key( $versionCheck->response, array_flip( $activePlugins ) );
+				$notifiedPlugins = get_option( 'slack_notif_plugins_version' );
 
-      if( count( $needsUpdate ) > 0 ) {
+				$theMessage = '';
 
-        $notifiedPlugins = get_option( 'slack_notif_plugins_version' );
+				foreach ( $needsUpdate as $plugin => $updateData ) {
 
-        $theMessage = "";
+					$pluginMeta = get_plugin_data( WP_PLUGIN_DIR . '/' . $plugin, true, false );
 
-        foreach( $needsUpdate as $plugin => $updateData ) {
+					// Did we already notified the admin?
+					if ( ! array_key_exists( $plugin, $notifiedPlugins ) && $notifiedPlugins[ $plugin ] != $updateData->new_version ) {
 
-          $pluginMeta = get_plugin_data( WP_PLUGIN_DIR . '/' . $plugin, true, false );
+						$notifiedPlugins[ $plugin ] = $updateData->new_version;
 
-          # Did we already notified the admin?
-          if( !array_key_exists( $plugin, $notifiedPlugins ) && $notifiedPlugins[$plugin] != $updateData->new_version ) {
+						$theMessage .= sprintf( __( '• *%s* - v%s (current version is v%s)', 'dorzki-slack' ) . "\n", $pluginMeta['Name'], $updateData->new_version, $pluginMeta['Version'] );
 
-            $notifiedPlugins[$plugin] = $updateData->new_version;
+					}
+				}
 
-            $theMessage .= sprintf( __( '• *%s* - v%s (current version is v%s)', 'dorzki-slack' ) . "\n", $pluginMeta['Name'], $updateData->new_version, $pluginMeta['Version'] );
+				update_option( 'slack_notif_plugins_version', $notifiedPlugins );
 
-          }
+				// Do we still need to notify?
+				if ( $theMessage != '' ) {
 
-        }
+					$theMessage = __( ':information_source: The following plugins have a new version:', 'dorzki-slack' ) . "\n" . $theMessage;
 
-        update_option( 'slack_notif_plugins_version', $notifiedPlugins );
+					$this->slack->sendMessage( $theMessage );
 
-        # Do we still need to notify?
-        if( $theMessage != '' ) {
+				}
+			}
 
-          $theMessage = __( ':information_source: The following plugins have a new version:', 'dorzki-slack' ) . "\n" . $theMessage;
+		}
 
-          $this->slack->sendMessage( $theMessage );
 
-        }
 
-      }
+		/**
+		 * Send notification on published post.
+		 * @param  integer $postID   the post id number.
+		 * @param  object  $post     post details object.
+		 */
+		public function postPublishNotif( $postID, $post ) {
 
-    }
+			$title  = $post->post_title;
+			$url    = get_permalink( $postID );
+			$author = get_the_author_meta( 'display_name', $post->post_author );
 
+			$template = sprintf( __( ':metal: The post *<%s|%s>* was published by *%s* right now!', 'dorzki-slack' ), $url, $title, $author );
 
+			$this->slack->sendMessage( $template );
 
-    /**
-     * Send notification on published post.
-     * @param  integer   $postID   the post id number.
-     * @param  object    $post     post details object.
-     */
-    public function postPublishNotif( $postID, $post ) {
+		}
 
-      $title  = $post->post_title;
-      $url    = get_permalink( $postID );
-      $author = get_the_author_meta( 'display_name', $post->post_author );
 
-      $template = sprintf( __( ':metal: The post *<%s|%s>* was published by *%s* right now!', 'dorzki-slack' ), $url, $title, $author );
 
-      $this->slack->sendMessage( $template );
+		/**
+		 * Send notification on published page.
+		 * @param  integer $postID   the page id number.
+		 * @param  object  $post     page details object.
+		 */
+		public function pagePublishNotif( $postID, $post ) {
 
-    }
+			$title  = $post->post_title;
+			$url    = get_permalink( $postID );
+			$author = get_the_author_meta( 'display_name', $post->post_author );
 
+			$template = sprintf( __( ':metal: The page *<%s|%s>* was published by *%s* right now!', 'dorzki-slack' ), $url, $title, $author );
 
+			$this->slack->sendMessage( $template );
 
-    /**
-     * Send notification on published page.
-     * @param  integer   $postID   the page id number.
-     * @param  object    $post     page details object.
-     */
-    public function pagePublishNotif( $postID, $post ) {
+		}
 
-      $title  = $post->post_title;
-      $url    = get_permalink( $postID );
-      $author = get_the_author_meta( 'display_name', $post->post_author );
 
-      $template = sprintf( __( ':metal: The page *<%s|%s>* was published by *%s* right now!', 'dorzki-slack' ), $url, $title, $author );
 
-      $this->slack->sendMessage( $template );
+		/**
+		 * Send notification when comment has been submitted.
+		 * @param  integer $commentID     the comment id number.
+		 * @param  integer $isApproved    has the comment approved?
+		 */
+		public function commentAddedNotif( $commentID, $isApproved ) {
 
-    }
+			$commentData = get_comment( $commentID );
 
+			$author  = $commentData->comment_author;
+			$post    = get_the_title( $commentData->comment_post_ID );
+			$url     = get_permalink( $commentData->comment_post_ID );
+			$comment = $commentData->comment_content;
 
+			$template = sprintf( __( ':metal: A new comment by *%s* on *<%s|%s>*:', 'dorzki-slack' ) . "\n>>>%s", $author, $url, $post, $comment );
 
-    /**
-     * Send notification when comment has been submitted.
-     * @param  integer   $commentID     the comment id number.
-     * @param  integer   $isApproved    has the comment approved?
-     */
-    public function commentAddedNotif( $commentID, $isApproved ) {
+			$this->slack->sendMessage( $template );
 
-      $commentData = get_comment( $commentID );
+		}
 
-      $author  = $commentData->comment_author;
-      $post    = get_the_title( $commentData->comment_post_ID );
-      $url     = get_permalink( $commentData->comment_post_ID );
-      $comment = $commentData->comment_content;
 
-      $template = sprintf( __( ':metal: A new comment by *%s* on *<%s|%s>*:', 'dorzki-slack' ) . "\n>>>%s", $author, $url, $post, $comment );
 
-      $this->slack->sendMessage( $template );
+		/**
+		 * Send notification on user registration.
+		 * @param  integer $userID   the registered user id number.
+		 */
+		public function userRegisteredNotif( $userID ) {
 
-    }
+			$user = get_userdata( $userID );
 
+			$template = sprintf( __( ':dancer: A new user just registered - *%s* (%s).', 'dorzki-slack' ), $user->user_login, $user->user_email );
 
+			$this->slack->sendMessage( $template );
 
-    /**
-     * Send notification on user registration.
-     * @param  integer   $userID   the registered user id number.
-     */
-    public function userRegisteredNotif( $userID ) {
+		}
 
-      $user = get_userdata( $userID );
 
-      $template = sprintf( __( ':dancer: A new user just registered - *%s* (%s).', 'dorzki-slack' ), $user->user_login, $user->user_email );
 
-      $this->slack->sendMessage( $template );
+		/**
+		 * Send notification on administrator login.
+		 * @param  string $username   the username.
+		 * @param  object $user       the user details.
+		 */
+		public function adminLoggedInNotif( $username, $user ) {
 
-    }
+			if ( in_array( 'administrator', $user->roles ) ) {
 
+				$template = sprintf( __( ':bowtie: Administrator login: *%s*.', 'dorzki-slack' ), $username );
 
+				$this->slack->sendMessage( $template );
 
-    /**
-     * Send notification on administrator login.
-     * @param  string   $username   the username.
-     * @param  object   $user       the user details.
-     */
-    public function adminLoggedInNotif( $username, $user ) {
+			}
 
-      if( in_array( 'administrator', $user->roles ) ) {
-
-        $template = sprintf( __( ':bowtie: Administrator login: *%s*.', 'dorzki-slack' ), $username );
-
-        $this->slack->sendMessage( $template );
-
-      }
-
-    }
-
-  }
+		}
+	}
 
 }
