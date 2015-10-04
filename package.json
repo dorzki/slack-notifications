@@ -18,9 +18,9 @@
     "url": "https://github.com/dorzki/Slack-Notifications.git"
   },
   "author": "Ran Bar-Zik",
-  "license": "ISC",
+  "license": "GPL2",
   "bugs": {
-    "url": "https://github.com/barzik/wp-notice/issues"
+    "url": "https://github.com/dorzki/Slack-Notifications/issues"
   },
   "homepage": "https://github.com/dorzki/Slack-Notifications",
   "devDependencies": {},
