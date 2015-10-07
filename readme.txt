@@ -3,7 +3,7 @@ Contributors: dorzki
 Tags: notifications, slack
 Requires at least: 4.3
 Tested up to: 4.3
-Stable tag: 1.0.0
+Stable tag: 1.0.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -11,7 +11,7 @@ Get WordPress notifications to your team's Slack channel.
 
 == Description ==
 
-A light and essential plugin that notifies you via Slack API to your Slack channel on the follwing:
+A light and essential plugin that notifies you via Slack API to your Slack channel on the following:
 
 * New WordPress Version.
 * New Plugins Updates.
@@ -54,6 +54,10 @@ Please feel free to contact me `webmaster[AT]dorzki.co.il`
 2. `Settings Screen - Part 2` Choose which notifications to get.
 
 == Changelog ==
+
+= 1.0.1 =
+* Now when a notification is generated, the website name & url will be appended at the end.
+* Added the ability to choose if and for which custom post type to enable notifications.
 
 = 1.0.0 =
 * Hooray! First version!

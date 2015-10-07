@@ -1,4 +1,18 @@
 <?php
+/**
+ * @package   Slack Notifications
+ * @since     1.0.0
+ * @version   1.0.1
+ * @author    Dor Zuberi <me@dorzki.co.il>
+ * @link      https://www.dorzki.co.il
+ *
+ *
+ * SETTINGS PAGE
+ */
+
+
+global $postTypes;
+
 $core_update = get_option( 'slack_notif_core_update' );
 $theme_update = get_option( 'slack_notif_theme_update' );
 $plugin_update = get_option( 'slack_notif_plugin_update' );
@@ -59,9 +73,9 @@ $admin_logged = get_option( 'slack_notif_admin_logged' );
             <input id="slack_bot_image_button" type="button" class="button" value="<?php _e( 'Upload', 'dorzki-slack' ); ?>" />
             <p class="description" id="slack_bot_image-description"><?php _e( 'Slack Bot image to be displayed in Slack.', 'dorzki-slack' ); ?></p>
             <div id="slack_bot_image_preview">
-				<?php if ( get_option( 'slack_bot_image' ) != '' ) : ?>
+              <?php if ( get_option( 'slack_bot_image' ) != '' ) : ?>
                 <img src="<?php echo get_option( 'slack_bot_image' ); ?>">
-				<?php endif; ?>
+              <?php endif; ?>
             </div>
           </td>
         </tr>
@@ -128,6 +142,15 @@ $admin_logged = get_option( 'slack_notif_admin_logged' );
               <br>
               <!-- /New Page -->
 
+              <?php foreach( $postTypes as $postType ) : ?>
+                <!-- New <?php echo $postType->labels->singular_name; ?> -->
+                <label for="slack_notif_new_<?php echo $postType->name; ?>">
+                  <input type="checkbox" name="slack_notif_new_<?php echo $postType->name; ?>" id="slack_notif_new_<?php echo $postType->name; ?>" value="1" <?php checked( intval( get_option( 'slack_notif_new_' . $postType->name ) ), 1, true ); ?>> <?php printf( __( '%s Published', 'dorzki-slack' ), $postType->labels->singular_name ); ?>
+                </label>
+                <br>
+                <!-- /New <?php echo $postType->labels->singular_name; ?> -->
+              <?php endforeach; ?>
+
               <!-- New Comment -->
               <label for="slack_notif_new_comment">
                 <input type="checkbox" name="slack_notif_new_comment" id="slack_notif_new_comment" value="1" <?php checked( $new_comment, 1, true ); ?>> <?php _e( 'New Comment', 'dorzki-slack' ); ?>
@@ -139,7 +162,7 @@ $admin_logged = get_option( 'slack_notif_admin_logged' );
           </td>
         </tr>
         <tr>
-        <th scope="row"><?php _e( 'Users', 'dorzki-slack' ); ?></th>
+          <th scope="row"><?php _e( 'Users', 'dorzki-slack' ); ?></th>
           <td>
             <fieldset>
               <legend class="screen-reader-text">

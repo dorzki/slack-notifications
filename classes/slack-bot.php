@@ -1,5 +1,12 @@
 <?php
 /**
+ * @package   Slack Notifications
+ * @since     1.0.0
+ * @version   1.0.1
+ * @author    Dor Zuberi <me@dorzki.co.il>
+ * @link      https://www.dorzki.co.il
+ * 
+ * 
  * SLACK BOT CLASS
  */
 if ( ! class_exists( slackBot ) ) {
@@ -8,6 +15,9 @@ if ( ! class_exists( slackBot ) ) {
 
 		/**
 		 * Slack Webhook Endpoint
+		 *
+		 * @var 	  string
+		 * @since   1.0.0
 		 */
 		private $apiEndpoint;
 
@@ -15,6 +25,9 @@ if ( ! class_exists( slackBot ) ) {
 
 		/**
 		 * Slack Channel
+		 * 
+		 * @var 	  string
+		 * @since   1.0.0
 		 */
 		private $slackChannel;
 
@@ -22,6 +35,9 @@ if ( ! class_exists( slackBot ) ) {
 
 		/**
 		 * Slack Name
+		 * 
+		 * @var 	  string
+		 * @since   1.0.0
 		 */
 		private $botName;
 
@@ -29,6 +45,9 @@ if ( ! class_exists( slackBot ) ) {
 
 		/**
 		 * Slack Image
+		 * 
+		 * @var 	  string
+		 * @since   1.0.0
 		 */
 		private $botIcon;
 
@@ -36,6 +55,8 @@ if ( ! class_exists( slackBot ) ) {
 
 		/**
 		 * Get slack bot details.
+		 * 
+		 * @since   1.0.0
 		 */
 		public function __construct() {
 
@@ -50,7 +71,9 @@ if ( ! class_exists( slackBot ) ) {
 
 		/**
 		 * Send the notification thought the API.
-		 * @param  string $theMessage   the notification to send.
+		 * 
+		 * @param   string  $theMessage   the notification to send.
+		 * @since   1.0.0
 		 */
 		public function sendMessage( $theMessage ) {
 
@@ -65,7 +88,7 @@ if ( ! class_exists( slackBot ) ) {
 					'channel'  => $this->slackChannel,
 					'username' => $this->botName,
 					'icon_url' => $this->botIcon,
-					'text'     => $theMessage,
+					'text'     => sprintf( '%s @ *<%s|%s>*', $theMessage, get_bloginfo( 'home' ), get_bloginfo( 'name' ) )
 				) ),
 				),
 			) );

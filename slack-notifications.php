@@ -3,10 +3,17 @@
  * Plugin Name: Slack Notifications
  * Plugin URI: https://www.dorzki.co.il
  * Description: Add Slack integration to a channel and send desired notifications as a slack bot.
- * Version: 1.0.0
+ * Version: 1.0.1
  * Author: dorzki
  * Author URI: https://www.dorzki.co.il
  * Text Domain: dorzki-slack
+ *
+ * 
+ * @package   Slack Notifications
+ * @since     1.0.0
+ * @version   1.0.1
+ * @author    Dor Zuberi <me@dorzki.co.il>
+ * @link      https://www.dorzki.co.il
  */
 
 
@@ -47,5 +54,5 @@ $wpSlack = new wpSlack();
 /**
  * REGISTER ACTIVATION & DEACTIVATION
  */
-register_activation_hook( __FILE__, array( 'wpSlack', 'plugin_activate' ) );
-register_deactivation_hook( __FILE__, array( 'wpSlack', 'plugin_deactivate' ) );
+register_activation_hook( __FILE__, array( &$wpSlack, 'plugin_activate' ) );
+register_deactivation_hook( __FILE__, array( &$wpSlack, 'plugin_deactivate' ) );
