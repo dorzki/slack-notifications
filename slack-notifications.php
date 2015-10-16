@@ -8,7 +8,6 @@
  * Author URI: https://www.dorzki.co.il
  * Text Domain: dorzki-slack
  *
- * 
  * @package   Slack Notifications
  * @since     1.0.0
  * @version   1.0.1

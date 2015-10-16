@@ -5,8 +5,8 @@
  * @version   1.0.1
  * @author    Dor Zuberi <me@dorzki.co.il>
  * @link      https://www.dorzki.co.il
- * 
- * 
+ *
+ *
  * WORDPRESS CLASS
  */
 if ( ! class_exists( wpSlack ) ) {
@@ -25,7 +25,7 @@ if ( ! class_exists( wpSlack ) ) {
 
 		/**
 		 * Notifications class handler.
-		 * 
+		 *
 		 * @var 	  wpNotifications
 		 * @since   1.0.1
 		 */
@@ -101,7 +101,7 @@ if ( ! class_exists( wpSlack ) ) {
 			delete_option( 'slack_notif_plugins_version' );
 
 			// Delte custom post types settings.
-			foreach( $this->postTypes as $postType ) {
+			foreach ( $this->postTypes as $postType ) {
 
 				delete_option( 'slack_notif_new_' . $postType->name );
 
@@ -230,8 +230,6 @@ if ( ! class_exists( wpSlack ) ) {
 			$new_user = get_option( 'slack_notif_new_user' );
 			$admin_logged = get_option( 'slack_notif_admin_logged' );
 
-
-
 			// Register Hooks
 			if ( $core_update == 1 ) {
 				add_action( 'slack_notif_check_versions', array( &$notifs, 'coreUpdateNotif' ) );
@@ -279,7 +277,7 @@ if ( ! class_exists( wpSlack ) ) {
 			// Retrieve custom post types.
 			$this->postTypes = get_post_types( array(
 				'public' => true,
-				'_builtin' => false
+				'_builtin' => false,
 				), 'objects' );
 
 			add_action( 'admin_init', array( &$this, 'register_post_types_settings' ) );
@@ -295,7 +293,7 @@ if ( ! class_exists( wpSlack ) ) {
 		 */
 		public function register_post_types_settings() {
 
-			foreach( $this->postTypes as $postType ) {
+			foreach ( $this->postTypes as $postType ) {
 
 				register_setting( 'dorzki-slack', 'slack_notif_new_' . $postType->name );
 
@@ -309,7 +307,7 @@ if ( ! class_exists( wpSlack ) ) {
 
 		/**
 		 * Register custom post types notifications hooks.
-		 * 
+		 *
 		 * @since   1.0.1
 		 */
 		public function register_post_types_notifs_hooks() {
@@ -317,16 +315,14 @@ if ( ! class_exists( wpSlack ) ) {
 			$notifs = $this->notifs;
 
 			// Get selected settings for custom post types.
-			foreach( $this->postTypes as $postType ) {
+			foreach ( $this->postTypes as $postType ) {
 
 				if ( get_option( 'slack_notif_new_' . $postType->name ) == 1 ) {
 
 					if ( has_action( 'publish_' . $postType->name, array( &$notifs, 'cptPublishNotif' ) ) === false ) {
 						add_action( 'publish_' . $postType->name, array( &$notifs, 'cptPublishNotif' ), 10, 2 );
 					}
-
 				}
-
 			}
 
 		}

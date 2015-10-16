@@ -5,8 +5,8 @@
  * @version   1.0.1
  * @author    Dor Zuberi <me@dorzki.co.il>
  * @link      https://www.dorzki.co.il
- * 
- * 
+ *
+ *
  * NOTIFICATIONS CLASS
  */
 if ( ! class_exists( wpNotifications ) ) {
@@ -15,7 +15,7 @@ if ( ! class_exists( wpNotifications ) ) {
 
 		/**
 		 * Slack class handler.
-		 * 
+		 *
 		 * @var 	  slackBot
 		 * @since   1.0.0
 		 */
@@ -26,7 +26,7 @@ if ( ! class_exists( wpNotifications ) ) {
 		/**
 		 * Register the SlackBot for internal use.
 		 *
-     * @since   1.0.0
+		 * @since   1.0.0
 		 */
 		public function __construct() {
 
@@ -154,9 +154,9 @@ if ( ! class_exists( wpNotifications ) ) {
 
 		/**
 		 * Send notification on published post.
-		 * 
-		 * @param   integer  $postID  the post id number.
-		 * @param   object   $post    post details object.
+		 *
+		 * @param   integer $postID  the post id number.
+		 * @param   object  $post    post details object.
 		 * @since   1.0.0
 		 */
 		public function postPublishNotif( $postID, $post ) {
@@ -175,9 +175,9 @@ if ( ! class_exists( wpNotifications ) ) {
 
 		/**
 		 * Send notification on published page.
-		 * 
-		 * @param   integer  $postID  the page id number.
-		 * @param   object   $post    page details object.
+		 *
+		 * @param   integer $postID  the page id number.
+		 * @param   object  $post    page details object.
 		 * @since   1.0.0
 		 */
 		public function pagePublishNotif( $postID, $post ) {
@@ -196,9 +196,9 @@ if ( ! class_exists( wpNotifications ) ) {
 
 		/**
 		 * Send notification when comment has been submitted.
-		 * 
-		 * @param   integer  $commentID    the comment id number.
-		 * @param   integer  $isApproved   has the comment approved?
+		 *
+		 * @param   integer $commentID    the comment id number.
+		 * @param   integer $isApproved   has the comment approved?
 		 * @since   1.0.0
 		 */
 		public function commentAddedNotif( $commentID, $isApproved ) {
@@ -220,8 +220,8 @@ if ( ! class_exists( wpNotifications ) ) {
 
 		/**
 		 * Send notification on user registration.
-		 * 
-		 * @param   integer  $userID  the registered user id number.
+		 *
+		 * @param   integer $userID  the registered user id number.
 		 * @since   1.0.0
 		 */
 		public function userRegisteredNotif( $userID ) {
@@ -238,9 +238,9 @@ if ( ! class_exists( wpNotifications ) ) {
 
 		/**
 		 * Send notification on administrator login.
-		 * 
-		 * @param   string  $username  the username.
-		 * @param   object  $user      the user details.
+		 *
+		 * @param   string $username  the username.
+		 * @param   object $user      the user details.
 		 * @since   1.0.0
 		 */
 		public function adminLoggedInNotif( $username, $user ) {
@@ -259,9 +259,9 @@ if ( ! class_exists( wpNotifications ) ) {
 
 		/**
 		 * Send notification on published custom post type.
-		 * 
-		 * @param   integer  $postID  the post id number.
-		 * @param   object   $post    page details object.
+		 *
+		 * @param   integer $postID  the post id number.
+		 * @param   object  $post    page details object.
 		 * @since   1.0.1
 		 */
 		public function cptPublishNotif( $postID, $post ) {
