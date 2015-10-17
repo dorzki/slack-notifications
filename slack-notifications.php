@@ -15,10 +15,8 @@
  * @link      https://www.dorzki.co.il
  */
 
-
-
 /**
- * PLUGIN CONSTACTS
+ * PLUGIN CONSTANTS
  */
 if ( ! defined( PLUGIN_ROOT_URL ) ) {
 	define( PLUGIN_ROOT_URL, plugin_dir_url( __FILE__ ) );
@@ -44,7 +42,7 @@ include_once( 'classes/wordpress-slack.php' );
 
 
 /**
- * PLUGIN INTIALIZATION
+ * PLUGIN INITIALIZATION
  */
 $wpSlack = new wpSlack();
 
