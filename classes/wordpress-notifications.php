@@ -60,7 +60,7 @@ if ( ! class_exists( wpNotifications ) ) {
 
 					update_option( 'slack_notif_core_version', $newVersion );
 
-					$this->slack->sendMessage( sprintf( __( ':information_source: There is a new WordPress version available - v%s (current version is v%s).' ), $newVersion, $wp_version ) );
+					$this->slack->send_message( sprintf( __( ':information_source: There is a new WordPress version available - v%s (current version is v%s).' ), $newVersion, $wp_version ) );
 
 				}
 			}
@@ -92,7 +92,7 @@ if ( ! class_exists( wpNotifications ) ) {
 
 					update_option( 'slack_notif_theme_version', $newVersion );
 
-					$this->slack->sendMessage( sprintf( __( ':information_source: Theme is a new version of the theme *%s* - v%s (current version is v%s).' ), $currentTheme, $newVersion, $currentVersion ) );
+					$this->slack->send_message( sprintf( __( ':information_source: Theme is a new version of the theme *%s* - v%s (current version is v%s).' ), $currentTheme, $newVersion, $currentVersion ) );
 
 				}
 			}
@@ -143,7 +143,7 @@ if ( ! class_exists( wpNotifications ) ) {
 
 					$theMessage = __( ':information_source: The following plugins have a new version:', 'dorzki-slack' ) . "\n" . $theMessage;
 
-					$this->slack->sendMessage( $theMessage );
+					$this->slack->send_message( $theMessage );
 
 				}
 			}
@@ -167,7 +167,7 @@ if ( ! class_exists( wpNotifications ) ) {
 
 			$template = sprintf( __( ':metal: The post *<%s|%s>* was published by *%s* right now!', 'dorzki-slack' ), $url, $title, $author );
 
-			$this->slack->sendMessage( $template );
+			$this->slack->send_message( $template );
 
 		}
 
@@ -188,7 +188,7 @@ if ( ! class_exists( wpNotifications ) ) {
 
 			$template = sprintf( __( ':metal: The page *<%s|%s>* was published by *%s* right now!', 'dorzki-slack' ), $url, $title, $author );
 
-			$this->slack->sendMessage( $template );
+			$this->slack->send_message( $template );
 
 		}
 
@@ -212,7 +212,7 @@ if ( ! class_exists( wpNotifications ) ) {
 
 			$template = sprintf( __( ':metal: A new comment by *%s* on *<%s|%s>*:', 'dorzki-slack' ) . "\n>>>%s", $author, $url, $post, $comment );
 
-			$this->slack->sendMessage( $template );
+			$this->slack->send_message( $template );
 
 		}
 
@@ -230,7 +230,7 @@ if ( ! class_exists( wpNotifications ) ) {
 
 			$template = sprintf( __( ':dancer: A new user just registered - *%s* (%s).', 'dorzki-slack' ), $user->user_login, $user->user_email );
 
-			$this->slack->sendMessage( $template );
+			$this->slack->send_message( $template );
 
 		}
 
@@ -249,7 +249,7 @@ if ( ! class_exists( wpNotifications ) ) {
 
 				$template = sprintf( __( ':bowtie: Administrator login: *%s*.', 'dorzki-slack' ), $username );
 
-				$this->slack->sendMessage( $template );
+				$this->slack->send_message( $template );
 
 			}
 
@@ -272,7 +272,7 @@ if ( ! class_exists( wpNotifications ) ) {
 
 			$template = sprintf( __( ':metal: The post *<%s|%s>* was published by *%s* right now!', 'dorzki-slack' ), $url, $title, $author );
 
-			$this->slack->sendMessage( $template );
+			$this->slack->send_message( $template );
 
 		}
 	}

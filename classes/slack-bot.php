@@ -78,7 +78,7 @@ if ( ! class_exists( SlackBot ) ) {
 		 * @param   string $theMessage   the notification to send.
 		 * @since   1.0.0
 		 */
-		public function sendMessage( $theMessage ) {
+		public function send_message( $theMessage ) {
 
 			$apiResponse = wp_remote_post( $this->apiEndpoint, array(
 				'method'      => 'POST',
