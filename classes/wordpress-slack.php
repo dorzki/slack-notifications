@@ -235,11 +235,11 @@ if ( ! class_exists( WPSlack ) ) {
 
 			// Register Hooks.
 			if ( 1 === $core_update ) {
-				add_action( 'slack_notif_check_versions', array( &$notifs, 'coreUpdateNotif' ) );
+				add_action( 'slack_notif_check_versions', array( &$notifs, 'core_update_notif' ) );
 			}
 
 			if ( 1 === $theme_update ) {
-				add_action( 'slack_notif_check_versions', array( &$notifs, 'themeUpdateNotif' ) );
+				add_action( 'slack_notif_check_versions', array( &$notifs, 'theme_update_notif' ) );
 			}
 
 			if ( 1 === $plugin_update ) {

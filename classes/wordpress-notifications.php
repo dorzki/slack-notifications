@@ -44,7 +44,7 @@ if ( ! class_exists( WPNotifications ) ) {
 		 *
 		 * @since   1.0.0
 		 */
-		public function coreUpdateNotif() {
+		public function core_update_notif() {
 
 			global $wp_version;
 
@@ -77,7 +77,7 @@ if ( ! class_exists( WPNotifications ) ) {
 		 *
 		 * @since   1.0.0
 		 */
-		public function themeUpdateNotif() {
+		public function theme_update_notif() {
 
 			// Force version check.
 			do_action( 'wp_update_themes' );
