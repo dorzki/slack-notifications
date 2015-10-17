@@ -109,7 +109,7 @@ if ( ! class_exists( WPNotifications ) ) {
 		 *
 		 * @since   1.0.0
 		 */
-		public function pluginUpdateNotif() {
+		public function plugin_update_notif() {
 
 			// Force version check.
 			do_action( 'wp_update_plugins' );
@@ -162,7 +162,7 @@ if ( ! class_exists( WPNotifications ) ) {
 		 * @param   object  $post    post details object.
 		 * @since   1.0.0
 		 */
-		public function postPublishNotif( $postID, $post ) {
+		public function post_publish_notif( $postID, $post ) {
 
 			$title  = $post->post_title;
 			$url    = get_permalink( $postID );
@@ -183,7 +183,7 @@ if ( ! class_exists( WPNotifications ) ) {
 		 * @param   object  $post    page details object.
 		 * @since   1.0.0
 		 */
-		public function pagePublishNotif( $postID, $post ) {
+		public function page_publish_notif( $postID, $post ) {
 
 			$title  = $post->post_title;
 			$url    = get_permalink( $postID );
@@ -204,7 +204,7 @@ if ( ! class_exists( WPNotifications ) ) {
 		 * @param   integer $isApproved   has the comment approved?.
 		 * @since   1.0.0
 		 */
-		public function commentAddedNotif( $commentID, $isApproved ) {
+		public function comment_added_notif( $commentID, $isApproved ) {
 
 			$commentData = get_comment( $commentID );
 
@@ -227,7 +227,7 @@ if ( ! class_exists( WPNotifications ) ) {
 		 * @param   integer $userID  the registered user id number.
 		 * @since   1.0.0
 		 */
-		public function userRegisteredNotif( $userID ) {
+		public function user_registered_notif( $userID ) {
 
 			$user = get_userdata( $userID );
 
@@ -246,7 +246,7 @@ if ( ! class_exists( WPNotifications ) ) {
 		 * @param   object $user      the user details.
 		 * @since   1.0.0
 		 */
-		public function adminLoggedInNotif( $username, $user ) {
+		public function admin_logged_in_notif( $username, $user ) {
 
 			if ( in_array( 'administrator', $user->roles ) ) {
 
@@ -267,7 +267,7 @@ if ( ! class_exists( WPNotifications ) ) {
 		 * @param   object  $post    page details object.
 		 * @since   1.0.1
 		 */
-		public function cptPublishNotif( $postID, $post ) {
+		public function cpt_publish_notif( $postID, $post ) {
 
 			$title  = $post->post_title;
 			$url    = get_permalink( $postID );

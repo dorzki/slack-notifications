@@ -243,27 +243,27 @@ if ( ! class_exists( WPSlack ) ) {
 			}
 
 			if ( 1 === $plugin_update ) {
-				add_action( 'slack_notif_check_versions', array( &$notifs, 'pluginUpdateNotif' ) );
+				add_action( 'slack_notif_check_versions', array( &$notifs, 'plugin_update_notif' ) );
 			}
 
 			if ( 1 === $new_post ) {
-				add_action( 'publish_post', array( &$notifs, 'postPublishNotif' ), 10, 2 );
+				add_action( 'publish_post', array( &$notifs, 'post_publish_notif' ), 10, 2 );
 			}
 
 			if ( 1 === $new_page ) {
-				add_action( 'publish_page', array( &$notifs, 'pagePublishNotif' ), 10, 2 );
+				add_action( 'publish_page', array( &$notifs, 'page_publish_notif' ), 10, 2 );
 			}
 
 			if ( 1 === $new_comment ) {
-				add_action( 'comment_post', array( &$notifs, 'commentAddedNotif' ), 10, 2 );
+				add_action( 'comment_post', array( &$notifs, 'comment_added_notif' ), 10, 2 );
 			}
 
 			if ( 1 === $new_user ) {
-				add_action( 'user_register', array( &$notifs, 'userRegisteredNotif' ), 10, 1 );
+				add_action( 'user_register', array( &$notifs, 'user_registered_notif' ), 10, 1 );
 			}
 
 			if ( 1 === $admin_logged ) {
-				add_action( 'wp_login', array( &$notifs, 'adminLoggedInNotif' ), 10, 2 );
+				add_action( 'wp_login', array( &$notifs, 'admin_logged_in_notif' ), 10, 2 );
 			}
 
 		}
@@ -322,8 +322,8 @@ if ( ! class_exists( WPSlack ) ) {
 
 				if ( get_option( 'slack_notif_new_' . $postType->name ) === 1 ) {
 
-					if ( has_action( 'publish_' . $postType->name, array( &$notifs, 'cptPublishNotif' ) ) === false ) {
-						add_action( 'publish_' . $postType->name, array( &$notifs, 'cptPublishNotif' ), 10, 2 );
+					if ( has_action( 'publish_' . $postType->name, array( &$notifs, 'cpt_publish_notif' ) ) === false ) {
+						add_action( 'publish_' . $postType->name, array( &$notifs, 'cpt_publish_notif' ), 10, 2 );
 					}
 				}
 			}
