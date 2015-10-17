@@ -65,8 +65,8 @@ if ( ! class_exists( SlackBot ) ) {
 
 			$this->apiEndpoint  = get_option( 'slack_webhook_endpoint' );
 			$this->slackChannel = get_option( 'slack_channel_name' );
-			$this->botName      = ( get_option( 'slack_bot_username' ) == '' ) ? 'Slack Bot' : get_option( 'slack_bot_username' );
-			$this->botIcon      = ( get_option( 'slack_bot_image' ) == '' ) ? PLUGIN_ROOT_URL . 'assets/images/default-bot-icon.png' : get_option( 'slack_bot_image' );
+			$this->botName      = ( get_option( 'slack_bot_username' ) === '' ) ? 'Slack Bot' : get_option( 'slack_bot_username' );
+			$this->botIcon      = ( get_option( 'slack_bot_image' ) === '' ) ? PLUGIN_ROOT_URL . 'assets/images/default-bot-icon.png' : get_option( 'slack_bot_image' );
 
 		}
 
