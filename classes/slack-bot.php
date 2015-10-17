@@ -84,7 +84,7 @@ if ( ! class_exists( slackBot ) ) {
 				'blocking'    => true,
 				'headers'     => array(),
 				'body'        => array(
-				'payload'   => json_encode( array(
+				'payload'   => wp_json_encode( array(
 					'channel'  => $this->slackChannel,
 					'username' => $this->botName,
 					'icon_url' => $this->botIcon,
