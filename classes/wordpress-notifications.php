@@ -1,16 +1,19 @@
 <?php
 /**
+ * Notifications class
+ *
  * @package   Slack Notifications
  * @since     1.0.0
  * @version   1.0.1
  * @author    Dor Zuberi <me@dorzki.co.il>
  * @link      https://www.dorzki.co.il
- *
- *
- * NOTIFICATIONS CLASS
  */
+
 if ( ! class_exists( wpNotifications ) ) {
 
+	/**
+	 * Class wpNotifications
+	 */
 	class wpNotifications {
 
 		/**
@@ -198,7 +201,7 @@ if ( ! class_exists( wpNotifications ) ) {
 		 * Send notification when comment has been submitted.
 		 *
 		 * @param   integer $commentID    the comment id number.
-		 * @param   integer $isApproved   has the comment approved?
+		 * @param   integer $isApproved   has the comment approved?.
 		 * @since   1.0.0
 		 */
 		public function commentAddedNotif( $commentID, $isApproved ) {
