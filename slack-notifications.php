@@ -18,7 +18,7 @@
 /**
  * PLUGIN CONSTANTS
  */
-if ( ! defined( PLUGIN_ROOT_URL ) ) {
+if ( ! defined( 'PLUGIN_ROOT_URL' ) ) {
 	define( PLUGIN_ROOT_URL, plugin_dir_url( __FILE__ ) );
 }
 
