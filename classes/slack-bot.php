@@ -9,9 +9,9 @@
  * @link      https://www.dorzki.co.il
  */
 
-if ( ! class_exists( slackBot ) ) {
+if ( ! class_exists( SlackBot ) ) {
 
-	class slackBot {
+	class SlackBot {
 
 		/**
 		 * Slack Webhook Endpoint

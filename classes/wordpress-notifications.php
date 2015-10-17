@@ -16,7 +16,7 @@ if ( ! class_exists( wpNotifications ) ) {
 		/**
 		 * Slack class handler.
 		 *
-		 * @var 	  slackBot
+		 * @var 	  SlackBot
 		 * @since   1.0.0
 		 */
 		private $slack;
@@ -30,7 +30,7 @@ if ( ! class_exists( wpNotifications ) ) {
 		 */
 		public function __construct() {
 
-			$this->slack = new slackBot();
+			$this->slack = new SlackBot();
 
 		}
 
