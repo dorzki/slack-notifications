@@ -9,12 +9,12 @@
  * @link      https://www.dorzki.co.il
  */
 
-if ( ! class_exists( wpNotifications ) ) {
+if ( ! class_exists( WPNotifications ) ) {
 
 	/**
-	 * Class wpNotifications
+	 * Class WPNotifications
 	 */
-	class wpNotifications {
+	class WPNotifications {
 
 		/**
 		 * Slack class handler.

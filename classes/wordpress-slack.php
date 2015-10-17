@@ -29,7 +29,7 @@ if ( ! class_exists( WPSlack ) ) {
 		/**
 		 * Notifications class handler.
 		 *
-		 * @var 	  wpNotifications
+		 * @var 	  WPNotifications
 		 * @since   1.0.1
 		 */
 		private $notifs;
@@ -44,7 +44,7 @@ if ( ! class_exists( WPSlack ) ) {
 		public function __construct() {
 
 			// Initiate the Notifications Class.
-			$this->notifs = new wpNotifications();
+			$this->notifs = new WPNotifications();
 
 			add_action( 'admin_init', array( &$this, 'plugin_init' ) );
 			add_action( 'init', array( &$this, 'plugin_translate' ) );
