@@ -11,6 +11,9 @@
 
 if ( ! class_exists( SlackBot ) ) {
 
+	/**
+	 * Class SlackBot
+	 */
 	class SlackBot {
 
 		/**
