@@ -2,7 +2,7 @@ module.exports = function(grunt) {
     grunt.initConfig({ //object with all tasks.
         phpcs: {
             application: {
-                src: ['./**/*.php']
+                src: ['./**/*.php', '!./node_modules/**']
             },
             options: {
                 standard: 'WordPress',
@@ -11,7 +11,7 @@ module.exports = function(grunt) {
         },
         phpcbf: {
             files: {
-                src: ['./**/*.php']
+                src: ['./**/*.php', '!./node_modules/**']
             },
             options: {
                 standard: 'WordPress',

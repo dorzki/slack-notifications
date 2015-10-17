@@ -8,7 +8,6 @@
  * Author URI: https://www.dorzki.co.il
  * Text Domain: dorzki-slack
  *
- * 
  * @package   Slack Notifications
  * @since     1.0.0
  * @version   1.0.1
@@ -16,12 +15,10 @@
  * @link      https://www.dorzki.co.il
  */
 
-
-
 /**
- * PLUGIN CONSTACTS
+ * PLUGIN CONSTANTS
  */
-if ( ! defined( PLUGIN_ROOT_URL ) ) {
+if ( ! defined( 'PLUGIN_ROOT_URL' ) ) {
 	define( PLUGIN_ROOT_URL, plugin_dir_url( __FILE__ ) );
 }
 
@@ -45,14 +42,14 @@ include_once( 'classes/wordpress-slack.php' );
 
 
 /**
- * PLUGIN INTIALIZATION
+ * PLUGIN INITIALIZATION
  */
-$wpSlack = new wpSlack();
+$WPSlack = new WPSlack();
 
 
 
 /**
  * REGISTER ACTIVATION & DEACTIVATION
  */
-register_activation_hook( __FILE__, array( &$wpSlack, 'plugin_activate' ) );
-register_deactivation_hook( __FILE__, array( &$wpSlack, 'plugin_deactivate' ) );
+register_activation_hook( __FILE__, array( &$WPSlack, 'plugin_activate' ) );
+register_deactivation_hook( __FILE__, array( &$WPSlack, 'plugin_deactivate' ) );

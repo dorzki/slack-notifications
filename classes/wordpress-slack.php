@@ -1,17 +1,20 @@
 <?php
 /**
+ * WordPress Slack
+ *
  * @package   Slack Notifications
  * @since     1.0.0
  * @version   1.0.1
  * @author    Dor Zuberi <me@dorzki.co.il>
  * @link      https://www.dorzki.co.il
- * 
- * 
- * WORDPRESS CLASS
  */
-if ( ! class_exists( wpSlack ) ) {
 
-	class wpSlack {
+if ( ! class_exists( WPSlack ) ) {
+
+	/**
+	 * Class WPSlack
+	 */
+	class WPSlack {
 
 		/**
 		 * Registerd Post Types.
@@ -25,8 +28,8 @@ if ( ! class_exists( wpSlack ) ) {
 
 		/**
 		 * Notifications class handler.
-		 * 
-		 * @var 	  wpNotifications
+		 *
+		 * @var 	  WPNotifications
 		 * @since   1.0.1
 		 */
 		private $notifs;
@@ -41,7 +44,7 @@ if ( ! class_exists( wpSlack ) ) {
 		public function __construct() {
 
 			// Initiate the Notifications Class.
-			$this->notifs = new wpNotifications();
+			$this->notifs = new WPNotifications();
 
 			add_action( 'admin_init', array( &$this, 'plugin_init' ) );
 			add_action( 'init', array( &$this, 'plugin_translate' ) );
@@ -101,7 +104,7 @@ if ( ! class_exists( wpSlack ) ) {
 			delete_option( 'slack_notif_plugins_version' );
 
 			// Delte custom post types settings.
-			foreach( $this->postTypes as $postType ) {
+			foreach ( $this->postTypes as $postType ) {
 
 				delete_option( 'slack_notif_new_' . $postType->name );
 
@@ -174,7 +177,7 @@ if ( ! class_exists( wpSlack ) ) {
 			global $postTypes;
 
 			if ( ! current_user_can( 'manage_options' ) ) {
-				wp_die( __( 'Oops... It\'s seems like you don\'t meet the required level of permissions', 'dorzki-slack' ) );
+				wp_die( esc_html__( 'Oops... It\'s seems like you don\'t meet the required level of permissions', 'dorzki-slack' ) );
 			}
 
 			$postTypes = $this->postTypes;
@@ -195,7 +198,7 @@ if ( ! class_exists( wpSlack ) ) {
 			wp_register_script( 'dorzki-slack-media-upload', PLUGIN_ROOT_URL . 'assets/js/admin-scripts.js' );
 			wp_register_style( 'dorzki-slack-settings-css', PLUGIN_ROOT_URL . 'assets/css/admin-styles.css' );
 
-			if ( get_current_screen()->id == 'settings_page_slack_notifications' ) {
+			if ( get_current_screen()->id === 'settings_page_slack_notifications' ) {
 
 				wp_enqueue_script( 'jquery' );
 				wp_enqueue_script( 'thickbox' );
@@ -230,39 +233,37 @@ if ( ! class_exists( wpSlack ) ) {
 			$new_user = get_option( 'slack_notif_new_user' );
 			$admin_logged = get_option( 'slack_notif_admin_logged' );
 
-
-
-			// Register Hooks
-			if ( $core_update == 1 ) {
-				add_action( 'slack_notif_check_versions', array( &$notifs, 'coreUpdateNotif' ) );
+			// Register Hooks.
+			if ( 1 === $core_update ) {
+				add_action( 'slack_notif_check_versions', array( &$notifs, 'core_update_notif' ) );
 			}
 
-			if ( $theme_update == 1 ) {
-				add_action( 'slack_notif_check_versions', array( &$notifs, 'themeUpdateNotif' ) );
+			if ( 1 === $theme_update ) {
+				add_action( 'slack_notif_check_versions', array( &$notifs, 'theme_update_notif' ) );
 			}
 
-			if ( $plugin_update == 1 ) {
-				add_action( 'slack_notif_check_versions', array( &$notifs, 'pluginUpdateNotif' ) );
+			if ( 1 === $plugin_update ) {
+				add_action( 'slack_notif_check_versions', array( &$notifs, 'plugin_update_notif' ) );
 			}
 
-			if ( $new_post == 1 ) {
-				add_action( 'publish_post', array( &$notifs, 'postPublishNotif' ), 10, 2 );
+			if ( 1 === $new_post ) {
+				add_action( 'publish_post', array( &$notifs, 'post_publish_notif' ), 10, 2 );
 			}
 
-			if ( $new_page == 1 ) {
-				add_action( 'publish_page', array( &$notifs, 'pagePublishNotif' ), 10, 2 );
+			if ( 1 === $new_page ) {
+				add_action( 'publish_page', array( &$notifs, 'page_publish_notif' ), 10, 2 );
 			}
 
-			if ( $new_comment == 1 ) {
-				add_action( 'comment_post', array( &$notifs, 'commentAddedNotif' ), 10, 2 );
+			if ( 1 === $new_comment ) {
+				add_action( 'comment_post', array( &$notifs, 'comment_added_notif' ), 10, 2 );
 			}
 
-			if ( $new_user == 1 ) {
-				add_action( 'user_register', array( &$notifs, 'userRegisteredNotif' ), 10, 1 );
+			if ( 1 === $new_user ) {
+				add_action( 'user_register', array( &$notifs, 'user_registered_notif' ), 10, 1 );
 			}
 
-			if ( $admin_logged == 1 ) {
-				add_action( 'wp_login', array( &$notifs, 'adminLoggedInNotif' ), 10, 2 );
+			if ( 1 === $admin_logged ) {
+				add_action( 'wp_login', array( &$notifs, 'admin_logged_in_notif' ), 10, 2 );
 			}
 
 		}
@@ -279,7 +280,7 @@ if ( ! class_exists( wpSlack ) ) {
 			// Retrieve custom post types.
 			$this->postTypes = get_post_types( array(
 				'public' => true,
-				'_builtin' => false
+				'_builtin' => false,
 				), 'objects' );
 
 			add_action( 'admin_init', array( &$this, 'register_post_types_settings' ) );
@@ -295,7 +296,7 @@ if ( ! class_exists( wpSlack ) ) {
 		 */
 		public function register_post_types_settings() {
 
-			foreach( $this->postTypes as $postType ) {
+			foreach ( $this->postTypes as $postType ) {
 
 				register_setting( 'dorzki-slack', 'slack_notif_new_' . $postType->name );
 
@@ -309,7 +310,7 @@ if ( ! class_exists( wpSlack ) ) {
 
 		/**
 		 * Register custom post types notifications hooks.
-		 * 
+		 *
 		 * @since   1.0.1
 		 */
 		public function register_post_types_notifs_hooks() {
@@ -317,16 +318,14 @@ if ( ! class_exists( wpSlack ) ) {
 			$notifs = $this->notifs;
 
 			// Get selected settings for custom post types.
-			foreach( $this->postTypes as $postType ) {
+			foreach ( $this->postTypes as $postType ) {
 
-				if ( get_option( 'slack_notif_new_' . $postType->name ) == 1 ) {
+				if ( get_option( 'slack_notif_new_' . $postType->name ) === 1 ) {
 
-					if ( has_action( 'publish_' . $postType->name, array( &$notifs, 'cptPublishNotif' ) ) === false ) {
-						add_action( 'publish_' . $postType->name, array( &$notifs, 'cptPublishNotif' ), 10, 2 );
+					if ( has_action( 'publish_' . $postType->name, array( &$notifs, 'cpt_publish_notif' ) ) === false ) {
+						add_action( 'publish_' . $postType->name, array( &$notifs, 'cpt_publish_notif' ), 10, 2 );
 					}
-
 				}
-
 			}
 
 		}

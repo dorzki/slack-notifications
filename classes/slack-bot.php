@@ -1,17 +1,20 @@
 <?php
 /**
+ * Slack Bot Class.
+ *
  * @package   Slack Notifications
  * @since     1.0.0
  * @version   1.0.1
  * @author    Dor Zuberi <me@dorzki.co.il>
  * @link      https://www.dorzki.co.il
- * 
- * 
- * SLACK BOT CLASS
  */
-if ( ! class_exists( slackBot ) ) {
 
-	class slackBot {
+if ( ! class_exists( SlackBot ) ) {
+
+	/**
+	 * Class SlackBot
+	 */
+	class SlackBot {
 
 		/**
 		 * Slack Webhook Endpoint
@@ -25,7 +28,7 @@ if ( ! class_exists( slackBot ) ) {
 
 		/**
 		 * Slack Channel
-		 * 
+		 *
 		 * @var 	  string
 		 * @since   1.0.0
 		 */
@@ -35,7 +38,7 @@ if ( ! class_exists( slackBot ) ) {
 
 		/**
 		 * Slack Name
-		 * 
+		 *
 		 * @var 	  string
 		 * @since   1.0.0
 		 */
@@ -45,7 +48,7 @@ if ( ! class_exists( slackBot ) ) {
 
 		/**
 		 * Slack Image
-		 * 
+		 *
 		 * @var 	  string
 		 * @since   1.0.0
 		 */
@@ -55,15 +58,15 @@ if ( ! class_exists( slackBot ) ) {
 
 		/**
 		 * Get slack bot details.
-		 * 
+		 *
 		 * @since   1.0.0
 		 */
 		public function __construct() {
 
 			$this->apiEndpoint  = get_option( 'slack_webhook_endpoint' );
 			$this->slackChannel = get_option( 'slack_channel_name' );
-			$this->botName      = ( get_option( 'slack_bot_username' ) == '' ) ? 'Slack Bot' : get_option( 'slack_bot_username' );
-			$this->botIcon      = ( get_option( 'slack_bot_image' ) == '' ) ? PLUGIN_ROOT_URL . 'assets/images/default-bot-icon.png' : get_option( 'slack_bot_image' );
+			$this->botName      = ( get_option( 'slack_bot_username' ) === '' ) ? 'Slack Bot' : get_option( 'slack_bot_username' );
+			$this->botIcon      = ( get_option( 'slack_bot_image' ) === '' ) ? PLUGIN_ROOT_URL . 'assets/images/default-bot-icon.png' : get_option( 'slack_bot_image' );
 
 		}
 
@@ -71,11 +74,11 @@ if ( ! class_exists( slackBot ) ) {
 
 		/**
 		 * Send the notification thought the API.
-		 * 
-		 * @param   string  $theMessage   the notification to send.
+		 *
+		 * @param   string $theMessage   the notification to send.
 		 * @since   1.0.0
 		 */
-		public function sendMessage( $theMessage ) {
+		public function send_message( $theMessage ) {
 
 			$apiResponse = wp_remote_post( $this->apiEndpoint, array(
 				'method'      => 'POST',
@@ -84,11 +87,11 @@ if ( ! class_exists( slackBot ) ) {
 				'blocking'    => true,
 				'headers'     => array(),
 				'body'        => array(
-				'payload'   => json_encode( array(
+				'payload'   => wp_json_encode( array(
 					'channel'  => $this->slackChannel,
 					'username' => $this->botName,
 					'icon_url' => $this->botIcon,
-					'text'     => sprintf( '%s @ *<%s|%s>*', $theMessage, get_bloginfo( 'home' ), get_bloginfo( 'name' ) )
+					'text'     => sprintf( '%s @ *<%s|%s>*', $theMessage, get_bloginfo( 'home' ), get_bloginfo( 'name' ) ),
 				) ),
 				),
 			) );
