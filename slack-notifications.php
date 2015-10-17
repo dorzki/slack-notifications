@@ -44,12 +44,12 @@ include_once( 'classes/wordpress-slack.php' );
 /**
  * PLUGIN INITIALIZATION
  */
-$wpSlack = new wpSlack();
+$WPSlack = new WPSlack();
 
 
 
 /**
  * REGISTER ACTIVATION & DEACTIVATION
  */
-register_activation_hook( __FILE__, array( &$wpSlack, 'plugin_activate' ) );
-register_deactivation_hook( __FILE__, array( &$wpSlack, 'plugin_deactivate' ) );
+register_activation_hook( __FILE__, array( &$WPSlack, 'plugin_activate' ) );
+register_deactivation_hook( __FILE__, array( &$WPSlack, 'plugin_deactivate' ) );

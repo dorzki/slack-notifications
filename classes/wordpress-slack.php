@@ -9,12 +9,12 @@
  * @link      https://www.dorzki.co.il
  */
 
-if ( ! class_exists( wpSlack ) ) {
+if ( ! class_exists( WPSlack ) ) {
 
 	/**
-	 * Class wpSlack
+	 * Class WPSlack
 	 */
-	class wpSlack {
+	class WPSlack {
 
 		/**
 		 * Registerd Post Types.
