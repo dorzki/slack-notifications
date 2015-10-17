@@ -198,7 +198,7 @@ if ( ! class_exists( WPSlack ) ) {
 			wp_register_script( 'dorzki-slack-media-upload', PLUGIN_ROOT_URL . 'assets/js/admin-scripts.js' );
 			wp_register_style( 'dorzki-slack-settings-css', PLUGIN_ROOT_URL . 'assets/css/admin-styles.css' );
 
-			if ( get_current_screen()->id == 'settings_page_slack_notifications' ) {
+			if ( get_current_screen()->id === 'settings_page_slack_notifications' ) {
 
 				wp_enqueue_script( 'jquery' );
 				wp_enqueue_script( 'thickbox' );
@@ -234,35 +234,35 @@ if ( ! class_exists( WPSlack ) ) {
 			$admin_logged = get_option( 'slack_notif_admin_logged' );
 
 			// Register Hooks.
-			if ( $core_update == 1 ) {
+			if ( 1 === $core_update ) {
 				add_action( 'slack_notif_check_versions', array( &$notifs, 'coreUpdateNotif' ) );
 			}
 
-			if ( $theme_update == 1 ) {
+			if ( 1 === $theme_update ) {
 				add_action( 'slack_notif_check_versions', array( &$notifs, 'themeUpdateNotif' ) );
 			}
 
-			if ( $plugin_update == 1 ) {
+			if ( 1 === $plugin_update ) {
 				add_action( 'slack_notif_check_versions', array( &$notifs, 'pluginUpdateNotif' ) );
 			}
 
-			if ( $new_post == 1 ) {
+			if ( 1 === $new_post ) {
 				add_action( 'publish_post', array( &$notifs, 'postPublishNotif' ), 10, 2 );
 			}
 
-			if ( $new_page == 1 ) {
+			if ( 1 === $new_page ) {
 				add_action( 'publish_page', array( &$notifs, 'pagePublishNotif' ), 10, 2 );
 			}
 
-			if ( $new_comment == 1 ) {
+			if ( 1 === $new_comment ) {
 				add_action( 'comment_post', array( &$notifs, 'commentAddedNotif' ), 10, 2 );
 			}
 
-			if ( $new_user == 1 ) {
+			if ( 1 === $new_user ) {
 				add_action( 'user_register', array( &$notifs, 'userRegisteredNotif' ), 10, 1 );
 			}
 
-			if ( $admin_logged == 1 ) {
+			if ( 1 === $admin_logged ) {
 				add_action( 'wp_login', array( &$notifs, 'adminLoggedInNotif' ), 10, 2 );
 			}
 
@@ -320,7 +320,7 @@ if ( ! class_exists( WPSlack ) ) {
 			// Get selected settings for custom post types.
 			foreach ( $this->postTypes as $postType ) {
 
-				if ( get_option( 'slack_notif_new_' . $postType->name ) == 1 ) {
+				if ( get_option( 'slack_notif_new_' . $postType->name ) === 1 ) {
 
 					if ( has_action( 'publish_' . $postType->name, array( &$notifs, 'cptPublishNotif' ) ) === false ) {
 						add_action( 'publish_' . $postType->name, array( &$notifs, 'cptPublishNotif' ), 10, 2 );
