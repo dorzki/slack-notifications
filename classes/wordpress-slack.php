@@ -1,16 +1,19 @@
 <?php
 /**
+ * WordPress Slack
+ *
  * @package   Slack Notifications
  * @since     1.0.0
  * @version   1.0.1
  * @author    Dor Zuberi <me@dorzki.co.il>
  * @link      https://www.dorzki.co.il
- *
- *
- * WORDPRESS CLASS
  */
+
 if ( ! class_exists( wpSlack ) ) {
 
+	/**
+	 * Class wpSlack
+	 */
 	class wpSlack {
 
 		/**
@@ -230,7 +233,7 @@ if ( ! class_exists( wpSlack ) ) {
 			$new_user = get_option( 'slack_notif_new_user' );
 			$admin_logged = get_option( 'slack_notif_admin_logged' );
 
-			// Register Hooks
+			// Register Hooks.
 			if ( $core_update == 1 ) {
 				add_action( 'slack_notif_check_versions', array( &$notifs, 'coreUpdateNotif' ) );
 			}
