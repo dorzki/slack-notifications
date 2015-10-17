@@ -177,7 +177,7 @@ if ( ! class_exists( WPSlack ) ) {
 			global $postTypes;
 
 			if ( ! current_user_can( 'manage_options' ) ) {
-				wp_die( __( 'Oops... It\'s seems like you don\'t meet the required level of permissions', 'dorzki-slack' ) );
+				wp_die( esc_html__( 'Oops... It\'s seems like you don\'t meet the required level of permissions', 'dorzki-slack' ) );
 			}
 
 			$postTypes = $this->postTypes;
