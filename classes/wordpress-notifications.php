@@ -142,7 +142,7 @@ if ( ! class_exists( WPNotifications ) ) {
 				update_option( 'slack_notif_plugins_version', $notifiedPlugins );
 
 				// Do we still need to notify?
-				if ( $theMessage != '' ) {
+				if ( '' !== $theMessage ) {
 
 					$theMessage = __( ':information_source: The following plugins have a new version:', 'dorzki-slack' ) . "\n" . $theMessage;
 
