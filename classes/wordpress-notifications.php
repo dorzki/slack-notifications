@@ -54,12 +54,12 @@ if ( ! class_exists( WPNotifications ) ) {
 			$versionCheck = get_site_transient( 'update_core' );
 
 			// Is there a new version of WordPress?
-			if ( $versionCheck->updates[0]->response == 'upgrade' ) {
+			if ( $versionCheck->updates[0]->response === 'upgrade' ) {
 
 				$newVersion = $versionCheck->updates[0]->current;
 
 				// Did we already notified the admin?
-				if ( get_option( 'slack_notif_core_version' ) != $newVersion ) {
+				if ( get_option( 'slack_notif_core_version' ) !== $newVersion ) {
 
 					update_option( 'slack_notif_core_version', $newVersion );
 
@@ -86,12 +86,12 @@ if ( ! class_exists( WPNotifications ) ) {
 			$currentVersion = wp_get_theme()->get( 'Version' );
 			$currentTheme   = get_option( 'template' );
 
-			if ( $versionCheck->response[ $currentTheme ]['new_version'] != $currentVersion ) {
+			if ( $versionCheck->response[ $currentTheme ]['new_version'] !== $currentVersion ) {
 
 				$newVersion = $versionCheck->response[ $currentTheme ]['new_version'];
 
 				// Did we already notified the admin?
-				if ( get_option( 'slack_notif_theme_version' ) != $newVersion ) {
+				if ( get_option( 'slack_notif_theme_version' ) !== $newVersion ) {
 
 					update_option( 'slack_notif_theme_version', $newVersion );
 
@@ -130,7 +130,7 @@ if ( ! class_exists( WPNotifications ) ) {
 					$pluginMeta = get_plugin_data( WP_PLUGIN_DIR . '/' . $plugin, true, false );
 
 					// Did we already notified the admin?
-					if ( ! array_key_exists( $plugin, $notifiedPlugins ) && $notifiedPlugins[ $plugin ] != $updateData->new_version ) {
+					if ( ! array_key_exists( $plugin, $notifiedPlugins ) && $notifiedPlugins[ $plugin ] !== $updateData->new_version ) {
 
 						$notifiedPlugins[ $plugin ] = $updateData->new_version;
 
