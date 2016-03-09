@@ -9,7 +9,7 @@
  * @link      https://www.dorzki.co.il
  */
 
-if ( ! class_exists( SlackBot ) ) {
+if ( ! class_exists( 'SlackBot' ) ) {
 
 	/**
 	 * Class SlackBot

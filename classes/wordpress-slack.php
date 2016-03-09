@@ -9,7 +9,7 @@
  * @link      https://www.dorzki.co.il
  */
 
-if ( ! class_exists( WPSlack ) ) {
+if ( ! class_exists( 'WPSlack' ) ) {
 
 	/**
 	 * Class WPSlack
