@@ -14,6 +14,14 @@ wp-content/cache/
 wp-content/upgrade/
 wp-content/uploads/
 wp-content/wp-cache-config.php
+.DS_Store
+assets/.DS_Store
+assets/css/.DS_Store
+assets/images/.DS_Store
+assets/js/.DS_Store
+classes/.DS_Store
+templates/.DS_Store
+tests/.DS_Store
 #ignore code coverage results
 /log
 #ignore node_modules for grunt
