@@ -9,7 +9,7 @@
  * @link      https://www.dorzki.co.il
  */
 
-if ( ! class_exists( WPNotifications ) ) {
+if ( ! class_exists( 'WPNotifications' ) ) {
 
 	/**
 	 * Class WPNotifications
