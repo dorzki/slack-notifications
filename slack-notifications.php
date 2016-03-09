@@ -19,15 +19,15 @@
  * PLUGIN CONSTANTS
  */
 if ( ! defined( 'PLUGIN_ROOT_URL' ) ) {
-	define( PLUGIN_ROOT_URL, plugin_dir_url( __FILE__ ) );
+	define( 'PLUGIN_ROOT_URL', plugin_dir_url( __FILE__ ) );
 }
 
-if ( ! defined( PLUGIN_ROOT_DIR ) ) {
-	define( PLUGIN_ROOT_DIR, dirname( __FILE__ ) );
+if ( ! defined( 'PLUGIN_ROOT_DIR' ) ) {
+	define( 'PLUGIN_ROOT_DIR', dirname( __FILE__ ) );
 }
 
-if ( ! defined( PLUGIN_VERSION ) ) {
-	define( PLUGIN_VERSION, '1.0.0' );
+if ( ! defined( 'PLUGIN_VERSION' ) ) {
+	define( 'PLUGIN_VERSION', '1.0.0' );
 }
 
 
