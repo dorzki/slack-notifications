@@ -1,0 +1,224 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Slack Notifications\n"
+"POT-Creation-Date: 2016-03-11 00:29+0200\n"
+"PO-Revision-Date: 2016-03-11 00:41+0200\n"
+"Last-Translator: Dor Zuberi <me@dorzki.co.il>\n"
+"Language-Team: Dor Zuberi <me@dorzki.co.il>\n"
+"Language: he_IL\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.7\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-WPHeader: slack-notifications.php\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
+"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;"
+"_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: *.js\n"
+
+#: classes/wordpress-notifications.php:66
+#, php-format
+msgid ""
+":information_source: There is a new WordPress version available - v%s "
+"(current version is v%s)."
+msgstr ""
+"‏:information_source: ישנה גרסת וורדפרס חדשה זמינה - v%s (גרסא נוכחית v%s)."
+
+#: classes/wordpress-notifications.php:98
+#, php-format
+msgid ""
+":information_source: There is a new version of the theme *%s* - v%s (current "
+"version is v%s)."
+msgstr ""
+"‏:information_source: ישנה גרסא חדשה של ערכת הנושא *%s* - v%s (גרסא נוכחית v"
+"%s)."
+
+#: classes/wordpress-notifications.php:137
+#, php-format
+msgid "• *%s* - v%s (current version is v%s)"
+msgstr "‏• *%s* - v%s (גרסא נוכחית v%s)"
+
+#: classes/wordpress-notifications.php:147
+msgid ":information_source: The following plugins have a new version:"
+msgstr "‏:information_source: לתוספים הבאים יש גרסאות חדשות:"
+
+#: classes/wordpress-notifications.php:171
+#: classes/wordpress-notifications.php:276
+#, php-format
+msgid ":metal: The post *<%s|%s>* was published by *%s* right now!"
+msgstr "‏:metal: הפוסט *<%s|%s>* פורסם הרגע ע״י *%s*!"
+
+#: classes/wordpress-notifications.php:192
+#, php-format
+msgid ":metal: The page *<%s|%s>* was published by *%s* right now!"
+msgstr "‏:metal: העמוד *<%s|%s>* פורסם הרגע ע״י *%s*!"
+
+#: classes/wordpress-notifications.php:216
+#, php-format
+msgid ":metal: A new comment by *%s* on *<%s|%s>*:"
+msgstr "‏:metal: תגובה חדשה ע״י *%s* ב-*<%s|%s>*:"
+
+#: classes/wordpress-notifications.php:234
+#, php-format
+msgid ":dancer: A new user just registered - *%s* (%s)."
+msgstr "‏:dancer: משתמש חדש נרשם הרגע - *%s* (%s)."
+
+#: classes/wordpress-notifications.php:253
+#, php-format
+msgid ":bowtie: Administrator login: *%s*."
+msgstr "‏:bowtie: התחברות מנהל: *%s*."
+
+#. Plugin Name of the plugin/theme
+#: classes/wordpress-slack.php:164 templates/settings-page.php:24
+msgid "Slack Notifications"
+msgstr "התראות Slack"
+
+#: classes/wordpress-slack.php:164
+msgid "Slack Notifications Integration"
+msgstr "התממשקות התראות Slack"
+
+#: classes/wordpress-slack.php:180
+msgid ""
+"Oops... It's seems like you don't meet the required level of permissions"
+msgstr "אופס… נראה כי אין לך את ההרשאה המתאימה"
+
+#: templates/settings-page.php:25
+msgid "by"
+msgstr "מאת"
+
+#. Author of the plugin/theme
+#: templates/settings-page.php:25
+msgid "dorzki"
+msgstr "דורזקי"
+
+#: templates/settings-page.php:30
+msgid "Integration Setup"
+msgstr "הגדרות התממשקות"
+
+#: templates/settings-page.php:31
+msgid "Setup the integration between WordPress and Slack API."
+msgstr "הגדר את ההתממשקות בין וורדפרס ו-Slack."
+
+#: templates/settings-page.php:37
+msgid "Webhooks Endpoint"
+msgstr "נקודת קצה"
+
+#: templates/settings-page.php:40
+#, php-format
+msgid ""
+"Add <a href='%s' target='_blank'>Slack Incoming Webhooks</a> to your Slack "
+"Account and paste the Webhook URL here."
+msgstr ""
+"הוסף <a href='%s' target='_blank'>Slack Incoming Webhooks</a> לחשבון ה-Slack "
+"שלך והדבק את הקישור כאן."
+
+#: templates/settings-page.php:47
+msgid "Channel Name"
+msgstr "שם ערוץ"
+
+#: templates/settings-page.php:50
+msgid ""
+"Write here the desired channel name to receive notifications, don't forget "
+"to include the hash symbol before the name."
+msgstr ""
+"כתוב כאן את שם הערוץ הרצוי כדי לקבל הודעות, אל תשכח לכלול את סמל ה-hash לפני "
+"השם."
+
+#: templates/settings-page.php:57
+msgid "Slack Bot Name"
+msgstr "שם הבוט"
+
+#: templates/settings-page.php:60
+msgid "The Slack Bot name to be displayed in notifications."
+msgstr "שם הבוט אשר יציג את ההתראות בערוץ."
+
+#: templates/settings-page.php:67
+msgid "Slack Bot Logo"
+msgstr "לוגו בוט"
+
+#: templates/settings-page.php:70
+msgid "Upload"
+msgstr "העלה"
+
+#: templates/settings-page.php:71
+msgid "Slack Bot image to be displayed in Slack."
+msgstr "תמונת הבוט אשר יציג את ההתראות בערוץ"
+
+#: templates/settings-page.php:83
+msgid "Desired Notifications"
+msgstr "התראות רצויות"
+
+#: templates/settings-page.php:84
+msgid "Please select the desired notification to be sent on event fire."
+msgstr "נא בחר את ההתראות אותם תרצה לקבל."
+
+#: templates/settings-page.php:89 templates/settings-page.php:93
+msgid "Version Updates"
+msgstr "עדכוני גירסא"
+
+#: templates/settings-page.php:98
+msgid "WordPress Core Update Available?"
+msgstr "עדכון ליבה של וורדפרס זמין?"
+
+#: templates/settings-page.php:105
+msgid "Theme Update Available?"
+msgstr "עדכון ערכת נושא זמין?"
+
+#: templates/settings-page.php:112
+msgid "Plugin Update Available?"
+msgstr "עדכון תוסף זמין?"
+
+#: templates/settings-page.php:121 templates/settings-page.php:125
+msgid "New Entries"
+msgstr "פרסומים חדשים"
+
+#: templates/settings-page.php:130
+msgid "Post Published"
+msgstr "פוסט פורסם"
+
+#: templates/settings-page.php:137
+msgid "Page Published"
+msgstr "עמוד פורסם"
+
+#: templates/settings-page.php:145
+#, php-format
+msgid "%s Published"
+msgstr "‏%s פורסם."
+
+#: templates/settings-page.php:153
+msgid "New Comment"
+msgstr "תגובה חדשה"
+
+#: templates/settings-page.php:162 templates/settings-page.php:166
+msgid "Users"
+msgstr "משתמשים"
+
+#: templates/settings-page.php:171
+msgid "New User"
+msgstr "משתמש חדש"
+
+#: templates/settings-page.php:178
+msgid "Admin Logged-in"
+msgstr "מנהל התחבר"
+
+#. Plugin URI of the plugin/theme
+#. Author URI of the plugin/theme
+msgid "https://www.dorzki.co.il"
+msgstr "‏https://www.dorzki.co.il"
+
+#. Description of the plugin/theme
+msgid ""
+"Add Slack integration to a channel and send desired notifications as a slack "
+"bot."
+msgstr "הוסף התממשקות ל-Slack וקבל התראות בזמן אמת לערוץ ה-Slack שלך."
+
+#~ msgid ""
+#~ ":information_source: Theme is a new version of the theme *%s* - v%s "
+#~ "(current version is v%s)."
+#~ msgstr ""
+#~ "‏:information_source: Theme is a new version of the theme *%s* - v%s "
+#~ "(current version is v%s)."

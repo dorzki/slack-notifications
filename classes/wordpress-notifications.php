@@ -4,7 +4,7 @@
  *
  * @package   Slack Notifications
  * @since     1.0.0
- * @version   1.0.1
+ * @version   1.0.4
  * @author    Dor Zuberi <me@dorzki.co.il>
  * @link      https://www.dorzki.co.il
  */
@@ -95,7 +95,7 @@ if ( ! class_exists( 'WPNotifications' ) ) {
 
 					update_option( 'slack_notif_theme_version', $newVersion );
 
-					$this->slack->send_message( sprintf( __( ':information_source: Theme is a new version of the theme *%s* - v%s (current version is v%s).', 'dorzki-slack' ), $currentTheme, $newVersion, $currentVersion ) );
+					$this->slack->send_message( sprintf( __( ':information_source: There is a new version of the theme *%s* - v%s (current version is v%s).', 'dorzki-slack' ), $currentTheme, $newVersion, $currentVersion ) );
 
 				}
 			}

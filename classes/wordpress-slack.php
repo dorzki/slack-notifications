@@ -4,7 +4,7 @@
  *
  * @package   Slack Notifications
  * @since     1.0.0
- * @version   1.0.1
+ * @version   1.0.4
  * @author    Dor Zuberi <me@dorzki.co.il>
  * @link      https://www.dorzki.co.il
  */
@@ -47,7 +47,7 @@ if ( ! class_exists( 'WPSlack' ) ) {
 			$this->notifs = new WPNotifications();
 
 			add_action( 'admin_init', array( &$this, 'plugin_init' ) );
-			add_action( 'init', array( &$this, 'plugin_translate' ) );
+			add_action( 'plugins_loaded', array( &$this, 'plugin_translate' ) );
 			add_action( 'admin_menu', array( &$this, 'plugin_menu' ) );
 			add_action( 'admin_enqueue_scripts', array( &$this, 'plugin_register_assets' ) );
 			add_action( 'registered_post_type', array( &$this, 'get_registered_post_types' ) );
@@ -148,7 +148,7 @@ if ( ! class_exists( 'WPSlack' ) ) {
 		 */
 		public function plugin_translate() {
 
-			load_plugin_textdomain( 'dorzki-slack', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
+			load_plugin_textdomain( 'dorzki-slack', false, dirname( dirname( plugin_basename( __FILE__ ) ) ) . '/languages/' );
 
 		}
 
