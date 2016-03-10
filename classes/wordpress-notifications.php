@@ -63,7 +63,7 @@ if ( ! class_exists( 'WPNotifications' ) ) {
 
 					update_option( 'slack_notif_core_version', $newVersion );
 
-					$this->slack->send_message( sprintf( __( ':information_source: There is a new WordPress version available - v%s (current version is v%s).' ), $newVersion, $wp_version ) );
+					$this->slack->send_message( sprintf( __( ':information_source: There is a new WordPress version available - v%s (current version is v%s).', 'dorzki-slack' ), $newVersion, $wp_version ) );
 
 				}
 			}
@@ -95,7 +95,7 @@ if ( ! class_exists( 'WPNotifications' ) ) {
 
 					update_option( 'slack_notif_theme_version', $newVersion );
 
-					$this->slack->send_message( sprintf( __( ':information_source: Theme is a new version of the theme *%s* - v%s (current version is v%s).' ), $currentTheme, $newVersion, $currentVersion ) );
+					$this->slack->send_message( sprintf( __( ':information_source: Theme is a new version of the theme *%s* - v%s (current version is v%s).', 'dorzki-slack' ), $currentTheme, $newVersion, $currentVersion ) );
 
 				}
 			}

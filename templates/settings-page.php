@@ -37,7 +37,7 @@ $admin_logged = get_option( 'slack_notif_admin_logged' );
           <th scope="row"><label for="slack_webhook_endpoint"><?php esc_html_e( 'Webhooks Endpoint', 'dorzki-slack' ); ?></label></th>
           <td>
             <input type="url" name="slack_webhook_endpoint" id="slack_webhook_endpoint" class="regular-text" value="<?php echo esc_html( get_option( 'slack_webhook_endpoint' ) ); ?>">
-            <p class="description" id="slack_webhook_endpoint-description"><?php printf( 'Add <a href=\'%s\' target=\'_blank\'>Slack Incoming Webhooks</a> to your Slack Account and paste the Webhook URL here.', 'dorzki-slack' , 'https://my.slack.com/services/new/incoming-webhook/' ); ?></p>
+            <p class="description" id="slack_webhook_endpoint-description"><?php printf( __( 'Add <a href=\'%s\' target=\'_blank\'>Slack Incoming Webhooks</a> to your Slack Account and paste the Webhook URL here.', 'dorzki-slack' ) , 'https://my.slack.com/services/new/incoming-webhook/' ); ?></p>
           </td>
         </tr>
         <!-- /Webhook URL -->
@@ -70,9 +70,9 @@ $admin_logged = get_option( 'slack_notif_admin_logged' );
             <input id="slack_bot_image_button" type="button" class="button" value="<?php esc_html_e( 'Upload', 'dorzki-slack' ); ?>" />
             <p class="description" id="slack_bot_image-description"><?php esc_html_e( 'Slack Bot image to be displayed in Slack.', 'dorzki-slack' ); ?></p>
             <div id="slack_bot_image_preview">
-				<?php if ( '' !== get_option( 'slack_bot_image' )  ) : ?>
+              <?php if ( '' !== get_option( 'slack_bot_image' )  ) : ?>
                 <img src="<?php echo esc_url( get_option( 'slack_bot_image' ) ); ?>">
-				<?php endif; ?>
+              <?php endif; ?>
             </div>
           </td>
         </tr>
@@ -139,14 +139,14 @@ $admin_logged = get_option( 'slack_notif_admin_logged' );
               <br>
               <!-- /New Page -->
 
-				<?php foreach ( $postTypes as $postType ) : ?>
+              <?php foreach ( $postTypes as $postType ) : ?>
                 <!-- New <?php echo esc_html( $postType->labels->singular_name ); ?> -->
                 <label for="slack_notif_new_<?php echo esc_html( $postType->name ); ?>">
                   <input type="checkbox" name="slack_notif_new_<?php echo esc_html( $postType->name ); ?>" id="slack_notif_new_<?php echo esc_html( $postType->name ); ?>" value="1" <?php checked( intval( get_option( 'slack_notif_new_' . $postType->name ) ), 1, true ); ?>> <?php printf( esc_html__( '%s Published', 'dorzki-slack' ), esc_html( $postType->labels->singular_name ) ); ?>
                 </label>
                 <br>
                 <!-- /New <?php echo esc_html( $postType->labels->singular_name ); ?> -->
-				<?php endforeach; ?>
+              <?php endforeach; ?>
 
               <!-- New Comment -->
               <label for="slack_notif_new_comment">

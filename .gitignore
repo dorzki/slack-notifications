@@ -22,6 +22,17 @@ assets/js/.DS_Store
 classes/.DS_Store
 templates/.DS_Store
 tests/.DS_Store
+languages/.DS_Store
+assets/.svn/
+assets/css/.svn/
+assets/images/.svn/
+assets/js/.svn/
+classes/.svn/
+templates/.svn/
+tests/.svn/
+tests/bin/.svn/
+tests/lib/.svn/
+languages/.svn/
 #ignore code coverage results
 /log
 #ignore node_modules for grunt
