@@ -1,0 +1,250 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Slack Notifications\n"
+"POT-Creation-Date: 2016-03-20 23:49+0200\n"
+"PO-Revision-Date: 2016-03-20 23:52+0200\n"
+"Last-Translator: Dor Zuberi <me@dorzki.co.il>\n"
+"Language-Team: Dor Zuberi <me@dorzki.co.il>\n"
+"Language: he_IL\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.7\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-WPHeader: slack-notifications.php\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
+"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;"
+"_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: *.js\n"
+
+#: classes/wordpress-notifications.php:66
+#, php-format
+msgid ""
+":information_source: There is a new WordPress version available - v%s "
+"(current version is v%s)."
+msgstr ""
+"‏:information_source: ישנה גרסת וורדפרס חדשה זמינה - v%s (גרסא נוכחית v%s)."
+
+#: classes/wordpress-notifications.php:98
+#, php-format
+msgid ""
+":information_source: There is a new version of the theme *%s* - v%s (current "
+"version is v%s)."
+msgstr ""
+"‏:information_source: ישנה גרסא חדשה של ערכת הנושא *%s* - v%s (גרסא נוכחית v"
+"%s)."
+
+#: classes/wordpress-notifications.php:137
+#, php-format
+msgid "• *%s* - v%s (current version is v%s)"
+msgstr "‏• *%s* - v%s (גרסא נוכחית v%s)"
+
+#: classes/wordpress-notifications.php:147
+msgid ":information_source: The following plugins have a new version:"
+msgstr "‏:information_source: לתוספים הבאים יש גרסאות חדשות:"
+
+#: classes/wordpress-notifications.php:171
+#: classes/wordpress-notifications.php:276
+#, php-format
+msgid ":metal: The post *<%s|%s>* was published by *%s* right now!"
+msgstr "‏:metal: הפוסט *<%s|%s>* פורסם הרגע ע״י *%s*!"
+
+#: classes/wordpress-notifications.php:192
+#, php-format
+msgid ":metal: The page *<%s|%s>* was published by *%s* right now!"
+msgstr "‏:metal: העמוד *<%s|%s>* פורסם הרגע ע״י *%s*!"
+
+#: classes/wordpress-notifications.php:216
+#, php-format
+msgid ":metal: A new comment by *%s* on *<%s|%s>*:"
+msgstr "‏:metal: תגובה חדשה ע״י *%s* ב-*<%s|%s>*:"
+
+#: classes/wordpress-notifications.php:234
+#, php-format
+msgid ":dancer: A new user just registered - *%s* (%s)."
+msgstr "‏:dancer: משתמש חדש נרשם הרגע - *%s* (%s)."
+
+#: classes/wordpress-notifications.php:253
+#, php-format
+msgid ":bowtie: Administrator login: *%s*."
+msgstr "‏:bowtie: התחברות מנהל: *%s*."
+
+#: classes/wordpress-notifications.php:292
+msgid ":pizza: Mmmmmm..... Pizzzzzzzzzzzzzzzzzzza!!!"
+msgstr "‏‪:‬pizza‪:‬ ממממממממממממ….. פיצצצצצצצצצצצצצצצצה!!!"
+
+#. Plugin Name of the plugin/theme
+#: classes/wordpress-slack.php:175 templates/settings-page.php:26
+msgid "Slack Notifications"
+msgstr "התראות Slack"
+
+#: classes/wordpress-slack.php:175
+msgid "Slack Notifications Integration"
+msgstr "התממשקות התראות Slack"
+
+#: classes/wordpress-slack.php:191
+msgid ""
+"Oops... It's seems like you don't meet the required level of permissions"
+msgstr "אופס… נראה כי אין לך את ההרשאה המתאימה"
+
+#: classes/wordpress-slack.php:355
+#, php-format
+msgid ""
+"There seem to be an error with the <a href=\"%s\">webhook configuration</a>, "
+"please try again."
+msgstr "נראה שיש תקלה ב<a href=\"%s\">הגדרות התוסף</a>, אנא נסה שנית."
+
+#: templates/settings-page.php:27
+msgid "by"
+msgstr "מאת"
+
+#. Author of the plugin/theme
+#: templates/settings-page.php:27
+msgid "dorzki"
+msgstr "דורזקי"
+
+#: templates/settings-page.php:32
+msgid "Integration Setup"
+msgstr "הגדרות התממשקות"
+
+#: templates/settings-page.php:33
+msgid "Setup the integration between WordPress and Slack API."
+msgstr "הגדר את ההתממשקות בין וורדפרס ו-Slack."
+
+#: templates/settings-page.php:39
+msgid "Webhooks Endpoint"
+msgstr "נקודת קצה"
+
+#: templates/settings-page.php:42
+#, php-format
+msgid ""
+"Add <a href='%s' target='_blank'>Slack Incoming Webhooks</a> to your Slack "
+"Account and paste the Webhook URL here."
+msgstr ""
+"הוסף <a href='%s' target='_blank'>Slack Incoming Webhooks</a> לחשבון ה-Slack "
+"שלך והדבק את הקישור כאן."
+
+#: templates/settings-page.php:49
+msgid "Channel Name"
+msgstr "שם ערוץ"
+
+#: templates/settings-page.php:52
+msgid ""
+"Write here the desired channel name to receive notifications, don't forget "
+"to include the hash symbol before the name."
+msgstr ""
+"כתוב כאן את שם הערוץ הרצוי כדי לקבל הודעות, אל תשכח לכלול את סמל ה-hash לפני "
+"השם."
+
+#: templates/settings-page.php:59
+msgid "Slack Bot Name"
+msgstr "שם הבוט"
+
+#: templates/settings-page.php:62
+msgid "The Slack Bot name to be displayed in notifications."
+msgstr "שם הבוט אשר יציג את ההתראות בערוץ."
+
+#: templates/settings-page.php:69
+msgid "Slack Bot Logo"
+msgstr "לוגו בוט"
+
+#: templates/settings-page.php:72
+msgid "Upload"
+msgstr "העלה"
+
+#: templates/settings-page.php:73
+msgid "Slack Bot image to be displayed in Slack."
+msgstr "תמונת הבוט אשר יציג את ההתראות בערוץ"
+
+#: templates/settings-page.php:85
+msgid "Desired Notifications"
+msgstr "התראות רצויות"
+
+#: templates/settings-page.php:86
+msgid "Please select the desired notification to be sent on event fire."
+msgstr "נא בחר את ההתראות אותם תרצה לקבל."
+
+#: templates/settings-page.php:91 templates/settings-page.php:95
+msgid "Version Updates"
+msgstr "עדכוני גירסא"
+
+#: templates/settings-page.php:100
+msgid "WordPress Core Update Available?"
+msgstr "עדכון ליבה של וורדפרס זמין?"
+
+#: templates/settings-page.php:107
+msgid "Theme Update Available?"
+msgstr "עדכון ערכת נושא זמין?"
+
+#: templates/settings-page.php:114
+msgid "Plugin Update Available?"
+msgstr "עדכון תוסף זמין?"
+
+#: templates/settings-page.php:123 templates/settings-page.php:127
+msgid "New Entries"
+msgstr "פרסומים חדשים"
+
+#: templates/settings-page.php:132
+msgid "Post Published"
+msgstr "פוסט פורסם"
+
+#: templates/settings-page.php:139
+msgid "Page Published"
+msgstr "עמוד פורסם"
+
+#: templates/settings-page.php:147
+#, php-format
+msgid "%s Published"
+msgstr "‏%s פורסם."
+
+#: templates/settings-page.php:155
+msgid "New Comment"
+msgstr "תגובה חדשה"
+
+#: templates/settings-page.php:164 templates/settings-page.php:168
+msgid "Users"
+msgstr "משתמשים"
+
+#: templates/settings-page.php:173
+msgid "New User"
+msgstr "משתמש חדש"
+
+#: templates/settings-page.php:180
+msgid "Admin Logged-in"
+msgstr "מנהל התחבר"
+
+#: templates/settings-page.php:193
+msgid "Test Integration"
+msgstr "בדיקת אינטגרציה"
+
+#: templates/settings-page.php:194
+msgid ""
+"Test if you configured the plugin correctly by sending a test notification "
+"(available only if the plugin is configured)."
+msgstr ""
+"בדוק את הגדרות התוסף ע״י שליחת התראת ניסיון (זמין רק אם התוסף מוגדר כהלכה)."
+
+#: templates/settings-page.php:195
+msgid "Send test notification"
+msgstr "שלח התראת ניסיון"
+
+#. Plugin URI of the plugin/theme
+#. Author URI of the plugin/theme
+msgid "https://www.dorzki.co.il"
+msgstr "‏https://www.dorzki.co.il"
+
+#. Description of the plugin/theme
+msgid ""
+"Add Slack integration to a channel and send desired notifications as a slack "
+"bot."
+msgstr "הוסף התממשקות ל-Slack וקבל התראות בזמן אמת לערוץ ה-Slack שלך."
+
+#~ msgid ""
+#~ ":information_source: Theme is a new version of the theme *%s* - v%s "
+#~ "(current version is v%s)."
+#~ msgstr ""
+#~ "‏:information_source: Theme is a new version of the theme *%s* - v%s "
+#~ "(current version is v%s)."

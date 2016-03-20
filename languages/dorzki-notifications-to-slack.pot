@@ -1,0 +1,210 @@
+#, fuzzy
+msgid ""
+msgstr ""
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"Project-Id-Version: Slack Notifications\n"
+"POT-Creation-Date: 2016-03-10 11:20+0200\n"
+"PO-Revision-Date: 2016-03-10 11:20+0200\n"
+"Last-Translator: Dor Zuberi <me@dorzki.co.il>\n"
+"Language-Team: Dor Zuberi <me@dorzki.co.il>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.7\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-WPHeader: slack-notifications.php\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
+"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;"
+"_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: *.js\n"
+
+#: classes/wordpress-notifications.php:66
+#, php-format
+msgid ""
+":information_source: There is a new WordPress version available - v%s "
+"(current version is v%s)."
+msgstr ""
+
+#: classes/wordpress-notifications.php:98
+#, php-format
+msgid ""
+":information_source: Theme is a new version of the theme *%s* - v%s (current "
+"version is v%s)."
+msgstr ""
+
+#: classes/wordpress-notifications.php:137
+#, php-format
+msgid "• *%s* - v%s (current version is v%s)"
+msgstr ""
+
+#: classes/wordpress-notifications.php:147
+msgid ":information_source: The following plugins have a new version:"
+msgstr ""
+
+#: classes/wordpress-notifications.php:171
+#: classes/wordpress-notifications.php:276
+#, php-format
+msgid ":metal: The post *<%s|%s>* was published by *%s* right now!"
+msgstr ""
+
+#: classes/wordpress-notifications.php:192
+#, php-format
+msgid ":metal: The page *<%s|%s>* was published by *%s* right now!"
+msgstr ""
+
+#: classes/wordpress-notifications.php:216
+#, php-format
+msgid ":metal: A new comment by *%s* on *<%s|%s>*:"
+msgstr ""
+
+#: classes/wordpress-notifications.php:234
+#, php-format
+msgid ":dancer: A new user just registered - *%s* (%s)."
+msgstr ""
+
+#: classes/wordpress-notifications.php:253
+#, php-format
+msgid ":bowtie: Administrator login: *%s*."
+msgstr ""
+
+#. Plugin Name of the plugin/theme
+#: classes/wordpress-slack.php:164 templates/settings-page.php:24
+msgid "Slack Notifications"
+msgstr ""
+
+#: classes/wordpress-slack.php:164
+msgid "Slack Notifications Integration"
+msgstr ""
+
+#: classes/wordpress-slack.php:180
+msgid ""
+"Oops... It's seems like you don't meet the required level of permissions"
+msgstr ""
+
+#: templates/settings-page.php:25
+msgid "by"
+msgstr ""
+
+#. Author of the plugin/theme
+#: templates/settings-page.php:25
+msgid "dorzki"
+msgstr ""
+
+#: templates/settings-page.php:30
+msgid "Integration Setup"
+msgstr ""
+
+#: templates/settings-page.php:31
+msgid "Setup the integration between WordPress and Slack API."
+msgstr ""
+
+#: templates/settings-page.php:37
+msgid "Webhooks Endpoint"
+msgstr ""
+
+#: templates/settings-page.php:40
+#, php-format
+msgid ""
+"Add <a href='%s' target='_blank'>Slack Incoming Webhooks</a> to your Slack "
+"Account and paste the Webhook URL here."
+msgstr ""
+
+#: templates/settings-page.php:47
+msgid "Channel Name"
+msgstr ""
+
+#: templates/settings-page.php:50
+msgid ""
+"Write here the desired channel name to receive notifications, don't forget "
+"to include the hash symbol before the name."
+msgstr ""
+
+#: templates/settings-page.php:57
+msgid "Slack Bot Name"
+msgstr ""
+
+#: templates/settings-page.php:60
+msgid "The Slack Bot name to be displayed in notifications."
+msgstr ""
+
+#: templates/settings-page.php:67
+msgid "Slack Bot Logo"
+msgstr ""
+
+#: templates/settings-page.php:70
+msgid "Upload"
+msgstr ""
+
+#: templates/settings-page.php:71
+msgid "Slack Bot image to be displayed in Slack."
+msgstr ""
+
+#: templates/settings-page.php:83
+msgid "Desired Notifications"
+msgstr ""
+
+#: templates/settings-page.php:84
+msgid "Please select the desired notification to be sent on event fire."
+msgstr ""
+
+#: templates/settings-page.php:89 templates/settings-page.php:93
+msgid "Version Updates"
+msgstr ""
+
+#: templates/settings-page.php:98
+msgid "WordPress Core Update Available?"
+msgstr ""
+
+#: templates/settings-page.php:105
+msgid "Theme Update Available?"
+msgstr ""
+
+#: templates/settings-page.php:112
+msgid "Plugin Update Available?"
+msgstr ""
+
+#: templates/settings-page.php:121 templates/settings-page.php:125
+msgid "New Entries"
+msgstr ""
+
+#: templates/settings-page.php:130
+msgid "Post Published"
+msgstr ""
+
+#: templates/settings-page.php:137
+msgid "Page Published"
+msgstr ""
+
+#: templates/settings-page.php:145
+#, php-format
+msgid "%s Published"
+msgstr ""
+
+#: templates/settings-page.php:153
+msgid "New Comment"
+msgstr ""
+
+#: templates/settings-page.php:162 templates/settings-page.php:166
+msgid "Users"
+msgstr ""
+
+#: templates/settings-page.php:171
+msgid "New User"
+msgstr ""
+
+#: templates/settings-page.php:178
+msgid "Admin Logged-in"
+msgstr ""
+
+#. Plugin URI of the plugin/theme
+#. Author URI of the plugin/theme
+msgid "https://www.dorzki.co.il"
+msgstr ""
+
+#. Description of the plugin/theme
+msgid ""
+"Add Slack integration to a channel and send desired notifications as a slack "
+"bot."
+msgstr ""
