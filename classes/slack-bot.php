@@ -75,7 +75,8 @@ if ( ! class_exists( 'SlackBot' ) ) {
 		/**
 		 * Send the notification thought the API.
 		 *
-		 * @param   string $theMessage   the notification to send.
+		 * @param   string    $theMessage   the notification to send.
+		 * @return  boolean                 did the message sent successfully?
 		 * @since   1.0.0
 		 */
 		public function send_message( $theMessage ) {
@@ -96,7 +97,32 @@ if ( ! class_exists( 'SlackBot' ) ) {
 				),
 			) );
 
+			// Check if there is an error.
+			if( is_wp_error( $apiResponse ) ) {
+
+				$this->display_send_error();
+
+				return false;
+
+			}
+
+			return true;
+
 		}
+
+
+
+		/**
+		 * Set the plugin to show an error.
+		 * 
+		 * @since 1.0.5
+		 */
+		private function display_send_error() {
+
+			update_option( 'slack_notice_connectivity', 1 );
+
+		}
+
 	}
 
 }

@@ -23,4 +23,18 @@ jQuery( document ).ready( function( $ ) {
 
   }
 
+
+
+  // Dismiss the admin notices.
+  $( document ).on( 'click', '.dorzki-slack-notice .notice-dismiss', function() {
+
+    $.ajax( {
+      url: ajaxurl,
+      data: {
+        action: 'dorzki-slack-dismiss-notice'
+      }
+    } );
+
+  } );
+
 } );

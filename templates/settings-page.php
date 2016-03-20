@@ -25,7 +25,7 @@ $admin_logged = get_option( 'slack_notif_admin_logged' );
     <small><?php esc_html_e( 'by', 'dorzki-notifications-to-slack' ); ?> <a href="https://www.dorzki.co.il" target="_blank"><?php esc_html_e( 'dorzki', 'dorzki-notifications-to-slack' ); ?></a></small>
   </h2>
   <form action="options.php" method="post">
-    <?php settings_fields( 'dorzki-notifications-to-slack' ); ?>
+    <?php settings_fields( 'dorzki-slack' ); ?>
 
     <h3 class="title"><?php esc_html_e( 'Integration Setup', 'dorzki-notifications-to-slack' ); ?></h3>
     <p><?php esc_html_e( 'Setup the integration between WordPress and Slack API.', 'dorzki-notifications-to-slack' ); ?></p>

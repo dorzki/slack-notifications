@@ -86,7 +86,7 @@ if ( ! class_exists( 'WPNotifications' ) ) {
 			$currentVersion = wp_get_theme()->get( 'Version' );
 			$currentTheme   = get_option( 'template' );
 
-			if ( $versionCheck->response[ $currentTheme ]['new_version'] !== $currentVersion && !is_null( $versionCheck->response[ $currentTheme ]['new_version'] ) ) {
+			if ( $versionCheck->response[ $currentTheme ]['new_version'] !== $currentVersion && ! is_null( $versionCheck->response[ $currentTheme ]['new_version'] ) ) {
 
 				$newVersion = $versionCheck->response[ $currentTheme ]['new_version'];
 

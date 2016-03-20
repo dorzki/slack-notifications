@@ -52,6 +52,14 @@ if ( ! class_exists( 'WPSlack' ) ) {
 			add_action( 'admin_enqueue_scripts', array( &$this, 'plugin_register_assets' ) );
 			add_action( 'registered_post_type', array( &$this, 'get_registered_post_types' ) );
 
+			// Admin Notices
+			if( 1 == get_option( 'slack_notice_connectivity' ) ) {
+				add_action( 'admin_notices', array( &$this, 'notice_error_connectivity' ) );
+			}
+
+			// AJAX
+			add_action( 'wp_ajax_dorzki-slack-dismiss-notice', array( &$this, 'dismiss_admin_notices' ) );
+
 			$this->get_registered_post_types();
 			$this->register_notifs_hooks();
 
@@ -91,6 +99,7 @@ if ( ! class_exists( 'WPSlack' ) ) {
 			delete_option( 'slack_channel_name' );
 			delete_option( 'slack_bot_username' );
 			delete_option( 'slack_bot_image' );
+			delete_option( 'slack_notice_connectivity' );
 			delete_option( 'slack_notif_core_update' );
 			delete_option( 'slack_notif_theme_update' );
 			delete_option( 'slack_notif_plugin_update' );
@@ -125,6 +134,7 @@ if ( ! class_exists( 'WPSlack' ) ) {
 			register_setting( 'dorzki-slack', 'slack_channel_name' );
 			register_setting( 'dorzki-slack', 'slack_bot_username' );
 			register_setting( 'dorzki-slack', 'slack_bot_image' );
+			register_setting( 'dorzki-slack', 'slack_notice_connectivity' );
 			register_setting( 'dorzki-slack', 'slack_notif_core_update' );
 			register_setting( 'dorzki-slack', 'slack_notif_theme_update' );
 			register_setting( 'dorzki-slack', 'slack_notif_plugin_update' );
@@ -195,7 +205,7 @@ if ( ! class_exists( 'WPSlack' ) ) {
 		 */
 		public function plugin_register_assets() {
 
-			wp_register_script( 'dorzki-slack-media-upload', PLUGIN_ROOT_URL . 'assets/js/admin-scripts.js' );
+			wp_register_script( 'dorzki-slack-scripts', PLUGIN_ROOT_URL . 'assets/js/admin-scripts.js' );
 			wp_register_style( 'dorzki-slack-settings-css', PLUGIN_ROOT_URL . 'assets/css/admin-styles.css' );
 
 			if ( get_current_screen()->id === 'settings_page_slack_notifications' ) {
@@ -203,12 +213,13 @@ if ( ! class_exists( 'WPSlack' ) ) {
 				wp_enqueue_script( 'jquery' );
 				wp_enqueue_script( 'thickbox' );
 				wp_enqueue_script( 'media_upload' );
-				wp_enqueue_script( 'dorzki-slack-media-upload' );
 
 				wp_enqueue_style( 'thickbox' );
 				wp_enqueue_style( 'dorzki-slack-settings-css' );
 
 			}
+
+			wp_enqueue_script( 'dorzki-slack-scripts' );
 
 		}
 
@@ -329,6 +340,35 @@ if ( ! class_exists( 'WPSlack' ) ) {
 			}
 
 		}
+
+
+
+		/**
+		 * Display admin notice if there was an error with the webhook connection.
+		 * 
+		 * @since 1.0.5
+		 */
+		public function notice_error_connectivity() {
+
+			echo '<div class="error notice dorzki-slack-notice is-dismissible">';
+    	echo '	<p>' . sprintf( __( 'There seem to be an error with the <a href="%s">webhook configuration</a>, please try again.', 'dorzki-notifications-to-slack' ), admin_url( 'options-general.php?page=slack_notifications' ) ) . '</p>';
+			echo '</div>';
+
+		}
+
+
+
+		/**
+		 * Dismiss requested admin notice.
+		 *
+		 * @since 1.0.5
+		 */
+		public function dismiss_admin_notices() {
+
+			update_option( 'slack_notice_connectivity', 0 );
+
+		}
+
 	}
 
 }
