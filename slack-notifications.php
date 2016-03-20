@@ -31,7 +31,7 @@ if ( ! defined( 'PLUGIN_ROOT_DIR' ) ) {
 }
 
 if ( ! defined( 'PLUGIN_VERSION' ) ) {
-	define( 'PLUGIN_VERSION', '1.0.4' );
+	define( 'PLUGIN_VERSION', '1.0.5' );
 }
 
 
