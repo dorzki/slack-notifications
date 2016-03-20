@@ -235,14 +235,14 @@ if ( ! class_exists( 'WPSlack' ) ) {
 			$notifs = $this->notifs;
 
 			// Get the selected user notifications.
-			$core_update = get_option( 'slack_notif_core_update' );
-			$theme_update = get_option( 'slack_notif_theme_update' );
-			$plugin_update = get_option( 'slack_notif_plugin_update' );
-			$new_post = get_option( 'slack_notif_new_post' );
-			$new_page = get_option( 'slack_notif_new_page' );
-			$new_comment = get_option( 'slack_notif_new_comment' );
-			$new_user = get_option( 'slack_notif_new_user' );
-			$admin_logged = get_option( 'slack_notif_admin_logged' );
+			$core_update   = intval( get_option( 'slack_notif_core_update' ) );
+			$theme_update  = intval( get_option( 'slack_notif_theme_update' ) );
+			$plugin_update = intval( get_option( 'slack_notif_plugin_update' ) );
+			$new_post      = intval( get_option( 'slack_notif_new_post' ) );
+			$new_page      = intval( get_option( 'slack_notif_new_page' ) );
+			$new_comment   = intval( get_option( 'slack_notif_new_comment' ) );
+			$new_user      = intval( get_option( 'slack_notif_new_user' ) );
+			$admin_logged  = intval( get_option( 'slack_notif_admin_logged' ) );
 
 			// Register Hooks.
 			if ( 1 === $core_update ) {
@@ -331,7 +331,7 @@ if ( ! class_exists( 'WPSlack' ) ) {
 			// Get selected settings for custom post types.
 			foreach ( $this->postTypes as $postType ) {
 
-				if ( get_option( 'slack_notif_new_' . $postType->name ) === 1 ) {
+				if ( intval( get_option( 'slack_notif_new_' . $postType->name ) ) === 1 ) {
 
 					if ( has_action( 'publish_' . $postType->name, array( &$notifs, 'cpt_publish_notif' ) ) === false ) {
 						add_action( 'publish_' . $postType->name, array( &$notifs, 'cpt_publish_notif' ), 10, 2 );
