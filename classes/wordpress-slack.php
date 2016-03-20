@@ -59,6 +59,7 @@ if ( ! class_exists( 'WPSlack' ) ) {
 
 			// AJAX
 			add_action( 'wp_ajax_dorzki-slack-dismiss-notice', array( &$this, 'dismiss_admin_notices' ) );
+			add_action( 'wp_ajax_dorzki-slack-test-integration', array( &$this, 'test_integration' ) );
 
 			$this->get_registered_post_types();
 			$this->register_notifs_hooks();
@@ -366,6 +367,22 @@ if ( ! class_exists( 'WPSlack' ) ) {
 		public function dismiss_admin_notices() {
 
 			update_option( 'slack_notice_connectivity', 0 );
+
+		}
+
+
+
+		/**
+		 * Test integration by sending a test notification.
+		 * 
+		 * @since 1.0.5
+		 */
+		public function test_integration() {
+
+			$response = $this->notifs->send_test_message();
+
+			echo json_encode( array( 'success' => $response ) );
+			die();
 
 		}
 

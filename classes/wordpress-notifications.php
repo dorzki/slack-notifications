@@ -278,6 +278,23 @@ if ( ! class_exists( 'WPNotifications' ) ) {
 			$this->slack->send_message( $template );
 
 		}
+
+
+
+		/**
+		 * Send a test notification.
+		 * 
+		 * @return   boolean   is the test sent successfully?
+		 * @since    1.0.5
+		 */
+		public function send_test_message() {
+
+			$template = __( ':pizza: Mmmmmm..... Pizzzzzzzzzzzzzzzzzzza!!!', 'dorzki-notifications-to-slack' );
+
+			return $this->slack->send_message( $template );
+
+		}
+
 	}
 
 }

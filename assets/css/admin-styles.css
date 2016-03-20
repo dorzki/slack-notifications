@@ -12,3 +12,20 @@
   padding: 5px;
   background-color: #f8f8f8;
 }
+
+#test-spinner {
+  display: none;
+  width: 16px;
+  height: auto;
+  vertical-align: -7px;
+}
+
+.test-success,
+.test-fail {
+  font-size: 22pt;
+  color: green;
+}
+
+.test-fail {
+  color: red;
+}

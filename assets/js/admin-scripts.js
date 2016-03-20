@@ -37,4 +37,33 @@ jQuery( document ).ready( function( $ ) {
 
   } );
 
+
+
+  // Test notification.
+  $( '#dorzki-test-integration' ).on( 'click', function() {
+
+    $( this ).prop( 'disabled', true );
+    $( '#test-spinner' ).show();
+
+    $.ajax( {
+      url: ajaxurl,
+      dataType: 'json',
+      data: {
+        action: 'dorzki-slack-test-integration'
+      },
+      success: function( data ) {
+
+        $( '#test-spinner' ).hide();
+
+        if( data.success ) {
+          $( '#dorzki-test-integration' ).after( '<span class="dashicons dashicons-yes test-success"></span>' );
+        } else {
+          $( '#dorzki-test-integration' ).after( '<span class="dashicons dashicons-no-alt test-fail"></span>' );
+        }
+
+      }
+    } )
+
+  } );
+
 } );

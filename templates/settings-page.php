@@ -19,6 +19,8 @@ $new_page = get_option( 'slack_notif_new_page' );
 $new_comment = get_option( 'slack_notif_new_comment' );
 $new_user = get_option( 'slack_notif_new_user' );
 $admin_logged = get_option( 'slack_notif_admin_logged' );
+
+$isConfigured = ( ! empty( get_option( 'slack_webhook_endpoint' ) ) && ! empty( get_option( 'slack_channel_name' ) ) );
 ?>
 <div class="wrap">
   <h2><?php esc_html_e( 'Slack Notifications', 'dorzki-notifications-to-slack' ); ?>
@@ -186,6 +188,13 @@ $admin_logged = get_option( 'slack_notif_admin_logged' );
 
       </tbody>
     </table>
+
+    <!-- Test Integration -->
+    <h3 class="title"><?php esc_html_e( 'Test Integration', 'dorzki-notifications-to-slack' ); ?></h3>
+    <p><?php esc_html_e( 'Test if you configured the plugin correctly by sending a test notification (available only if the plugin is configured).', 'dorzki-notifications-to-slack' ); ?></p>
+    <button type="button" id="dorzki-test-integration" class="button button-secondary" <?php echo ( ! $isConfigured ) ? 'disabled' : ''; ?>><?php esc_html_e( 'Send test notification' ); ?></button>
+    <img id="test-spinner" src="<?php echo admin_url( 'images/wpspin_light-2x.gif' ); ?>" alt="WordPress Spinner">
+    <!-- /Test Integration -->
 
     <?php submit_button(); ?>
   </form>
