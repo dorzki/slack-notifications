@@ -4,7 +4,7 @@
  *
  * @package   Slack Notifications
  * @since     1.0.0
- * @version   1.0.4
+ * @version   1.0.5
  * @author    Dor Zuberi <me@dorzki.co.il>
  * @link      https://www.dorzki.co.il
  */
@@ -148,7 +148,7 @@ if ( ! class_exists( 'WPSlack' ) ) {
 		 */
 		public function plugin_translate() {
 
-			load_plugin_textdomain( 'dorzki-slack', false, dirname( dirname( plugin_basename( __FILE__ ) ) ) . '/languages/' );
+			load_plugin_textdomain( 'dorzki-notifications-to-slack', false, dirname( dirname( plugin_basename( __FILE__ ) ) ) . '/languages/' );
 
 		}
 
@@ -161,7 +161,7 @@ if ( ! class_exists( 'WPSlack' ) ) {
 		 */
 		public function plugin_menu() {
 
-			add_options_page( __( 'Slack Notifications', 'dorzki-slack' ), __( 'Slack Notifications Integration', 'dorzki-slack' ), 'manage_options', 'slack_notifications', array( &$this, 'plugin_settings_page' ) );
+			add_options_page( __( 'Slack Notifications', 'dorzki-notifications-to-slack' ), __( 'Slack Notifications Integration', 'dorzki-notifications-to-slack' ), 'manage_options', 'slack_notifications', array( &$this, 'plugin_settings_page' ) );
 
 		}
 
@@ -177,7 +177,7 @@ if ( ! class_exists( 'WPSlack' ) ) {
 			global $postTypes;
 
 			if ( ! current_user_can( 'manage_options' ) ) {
-				wp_die( esc_html__( 'Oops... It\'s seems like you don\'t meet the required level of permissions', 'dorzki-slack' ) );
+				wp_die( esc_html__( 'Oops... It\'s seems like you don\'t meet the required level of permissions', 'dorzki-notifications-to-slack' ) );
 			}
 
 			$postTypes = $this->postTypes;

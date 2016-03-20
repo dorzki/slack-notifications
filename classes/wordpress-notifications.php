@@ -4,7 +4,7 @@
  *
  * @package   Slack Notifications
  * @since     1.0.0
- * @version   1.0.4
+ * @version   1.0.5
  * @author    Dor Zuberi <me@dorzki.co.il>
  * @link      https://www.dorzki.co.il
  */
@@ -63,7 +63,7 @@ if ( ! class_exists( 'WPNotifications' ) ) {
 
 					update_option( 'slack_notif_core_version', $newVersion );
 
-					$this->slack->send_message( sprintf( __( ':information_source: There is a new WordPress version available - v%s (current version is v%s).', 'dorzki-slack' ), $newVersion, $wp_version ) );
+					$this->slack->send_message( sprintf( __( ':information_source: There is a new WordPress version available - v%s (current version is v%s).', 'dorzki-notifications-to-slack' ), $newVersion, $wp_version ) );
 
 				}
 			}
@@ -95,7 +95,7 @@ if ( ! class_exists( 'WPNotifications' ) ) {
 
 					update_option( 'slack_notif_theme_version', $newVersion );
 
-					$this->slack->send_message( sprintf( __( ':information_source: There is a new version of the theme *%s* - v%s (current version is v%s).', 'dorzki-slack' ), $currentTheme, $newVersion, $currentVersion ) );
+					$this->slack->send_message( sprintf( __( ':information_source: There is a new version of the theme *%s* - v%s (current version is v%s).', 'dorzki-notifications-to-slack' ), $currentTheme, $newVersion, $currentVersion ) );
 
 				}
 			}
@@ -134,7 +134,7 @@ if ( ! class_exists( 'WPNotifications' ) ) {
 
 						$notifiedPlugins[ $plugin ] = $updateData->new_version;
 
-						$theMessage .= sprintf( __( '• *%s* - v%s (current version is v%s)', 'dorzki-slack' ) . "\n", $pluginMeta['Name'], $updateData->new_version, $pluginMeta['Version'] );
+						$theMessage .= sprintf( __( '• *%s* - v%s (current version is v%s)', 'dorzki-notifications-to-slack' ) . "\n", $pluginMeta['Name'], $updateData->new_version, $pluginMeta['Version'] );
 
 					}
 				}
@@ -144,7 +144,7 @@ if ( ! class_exists( 'WPNotifications' ) ) {
 				// Do we still need to notify?
 				if ( '' !== $theMessage ) {
 
-					$theMessage = __( ':information_source: The following plugins have a new version:', 'dorzki-slack' ) . "\n" . $theMessage;
+					$theMessage = __( ':information_source: The following plugins have a new version:', 'dorzki-notifications-to-slack' ) . "\n" . $theMessage;
 
 					$this->slack->send_message( $theMessage );
 
@@ -168,7 +168,7 @@ if ( ! class_exists( 'WPNotifications' ) ) {
 			$url    = get_permalink( $postID );
 			$author = get_the_author_meta( 'display_name', $post->post_author );
 
-			$template = sprintf( __( ':metal: The post *<%s|%s>* was published by *%s* right now!', 'dorzki-slack' ), $url, $title, $author );
+			$template = sprintf( __( ':metal: The post *<%s|%s>* was published by *%s* right now!', 'dorzki-notifications-to-slack' ), $url, $title, $author );
 
 			$this->slack->send_message( $template );
 
@@ -189,7 +189,7 @@ if ( ! class_exists( 'WPNotifications' ) ) {
 			$url    = get_permalink( $postID );
 			$author = get_the_author_meta( 'display_name', $post->post_author );
 
-			$template = sprintf( __( ':metal: The page *<%s|%s>* was published by *%s* right now!', 'dorzki-slack' ), $url, $title, $author );
+			$template = sprintf( __( ':metal: The page *<%s|%s>* was published by *%s* right now!', 'dorzki-notifications-to-slack' ), $url, $title, $author );
 
 			$this->slack->send_message( $template );
 
@@ -213,7 +213,7 @@ if ( ! class_exists( 'WPNotifications' ) ) {
 			$url     = get_permalink( $commentData->comment_post_ID );
 			$comment = $commentData->comment_content;
 
-			$template = sprintf( __( ':metal: A new comment by *%s* on *<%s|%s>*:', 'dorzki-slack' ) . "\n>>>%s", $author, $url, $post, $comment );
+			$template = sprintf( __( ':metal: A new comment by *%s* on *<%s|%s>*:', 'dorzki-notifications-to-slack' ) . "\n>>>%s", $author, $url, $post, $comment );
 
 			$this->slack->send_message( $template );
 
@@ -231,7 +231,7 @@ if ( ! class_exists( 'WPNotifications' ) ) {
 
 			$user = get_userdata( $userID );
 
-			$template = sprintf( __( ':dancer: A new user just registered - *%s* (%s).', 'dorzki-slack' ), $user->user_login, $user->user_email );
+			$template = sprintf( __( ':dancer: A new user just registered - *%s* (%s).', 'dorzki-notifications-to-slack' ), $user->user_login, $user->user_email );
 
 			$this->slack->send_message( $template );
 
@@ -250,7 +250,7 @@ if ( ! class_exists( 'WPNotifications' ) ) {
 
 			if ( in_array( 'administrator', $user->roles ) ) {
 
-				$template = sprintf( __( ':bowtie: Administrator login: *%s*.', 'dorzki-slack' ), $username );
+				$template = sprintf( __( ':bowtie: Administrator login: *%s*.', 'dorzki-notifications-to-slack' ), $username );
 
 				$this->slack->send_message( $template );
 
@@ -273,7 +273,7 @@ if ( ! class_exists( 'WPNotifications' ) ) {
 			$url    = get_permalink( $postID );
 			$author = get_the_author_meta( 'display_name', $post->post_author );
 
-			$template = sprintf( __( ':metal: The post *<%s|%s>* was published by *%s* right now!', 'dorzki-slack' ), $url, $title, $author );
+			$template = sprintf( __( ':metal: The post *<%s|%s>* was published by *%s* right now!', 'dorzki-notifications-to-slack' ), $url, $title, $author );
 
 			$this->slack->send_message( $template );
 

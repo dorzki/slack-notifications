@@ -6,13 +6,13 @@
  * Version: 1.0.4
  * Author: dorzki
  * Author URI: https://www.dorzki.co.il
- * Text Domain: dorzki-slack
+ * Text Domain: dorzki-notifications-to-slack
  * Domain Path: /languages
  *
  * 
  * @package   Slack Notifications
  * @since     1.0.0
- * @version   1.0.4
+ * @version   1.0.5
  * @author    Dor Zuberi <me@dorzki.co.il>
  * @link      https://www.dorzki.co.il
  */
