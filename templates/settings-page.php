@@ -19,8 +19,10 @@ $new_page = get_option( 'slack_notif_new_page' );
 $new_comment = get_option( 'slack_notif_new_comment' );
 $new_user = get_option( 'slack_notif_new_user' );
 $admin_logged = get_option( 'slack_notif_admin_logged' );
+$webhook_url = get_option( 'slack_webhook_endpoint' );
+$channel_name = get_option( 'slack_channel_name' );
 
-$isConfigured = ( ! empty( get_option( 'slack_webhook_endpoint' ) ) && ! empty( get_option( 'slack_channel_name' ) ) );
+$isConfigured = ( ( ! empty( $webhook_url ) && ! empty( $channel_name ) ) );
 ?>
 <div class="wrap">
   <h2><?php esc_html_e( 'Slack Notifications', 'dorzki-notifications-to-slack' ); ?>
@@ -38,7 +40,7 @@ $isConfigured = ( ! empty( get_option( 'slack_webhook_endpoint' ) ) && ! empty( 
         <tr valign="top">
           <th scope="row"><label for="slack_webhook_endpoint"><?php esc_html_e( 'Webhooks Endpoint', 'dorzki-notifications-to-slack' ); ?></label></th>
           <td>
-            <input type="url" name="slack_webhook_endpoint" id="slack_webhook_endpoint" class="regular-text" value="<?php echo esc_html( get_option( 'slack_webhook_endpoint' ) ); ?>">
+            <input type="url" name="slack_webhook_endpoint" id="slack_webhook_endpoint" class="regular-text" value="<?php echo esc_html( $webhook_url ); ?>">
             <p class="description" id="slack_webhook_endpoint-description"><?php printf( __( 'Add <a href=\'%s\' target=\'_blank\'>Slack Incoming Webhooks</a> to your Slack Account and paste the Webhook URL here.', 'dorzki-notifications-to-slack' ) , 'https://my.slack.com/services/new/incoming-webhook/' ); ?></p>
           </td>
         </tr>
@@ -48,7 +50,7 @@ $isConfigured = ( ! empty( get_option( 'slack_webhook_endpoint' ) ) && ! empty( 
         <tr valign="top">
           <th scope="row"><label for="slack_channel_name"><?php esc_html_e( 'Channel Name', 'dorzki-notifications-to-slack' ); ?></label></th>
           <td>
-            <input type="text" name="slack_channel_name" id="slack_channel_name" class="regular-text" value="<?php echo esc_html( get_option( 'slack_channel_name' ) ); ?>">
+            <input type="text" name="slack_channel_name" id="slack_channel_name" class="regular-text" value="<?php echo esc_html( $channel_name ); ?>">
             <p class="description" id="slack_channel_name-description"><?php esc_html_e( 'Write here the desired channel name to receive notifications, don\'t forget to include the hash symbol before the name.', 'dorzki-notifications-to-slack' ); ?></p>
           </td>
         </tr>
