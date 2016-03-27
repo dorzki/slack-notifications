@@ -11,15 +11,19 @@ jQuery( document ).ready( function( $ ) {
 
 
 
-  // Assign the uploaded file url to the input.
-  window.send_to_editor = function( html ) {
+  if( location.search.indexOf( 'slack_notifications' ) !== -1 ) {
 
-    var botImage = $( 'img', html );
+    // Assign the uploaded file url to the input.
+    window.send_to_editor = function( html ) {
 
-    $( '#slack_bot_image' ).val( botImage.attr( 'src' ) );
-    $( '#slack_bot_image_preview' ).html( botImage );
+      var botImage = $( 'img', html );
 
-    tb_remove();
+      $( '#slack_bot_image' ).val( botImage.attr( 'src' ) );
+      $( '#slack_bot_image_preview' ).html( botImage );
+
+      tb_remove();
+
+    }
 
   }
 
