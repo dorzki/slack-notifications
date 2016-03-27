@@ -3,7 +3,7 @@ Contributors: dorzki
 Tags: notifications, slack
 Requires at least: 4.3
 Tested up to: 4.4.2
-Stable tag: 1.0.5
+Stable tag: 1.0.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -56,6 +56,9 @@ Please feel free to contact me `webmaster[AT]dorzki.co.il`
 2. `Settings Screen - Part 2` Choose which notifications to get.
 
 == Changelog ==
+
+= 1.0.6 =
+* Fixed issue with image embed on WYSIWYG editor.
 
 = 1.0.5 =
 * Changed text domain slug to plugin slug.
