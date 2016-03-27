@@ -1,5 +1,6 @@
 === Slack Notifications by dorzki ===
 Contributors: dorzki
+Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=UYSJG8CB8YN2A
 Tags: notifications, slack
 Requires at least: 4.3
 Tested up to: 4.4.2
