@@ -92,7 +92,7 @@ if ( ! class_exists( 'SlackBot' ) ) {
 					'channel'  => $this->slackChannel,
 					'username' => $this->botName,
 					'icon_url' => $this->botIcon,
-					'text'     => sprintf( '%s @ *<%s|%s>*', $theMessage, get_bloginfo( 'home' ), get_bloginfo( 'name' ) ),
+					'text'     => sprintf( '%s @ *<%s|%s>*', $theMessage, get_bloginfo( 'url' ), get_bloginfo( 'name' ) ),
 				) ),
 				),
 			) );
