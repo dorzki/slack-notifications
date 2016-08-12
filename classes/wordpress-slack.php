@@ -4,7 +4,7 @@
  *
  * @package   Slack Notifications
  * @since     1.0.0
- * @version   1.0.5
+ * @version   1.0.7
  * @author    Dor Zuberi <me@dorzki.co.il>
  * @link      https://www.dorzki.co.il
  */
@@ -25,15 +25,13 @@ if ( ! class_exists( 'WPSlack' ) ) {
 		public $postTypes = array();
 
 
-
 		/**
 		 * Notifications class handler.
 		 *
-		 * @var 	  WPNotifications
+		 * @var    WPNotifications
 		 * @since   1.0.1
 		 */
 		private $notifs;
-
 
 
 		/**
@@ -53,7 +51,7 @@ if ( ! class_exists( 'WPSlack' ) ) {
 			add_action( 'registered_post_type', array( &$this, 'get_registered_post_types' ) );
 
 			// Admin Notices
-			if( 1 == get_option( 'slack_notice_connectivity' ) ) {
+			if ( 1 == get_option( 'slack_notice_connectivity' ) ) {
 				add_action( 'admin_notices', array( &$this, 'notice_error_connectivity' ) );
 			}
 
@@ -65,8 +63,6 @@ if ( ! class_exists( 'WPSlack' ) ) {
 			$this->register_notifs_hooks();
 
 		}
-
-
 
 
 		/**
@@ -82,7 +78,6 @@ if ( ! class_exists( 'WPSlack' ) ) {
 			}
 
 		}
-
 
 
 		/**
@@ -105,7 +100,9 @@ if ( ! class_exists( 'WPSlack' ) ) {
 			delete_option( 'slack_notif_theme_update' );
 			delete_option( 'slack_notif_plugin_update' );
 			delete_option( 'slack_notif_new_post' );
+			delete_option( 'slack_notif_future_post' );
 			delete_option( 'slack_notif_new_page' );
+			delete_option( 'slack_notif_future_page' );
 			delete_option( 'slack_notif_new_comment' );
 			delete_option( 'slack_notif_new_user' );
 			delete_option( 'slack_notif_admin_logged' );
@@ -121,7 +118,6 @@ if ( ! class_exists( 'WPSlack' ) ) {
 			}
 
 		}
-
 
 
 		/**
@@ -140,7 +136,9 @@ if ( ! class_exists( 'WPSlack' ) ) {
 			register_setting( 'dorzki-slack', 'slack_notif_theme_update' );
 			register_setting( 'dorzki-slack', 'slack_notif_plugin_update' );
 			register_setting( 'dorzki-slack', 'slack_notif_new_post' );
+			register_setting( 'dorzki-slack', 'slack_notif_future_post' );
 			register_setting( 'dorzki-slack', 'slack_notif_new_page' );
+			register_setting( 'dorzki-slack', 'slack_notif_future_page' );
 			register_setting( 'dorzki-slack', 'slack_notif_new_comment' );
 			register_setting( 'dorzki-slack', 'slack_notif_new_user' );
 			register_setting( 'dorzki-slack', 'slack_notif_admin_logged' );
@@ -149,7 +147,6 @@ if ( ! class_exists( 'WPSlack' ) ) {
 			register_setting( 'dorzki-slack', 'slack_notif_plugins_version' );
 
 		}
-
 
 
 		/**
@@ -164,7 +161,6 @@ if ( ! class_exists( 'WPSlack' ) ) {
 		}
 
 
-
 		/**
 		 * Add plugin settings page to the administration menu.
 		 *
@@ -172,10 +168,12 @@ if ( ! class_exists( 'WPSlack' ) ) {
 		 */
 		public function plugin_menu() {
 
-			add_options_page( __( 'Slack Notifications', 'dorzki-notifications-to-slack' ), __( 'Slack Notifications Integration', 'dorzki-notifications-to-slack' ), 'manage_options', 'slack_notifications', array( &$this, 'plugin_settings_page' ) );
+			add_options_page( __( 'Slack Notifications', 'dorzki-notifications-to-slack' ), __( 'Slack Notifications Integration', 'dorzki-notifications-to-slack' ), 'manage_options', 'slack_notifications', array(
+				&$this,
+				'plugin_settings_page'
+			) );
 
 		}
-
 
 
 		/**
@@ -196,7 +194,6 @@ if ( ! class_exists( 'WPSlack' ) ) {
 			include_once( PLUGIN_ROOT_DIR . '/templates/settings-page.php' );
 
 		}
-
 
 
 		/**
@@ -225,7 +222,6 @@ if ( ! class_exists( 'WPSlack' ) ) {
 		}
 
 
-
 		/**
 		 * Register user desired notifications to the related WordPress hooks.
 		 *
@@ -240,7 +236,9 @@ if ( ! class_exists( 'WPSlack' ) ) {
 			$theme_update  = intval( get_option( 'slack_notif_theme_update' ) );
 			$plugin_update = intval( get_option( 'slack_notif_plugin_update' ) );
 			$new_post      = intval( get_option( 'slack_notif_new_post' ) );
+			$future_post   = intval( get_option( 'slack_notif_future_post' ) );
 			$new_page      = intval( get_option( 'slack_notif_new_page' ) );
+			$future_page   = intval( get_option( 'slack_notif_future_page' ) );
 			$new_comment   = intval( get_option( 'slack_notif_new_comment' ) );
 			$new_user      = intval( get_option( 'slack_notif_new_user' ) );
 			$admin_logged  = intval( get_option( 'slack_notif_admin_logged' ) );
@@ -260,10 +258,24 @@ if ( ! class_exists( 'WPSlack' ) ) {
 
 			if ( 1 === $new_post ) {
 				add_action( 'auto-draft_to_publish', array( &$notifs, 'post_publish_notif' ) );
+				add_action( 'draft_to_publish', array( &$notifs, 'post_publish_notif' ) );
+				add_action( 'future_to_publish', array( &$notifs, 'post_publish_notif' ) );
+			}
+
+			if ( 1 === $future_post ) {
+				add_action( 'auto-draft_to_future', array( &$notifs, 'post_future_notif' ) );
+				add_action( 'draft_to_future', array( &$notifs, 'post_future_notif' ) );
 			}
 
 			if ( 1 === $new_page ) {
-				add_action( 'auto-draft_to_publish', array( &$notifs, 'page_publish_notif' ), 10, 2 );
+				add_action( 'auto-draft_to_publish', array( &$notifs, 'page_publish_notif' ) );
+				add_action( 'draft_to_publish', array( &$notifs, 'page_publish_notif' ) );
+				add_action( 'future_to_publish', array( &$notifs, 'page_publish_notif' ) );
+			}
+
+			if ( 1 === $future_page ) {
+				add_action( 'auto-draft_to_future', array( &$notifs, 'page_future_notif' ) );
+				add_action( 'draft_to_future', array( &$notifs, 'page_future_notif' ) );
 			}
 
 			if ( 1 === $new_comment ) {
@@ -281,7 +293,6 @@ if ( ! class_exists( 'WPSlack' ) ) {
 		}
 
 
-
 		/**
 		 * Get WordPress registered custom post types.
 		 *
@@ -291,14 +302,13 @@ if ( ! class_exists( 'WPSlack' ) ) {
 
 			// Retrieve custom post types.
 			$this->postTypes = get_post_types( array(
-				'public' => true,
+				'public'   => true,
 				'_builtin' => false,
-				), 'objects' );
+			), 'objects' );
 
 			add_action( 'admin_init', array( &$this, 'register_post_types_settings' ) );
 
 		}
-
 
 
 		/**
@@ -317,7 +327,6 @@ if ( ! class_exists( 'WPSlack' ) ) {
 			$this->register_post_types_notifs_hooks();
 
 		}
-
 
 
 		/**
@@ -343,20 +352,18 @@ if ( ! class_exists( 'WPSlack' ) ) {
 		}
 
 
-
 		/**
 		 * Display admin notice if there was an error with the webhook connection.
-		 * 
+		 *
 		 * @since 1.0.5
 		 */
 		public function notice_error_connectivity() {
 
 			echo '<div class="error notice dorzki-slack-notice is-dismissible">';
-    	echo '	<p>' . sprintf( __( 'There seem to be an error with the <a href="%s">webhook configuration</a>, please try again.', 'dorzki-notifications-to-slack' ), admin_url( 'options-general.php?page=slack_notifications' ) ) . '</p>';
+			echo '	<p>' . sprintf( __( 'There seem to be an error with the <a href="%s">webhook configuration</a>, please try again.', 'dorzki-notifications-to-slack' ), admin_url( 'options-general.php?page=slack_notifications' ) ) . '</p>';
 			echo '</div>';
 
 		}
-
 
 
 		/**
@@ -371,10 +378,9 @@ if ( ! class_exists( 'WPSlack' ) ) {
 		}
 
 
-
 		/**
 		 * Test integration by sending a test notification.
-		 * 
+		 *
 		 * @since 1.0.5
 		 */
 		public function test_integration() {

@@ -3,7 +3,7 @@
  * Plugin Name: Slack Notifications
  * Plugin URI: https://www.dorzki.co.il
  * Description: Add Slack integration to a channel and send desired notifications as a slack bot.
- * Version: 1.0.6
+ * Version: 1.0.7
  * Author: dorzki
  * Author URI: https://www.dorzki.co.il
  * Text Domain: dorzki-notifications-to-slack
@@ -12,7 +12,7 @@
  * 
  * @package   Slack Notifications
  * @since     1.0.0
- * @version   1.0.5
+ * @version   1.0.7
  * @author    Dor Zuberi <me@dorzki.co.il>
  * @link      https://www.dorzki.co.il
  */
@@ -31,7 +31,7 @@ if ( ! defined( 'PLUGIN_ROOT_DIR' ) ) {
 }
 
 if ( ! defined( 'PLUGIN_VERSION' ) ) {
-	define( 'PLUGIN_VERSION', '1.0.6' );
+	define( 'PLUGIN_VERSION', '1.0.7' );
 }
 
 

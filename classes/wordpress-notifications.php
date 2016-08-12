@@ -4,7 +4,7 @@
  *
  * @package   Slack Notifications
  * @since     1.0.0
- * @version   1.0.5
+ * @version   1.0.7
  * @author    Dor Zuberi <me@dorzki.co.il>
  * @link      https://www.dorzki.co.il
  */
@@ -156,6 +156,7 @@ if ( ! class_exists( 'WPNotifications' ) ) {
 		 * @param   object $post post details object.
 		 *
 		 * @since   1.0.0
+		 * @return boolean
 		 */
 		public function post_publish_notif( $post ) {
 
@@ -175,11 +176,38 @@ if ( ! class_exists( 'WPNotifications' ) ) {
 
 
 		/**
+		 * Send notification on future post.
+		 *
+		 * @param   object $post post details object.
+		 *
+		 * @since   1.0.7
+		 * @return boolean
+		 */
+		public function post_future_notif( $post ) {
+
+			if ( 'post' !== $post->post_type ) {
+				return false;
+			}
+
+			$title  = $post->post_title;
+			$url    = get_permalink( $post->ID );
+			$author = get_the_author_meta( 'display_name', $post->post_author );
+			$date   = date( 'd-m-Y, H:i', strtotime( $post->post_date ) );
+
+			$template = sprintf( __( ':metal: The post *<%s|%s>* was scheduled to be published by *%s* on *%s*', 'dorzki-notifications-to-slack' ), $url, $title, $author, $date );
+
+			$this->slack->send_message( $template );
+
+		}
+
+
+		/**
 		 * Send notification on published page.
 		 *
 		 * @param   object $post page details object.
 		 *
 		 * @since   1.0.0
+		 * @return boolean
 		 */
 		public function page_publish_notif( $post ) {
 
@@ -192,6 +220,32 @@ if ( ! class_exists( 'WPNotifications' ) ) {
 			$author = get_the_author_meta( 'display_name', $post->post_author );
 
 			$template = sprintf( __( ':metal: The page *<%s|%s>* was published by *%s* right now!', 'dorzki-notifications-to-slack' ), $url, $title, $author );
+
+			$this->slack->send_message( $template );
+
+		}
+
+
+		/**
+		 * Send notification on future page.
+		 *
+		 * @param   object $post page details object.
+		 *
+		 * @since   1.0.7
+		 * @return boolean
+		 */
+		public function page_future_notif( $post ) {
+
+			if ( 'page' !== $post->post_type ) {
+				return false;
+			}
+
+			$title  = $post->post_title;
+			$url    = get_permalink( $post->ID );
+			$author = get_the_author_meta( 'display_name', $post->post_author );
+			$date   = date( 'd-m-Y, H:i', strtotime( $post->post_date ) );
+
+			$template = sprintf( __( ':metal: The page *<%s|%s>* was scheduled to be published by *%s* on *%s*', 'dorzki-notifications-to-slack' ), $url, $title, $author, $date );
 
 			$this->slack->send_message( $template );
 
@@ -264,18 +318,22 @@ if ( ! class_exists( 'WPNotifications' ) ) {
 		/**
 		 * Send notification on published custom post type.
 		 *
-		 * @param   integer $postID the post id number.
-		 * @param   object  $post   page details object.
+		 * @param   object $post page details object.
 		 *
 		 * @since   1.0.1
+		 * @return boolean
 		 */
-		public function cpt_publish_notif( $postID, $post ) {
+		public function cpt_publish_notif( $post ) {
+
+			if ( 'post' === $post->post_type || 'page' === $post->post_type ) {
+				return false;
+			}
 
 			$title  = $post->post_title;
 			$url    = get_permalink( $postID );
 			$author = get_the_author_meta( 'display_name', $post->post_author );
 
-			$template = sprintf( __( ':metal: The post *<%s|%s>* was published by *%s* right now!', 'dorzki-notifications-to-slack' ), $url, $title, $author );
+			$template = sprintf( __( ':metal: The %s *<%s|%s>* was published by *%s* right now!', 'dorzki-notifications-to-slack' ), $url, $title, $author, $post->post_type );
 
 			$this->slack->send_message( $template );
 
