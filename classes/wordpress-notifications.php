@@ -227,6 +227,31 @@ if ( ! class_exists( 'WPNotifications' ) ) {
 
 
 		/**
+		 * Send notification on updated post.
+		 *
+		 * @param   object $post post details object.
+		 *
+		 * @since   1.0.7
+		 * @return boolean
+		 */
+		public function post_update_notif( $post ) {
+
+			if ( 'post' !== $post->post_type ) {
+				return false;
+			}
+
+			$title  = $post->post_title;
+			$url    = get_permalink( $post->ID );
+			$author = get_the_author_meta( 'display_name', $post->post_author );
+
+			$template = sprintf( __( ':metal: The post *<%s|%s>* by *%s* was updated.', 'dorzki-notifications-to-slack' ), $url, $title, $author );
+
+			$this->slack->send_message( $template );
+
+		}
+
+
+		/**
 		 * Send notification on published page.
 		 *
 		 * @param   object $post page details object.
@@ -296,6 +321,31 @@ if ( ! class_exists( 'WPNotifications' ) ) {
 			$author = get_the_author_meta( 'display_name', $post->post_author );
 
 			$template = sprintf( __( ':metal: The page *<%s|%s>* by *%s* is pending approval.', 'dorzki-notifications-to-slack' ), $url, $title, $author );
+
+			$this->slack->send_message( $template );
+
+		}
+
+
+		/**
+		 * Send notification on updated page.
+		 *
+		 * @param   object $post page details object.
+		 *
+		 * @since   1.0.7
+		 * @return boolean
+		 */
+		public function page_update_notif( $post ) {
+
+			if ( 'page' !== $post->post_type ) {
+				return false;
+			}
+
+			$title  = $post->post_title;
+			$url    = get_permalink( $post->ID );
+			$author = get_the_author_meta( 'display_name', $post->post_author );
+
+			$template = sprintf( __( ':metal: The page *<%s|%s>* by *%s* was updated.', 'dorzki-notifications-to-slack' ), $url, $title, $author );
 
 			$this->slack->send_message( $template );
 

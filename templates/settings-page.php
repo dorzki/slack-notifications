@@ -17,9 +17,11 @@ $plugin_update = get_option( 'slack_notif_plugin_update' );
 $new_post      = get_option( 'slack_notif_new_post' );
 $future_post   = get_option( 'slack_notif_future_post' );
 $pending_post  = get_option( 'slack_notif_pending_post' );
+$update_post   = get_option( 'slack_notif_update_post' );
 $new_page      = get_option( 'slack_notif_new_page' );
 $future_page   = get_option( 'slack_notif_future_page' );
 $pending_page  = get_option( 'slack_notif_pending_page' );
+$update_page   = get_option( 'slack_notif_update_page' );
 $new_comment   = get_option( 'slack_notif_new_comment' );
 $new_user      = get_option( 'slack_notif_new_user' );
 $admin_logged  = get_option( 'slack_notif_admin_logged' );
@@ -164,6 +166,13 @@ $isConfigured = ( ( ! empty( $webhook_url ) && ! empty( $channel_name ) ) );
 						<br>
 						<!-- /Pending Post -->
 
+						<!-- Update Post -->
+						<label for="slack_notif_update_post">
+							<input type="checkbox" name="slack_notif_update_post" id="slack_notif_update_post" value="1" <?php checked( $update_post, 1, true ); ?>> <?php esc_html_e( 'Post Updated', 'dorzki-notifications-to-slack' ); ?>
+						</label>
+						<br>
+						<!-- /Update Post -->
+
 						<!-- New Page -->
 						<label for="slack_notif_new_page">
 							<input type="checkbox" name="slack_notif_new_page" id="slack_notif_new_page" value="1" <?php checked( $new_page, 1, true ); ?>> <?php esc_html_e( 'Page Published', 'dorzki-notifications-to-slack' ); ?>
@@ -184,6 +193,13 @@ $isConfigured = ( ( ! empty( $webhook_url ) && ! empty( $channel_name ) ) );
 						</label>
 						<br>
 						<!-- /Pending Page -->
+
+						<!-- Update Page -->
+						<label for="slack_notif_update_page">
+							<input type="checkbox" name="slack_notif_update_page" id="slack_notif_update_page" value="1" <?php checked( $update_page, 1, true ); ?>> <?php esc_html_e( 'Page Updated', 'dorzki-notifications-to-slack' ); ?>
+						</label>
+						<br>
+						<!-- /Update Page -->
 
 						<?php foreach ( $postTypes as $postType ) : ?>
 							<!-- New <?php echo esc_html( $postType->labels->singular_name ); ?> -->
