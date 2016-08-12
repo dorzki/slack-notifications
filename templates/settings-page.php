@@ -16,8 +16,10 @@ $theme_update  = get_option( 'slack_notif_theme_update' );
 $plugin_update = get_option( 'slack_notif_plugin_update' );
 $new_post      = get_option( 'slack_notif_new_post' );
 $future_post   = get_option( 'slack_notif_future_post' );
+$pending_post  = get_option( 'slack_notif_pending_post' );
 $new_page      = get_option( 'slack_notif_new_page' );
 $future_page   = get_option( 'slack_notif_future_page' );
+$pending_page  = get_option( 'slack_notif_pending_page' );
 $new_comment   = get_option( 'slack_notif_new_comment' );
 $new_user      = get_option( 'slack_notif_new_user' );
 $admin_logged  = get_option( 'slack_notif_admin_logged' );
@@ -155,6 +157,13 @@ $isConfigured = ( ( ! empty( $webhook_url ) && ! empty( $channel_name ) ) );
 						<br>
 						<!-- /Future Post -->
 
+						<!-- Pending Post -->
+						<label for="slack_notif_pending_post">
+							<input type="checkbox" name="slack_notif_pending_post" id="slack_notif_pending_post" value="1" <?php checked( $pending_post, 1, true ); ?>> <?php esc_html_e( 'Post Pending', 'dorzki-notifications-to-slack' ); ?>
+						</label>
+						<br>
+						<!-- /Pending Post -->
+
 						<!-- New Page -->
 						<label for="slack_notif_new_page">
 							<input type="checkbox" name="slack_notif_new_page" id="slack_notif_new_page" value="1" <?php checked( $new_page, 1, true ); ?>> <?php esc_html_e( 'Page Published', 'dorzki-notifications-to-slack' ); ?>
@@ -168,6 +177,13 @@ $isConfigured = ( ( ! empty( $webhook_url ) && ! empty( $channel_name ) ) );
 						</label>
 						<br>
 						<!-- /Future Page -->
+
+						<!-- Pending Page -->
+						<label for="slack_notif_pending_page">
+							<input type="checkbox" name="slack_notif_pending_page" id="slack_notif_pending_page" value="1" <?php checked( $pending_page, 1, true ); ?>> <?php esc_html_e( 'Page Pending', 'dorzki-notifications-to-slack' ); ?>
+						</label>
+						<br>
+						<!-- /Pending Page -->
 
 						<?php foreach ( $postTypes as $postType ) : ?>
 							<!-- New <?php echo esc_html( $postType->labels->singular_name ); ?> -->

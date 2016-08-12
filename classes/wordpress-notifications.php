@@ -202,6 +202,31 @@ if ( ! class_exists( 'WPNotifications' ) ) {
 
 
 		/**
+		 * Send notification on pending post.
+		 *
+		 * @param   object $post post details object.
+		 *
+		 * @since   1.0.7
+		 * @return boolean
+		 */
+		public function post_pending_notif( $post ) {
+
+			if ( 'post' !== $post->post_type ) {
+				return false;
+			}
+
+			$title  = $post->post_title;
+			$url    = get_permalink( $post->ID );
+			$author = get_the_author_meta( 'display_name', $post->post_author );
+
+			$template = sprintf( __( ':metal: The post *<%s|%s>* by *%s* is pending approval.', 'dorzki-notifications-to-slack' ), $url, $title, $author );
+
+			$this->slack->send_message( $template );
+
+		}
+
+
+		/**
 		 * Send notification on published page.
 		 *
 		 * @param   object $post page details object.
@@ -246,6 +271,31 @@ if ( ! class_exists( 'WPNotifications' ) ) {
 			$date   = date( 'd-m-Y, H:i', strtotime( $post->post_date ) );
 
 			$template = sprintf( __( ':metal: The page *<%s|%s>* was scheduled to be published by *%s* on *%s*', 'dorzki-notifications-to-slack' ), $url, $title, $author, $date );
+
+			$this->slack->send_message( $template );
+
+		}
+
+
+		/**
+		 * Send notification on pending page.
+		 *
+		 * @param   object $post page details object.
+		 *
+		 * @since   1.0.7
+		 * @return boolean
+		 */
+		public function page_pending_notif( $post ) {
+
+			if ( 'page' !== $post->post_type ) {
+				return false;
+			}
+
+			$title  = $post->post_title;
+			$url    = get_permalink( $post->ID );
+			$author = get_the_author_meta( 'display_name', $post->post_author );
+
+			$template = sprintf( __( ':metal: The page *<%s|%s>* by *%s* is pending approval.', 'dorzki-notifications-to-slack' ), $url, $title, $author );
 
 			$this->slack->send_message( $template );
 
@@ -318,16 +368,12 @@ if ( ! class_exists( 'WPNotifications' ) ) {
 		/**
 		 * Send notification on published custom post type.
 		 *
-		 * @param   object $post page details object.
+		 * @param   integer $postID the post id number.
+		 * @param   object  $post   page details object.
 		 *
 		 * @since   1.0.1
-		 * @return boolean
 		 */
-		public function cpt_publish_notif( $post ) {
-
-			if ( 'post' === $post->post_type || 'page' === $post->post_type ) {
-				return false;
-			}
+		public function cpt_publish_notif( $postID, $post ) {
 
 			$title  = $post->post_title;
 			$url    = get_permalink( $postID );

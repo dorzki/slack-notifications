@@ -101,8 +101,10 @@ if ( ! class_exists( 'WPSlack' ) ) {
 			delete_option( 'slack_notif_plugin_update' );
 			delete_option( 'slack_notif_new_post' );
 			delete_option( 'slack_notif_future_post' );
+			delete_option( 'slack_notif_pending_post' );
 			delete_option( 'slack_notif_new_page' );
 			delete_option( 'slack_notif_future_page' );
+			delete_option( 'slack_notif_pending_page' );
 			delete_option( 'slack_notif_new_comment' );
 			delete_option( 'slack_notif_new_user' );
 			delete_option( 'slack_notif_admin_logged' );
@@ -137,8 +139,10 @@ if ( ! class_exists( 'WPSlack' ) ) {
 			register_setting( 'dorzki-slack', 'slack_notif_plugin_update' );
 			register_setting( 'dorzki-slack', 'slack_notif_new_post' );
 			register_setting( 'dorzki-slack', 'slack_notif_future_post' );
+			register_setting( 'dorzki-slack', 'slack_notif_pending_post' );
 			register_setting( 'dorzki-slack', 'slack_notif_new_page' );
 			register_setting( 'dorzki-slack', 'slack_notif_future_page' );
+			register_setting( 'dorzki-slack', 'slack_notif_pending_page' );
 			register_setting( 'dorzki-slack', 'slack_notif_new_comment' );
 			register_setting( 'dorzki-slack', 'slack_notif_new_user' );
 			register_setting( 'dorzki-slack', 'slack_notif_admin_logged' );
@@ -237,8 +241,10 @@ if ( ! class_exists( 'WPSlack' ) ) {
 			$plugin_update = intval( get_option( 'slack_notif_plugin_update' ) );
 			$new_post      = intval( get_option( 'slack_notif_new_post' ) );
 			$future_post   = intval( get_option( 'slack_notif_future_post' ) );
+			$pending_post  = intval( get_option( 'slack_notif_pending_post' ) );
 			$new_page      = intval( get_option( 'slack_notif_new_page' ) );
 			$future_page   = intval( get_option( 'slack_notif_future_page' ) );
+			$pending_page  = intval( get_option( 'slack_notif_pending_page' ) );
 			$new_comment   = intval( get_option( 'slack_notif_new_comment' ) );
 			$new_user      = intval( get_option( 'slack_notif_new_user' ) );
 			$admin_logged  = intval( get_option( 'slack_notif_admin_logged' ) );
@@ -260,6 +266,7 @@ if ( ! class_exists( 'WPSlack' ) ) {
 				add_action( 'auto-draft_to_publish', array( &$notifs, 'post_publish_notif' ) );
 				add_action( 'draft_to_publish', array( &$notifs, 'post_publish_notif' ) );
 				add_action( 'future_to_publish', array( &$notifs, 'post_publish_notif' ) );
+				add_action( 'pending_to_publish', array( &$notifs, 'post_publish_notif' ) );
 			}
 
 			if ( 1 === $future_post ) {
@@ -267,15 +274,26 @@ if ( ! class_exists( 'WPSlack' ) ) {
 				add_action( 'draft_to_future', array( &$notifs, 'post_future_notif' ) );
 			}
 
+			if ( 1 === $pending_post ) {
+				add_action( 'auto-draft_to_pending', array( &$notifs, 'post_pending_notif' ) );
+				add_action( 'draft_to_pending', array( &$notifs, 'post_pending_notif' ) );
+			}
+
 			if ( 1 === $new_page ) {
 				add_action( 'auto-draft_to_publish', array( &$notifs, 'page_publish_notif' ) );
 				add_action( 'draft_to_publish', array( &$notifs, 'page_publish_notif' ) );
 				add_action( 'future_to_publish', array( &$notifs, 'page_publish_notif' ) );
+				add_action( 'pending_to_publish', array( &$notifs, 'page_publish_notif' ) );
 			}
 
 			if ( 1 === $future_page ) {
 				add_action( 'auto-draft_to_future', array( &$notifs, 'page_future_notif' ) );
 				add_action( 'draft_to_future', array( &$notifs, 'page_future_notif' ) );
+			}
+
+			if ( 1 === $pending_page ) {
+				add_action( 'auto-draft_to_pending', array( &$notifs, 'page_pending_notif' ) );
+				add_action( 'draft_to_pending', array( &$notifs, 'page_pending_notif' ) );
 			}
 
 			if ( 1 === $new_comment ) {
