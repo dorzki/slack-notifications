@@ -1,10 +1,10 @@
 === Slack Notifications by dorzki ===
 Contributors: dorzki
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=UYSJG8CB8YN2A
-Tags: notifications, slack
+Tags: notifications, slack, realtime, updates
 Requires at least: 4.3
-Tested up to: 4.4.2
-Stable tag: 1.0.6
+Tested up to: 4.5.3
+Stable tag: 1.0.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -57,6 +57,11 @@ Please feel free to contact me `webmaster[AT]dorzki.co.il`
 2. `Settings Screen - Part 2` Choose which notifications to get.
 
 == Changelog ==
+
+= 1.0.7 =
+* Added future, pending and updated post notifications.
+* Added future, pending and updated page notifications.
+* Several plugin fixes.
 
 = 1.0.6 =
 * Fixed issue with image embed on WYSIWYG editor.
