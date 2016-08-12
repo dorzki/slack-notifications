@@ -19,11 +19,10 @@ if ( ! class_exists( 'WPNotifications' ) ) {
 		/**
 		 * Slack class handler.
 		 *
-		 * @var 	  SlackBot
+		 * @var    SlackBot
 		 * @since   1.0.0
 		 */
 		private $slack;
-
 
 
 		/**
@@ -36,7 +35,6 @@ if ( ! class_exists( 'WPNotifications' ) ) {
 			$this->slack = new SlackBot();
 
 		}
-
 
 
 		/**
@@ -54,9 +52,9 @@ if ( ! class_exists( 'WPNotifications' ) ) {
 			$versionCheck = get_site_transient( 'update_core' );
 
 			// Is there a new version of WordPress?
-			if ( $versionCheck->updates[0]->response === 'upgrade' ) {
+			if ( $versionCheck->updates[ 0 ]->response === 'upgrade' ) {
 
-				$newVersion = $versionCheck->updates[0]->current;
+				$newVersion = $versionCheck->updates[ 0 ]->current;
 
 				// Did we already notified the admin?
 				if ( get_option( 'slack_notif_core_version' ) !== $newVersion ) {
@@ -69,7 +67,6 @@ if ( ! class_exists( 'WPNotifications' ) ) {
 			}
 
 		}
-
 
 
 		/**
@@ -86,9 +83,9 @@ if ( ! class_exists( 'WPNotifications' ) ) {
 			$currentVersion = wp_get_theme()->get( 'Version' );
 			$currentTheme   = get_option( 'template' );
 
-			if ( $versionCheck->response[ $currentTheme ]['new_version'] !== $currentVersion && ! is_null( $versionCheck->response[ $currentTheme ]['new_version'] ) ) {
+			if ( $versionCheck->response[ $currentTheme ][ 'new_version' ] !== $currentVersion && ! is_null( $versionCheck->response[ $currentTheme ][ 'new_version' ] ) ) {
 
-				$newVersion = $versionCheck->response[ $currentTheme ]['new_version'];
+				$newVersion = $versionCheck->response[ $currentTheme ][ 'new_version' ];
 
 				// Did we already notified the admin?
 				if ( get_option( 'slack_notif_theme_version' ) !== $newVersion ) {
@@ -101,7 +98,6 @@ if ( ! class_exists( 'WPNotifications' ) ) {
 			}
 
 		}
-
 
 
 		/**
@@ -134,7 +130,7 @@ if ( ! class_exists( 'WPNotifications' ) ) {
 
 						$notifiedPlugins[ $plugin ] = $updateData->new_version;
 
-						$theMessage .= sprintf( __( '• *%s* - v%s (current version is v%s)', 'dorzki-notifications-to-slack' ) . "\n", $pluginMeta['Name'], $updateData->new_version, $pluginMeta['Version'] );
+						$theMessage .= sprintf( __( '• *%s* - v%s (current version is v%s)', 'dorzki-notifications-to-slack' ) . "\n", $pluginMeta[ 'Name' ], $updateData->new_version, $pluginMeta[ 'Version' ] );
 
 					}
 				}
@@ -154,18 +150,21 @@ if ( ! class_exists( 'WPNotifications' ) ) {
 		}
 
 
-
 		/**
 		 * Send notification on published post.
 		 *
-		 * @param   integer $postID  the post id number.
-		 * @param   object  $post    post details object.
+		 * @param   object $post post details object.
+		 *
 		 * @since   1.0.0
 		 */
-		public function post_publish_notif( $postID, $post ) {
+		public function post_publish_notif( $post ) {
+
+			if ( 'post' !== $post->post_type ) {
+				return false;
+			}
 
 			$title  = $post->post_title;
-			$url    = get_permalink( $postID );
+			$url    = get_permalink( $post->ID );
 			$author = get_the_author_meta( 'display_name', $post->post_author );
 
 			$template = sprintf( __( ':metal: The post *<%s|%s>* was published by *%s* right now!', 'dorzki-notifications-to-slack' ), $url, $title, $author );
@@ -175,18 +174,21 @@ if ( ! class_exists( 'WPNotifications' ) ) {
 		}
 
 
-
 		/**
 		 * Send notification on published page.
 		 *
-		 * @param   integer $postID  the page id number.
-		 * @param   object  $post    page details object.
+		 * @param   object $post page details object.
+		 *
 		 * @since   1.0.0
 		 */
-		public function page_publish_notif( $postID, $post ) {
+		public function page_publish_notif( $post ) {
+
+			if ( 'page' !== $post->post_type ) {
+				return false;
+			}
 
 			$title  = $post->post_title;
-			$url    = get_permalink( $postID );
+			$url    = get_permalink( $post->ID );
 			$author = get_the_author_meta( 'display_name', $post->post_author );
 
 			$template = sprintf( __( ':metal: The page *<%s|%s>* was published by *%s* right now!', 'dorzki-notifications-to-slack' ), $url, $title, $author );
@@ -196,12 +198,12 @@ if ( ! class_exists( 'WPNotifications' ) ) {
 		}
 
 
-
 		/**
 		 * Send notification when comment has been submitted.
 		 *
-		 * @param   integer $commentID    the comment id number.
-		 * @param   integer $isApproved   has the comment approved?.
+		 * @param   integer $commentID  the comment id number.
+		 * @param   integer $isApproved has the comment approved?.
+		 *
 		 * @since   1.0.0
 		 */
 		public function comment_added_notif( $commentID, $isApproved ) {
@@ -220,11 +222,11 @@ if ( ! class_exists( 'WPNotifications' ) ) {
 		}
 
 
-
 		/**
 		 * Send notification on user registration.
 		 *
-		 * @param   integer $userID  the registered user id number.
+		 * @param   integer $userID the registered user id number.
+		 *
 		 * @since   1.0.0
 		 */
 		public function user_registered_notif( $userID ) {
@@ -238,12 +240,12 @@ if ( ! class_exists( 'WPNotifications' ) ) {
 		}
 
 
-
 		/**
 		 * Send notification on administrator login.
 		 *
-		 * @param   string $username  the username.
-		 * @param   object $user      the user details.
+		 * @param   string $username the username.
+		 * @param   object $user     the user details.
+		 *
 		 * @since   1.0.0
 		 */
 		public function admin_logged_in_notif( $username, $user ) {
@@ -259,12 +261,12 @@ if ( ! class_exists( 'WPNotifications' ) ) {
 		}
 
 
-
 		/**
 		 * Send notification on published custom post type.
 		 *
-		 * @param   integer $postID  the post id number.
-		 * @param   object  $post    page details object.
+		 * @param   integer $postID the post id number.
+		 * @param   object  $post   page details object.
+		 *
 		 * @since   1.0.1
 		 */
 		public function cpt_publish_notif( $postID, $post ) {
@@ -280,10 +282,9 @@ if ( ! class_exists( 'WPNotifications' ) ) {
 		}
 
 
-
 		/**
 		 * Send a test notification.
-		 * 
+		 *
 		 * @return   boolean   is the test sent successfully?
 		 * @since    1.0.5
 		 */

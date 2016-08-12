@@ -259,11 +259,11 @@ if ( ! class_exists( 'WPSlack' ) ) {
 			}
 
 			if ( 1 === $new_post ) {
-				add_action( 'publish_post', array( &$notifs, 'post_publish_notif' ), 10, 2 );
+				add_action( 'auto-draft_to_publish', array( &$notifs, 'post_publish_notif' ) );
 			}
 
 			if ( 1 === $new_page ) {
-				add_action( 'publish_page', array( &$notifs, 'page_publish_notif' ), 10, 2 );
+				add_action( 'auto-draft_to_publish', array( &$notifs, 'page_publish_notif' ), 10, 2 );
 			}
 
 			if ( 1 === $new_comment ) {
