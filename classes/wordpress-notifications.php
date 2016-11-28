@@ -4,7 +4,7 @@
  *
  * @package   Slack Notifications
  * @since     1.0.0
- * @version   1.0.7
+ * @version   1.0.8
  * @author    Dor Zuberi <me@dorzki.co.il>
  * @link      https://www.dorzki.co.il
  */
@@ -111,25 +111,20 @@ if ( ! class_exists( 'WPNotifications' ) ) {
 			do_action( 'wp_update_plugins' );
 
 			$versionCheck  = get_site_transient( 'update_plugins' );
-			$activePlugins = get_option( 'active_plugins' );
 
-			$needsUpdate = array_intersect_key( $versionCheck->response, array_flip( $activePlugins ) );
+			if ( count( $versionCheck ) > 0 ) {
 
-			if ( count( $needsUpdate ) > 0 ) {
+				$notifiedPlugins = ( ! empty( get_option( 'slack_notif_plugins_version' ) ) ) ? get_option( 'slack_notif_plugins_version' ) : array();
+				$theMessage      = '';
 
-				$notifiedPlugins = get_option( 'slack_notif_plugins_version' );
-
-				$theMessage = '';
-
-				foreach ( $needsUpdate as $plugin => $updateData ) {
-
+				foreach ( $versionCheck->response as $plugin => $updateData ) {
+					update_option( '_plug_' . $plugin, $updateData );
 					$pluginMeta = get_plugin_data( WP_PLUGIN_DIR . '/' . $plugin, true, false );
 
 					// Did we already notified the admin?
 					if ( ! array_key_exists( $plugin, $notifiedPlugins ) && $notifiedPlugins[ $plugin ] !== $updateData->new_version ) {
 
 						$notifiedPlugins[ $plugin ] = $updateData->new_version;
-
 						$theMessage .= sprintf( __( '• *%s* - v%s (current version is v%s)', 'dorzki-notifications-to-slack' ) . "\n", $pluginMeta[ 'Name' ], $updateData->new_version, $pluginMeta[ 'Version' ] );
 
 					}
@@ -139,7 +134,7 @@ if ( ! class_exists( 'WPNotifications' ) ) {
 
 				// Do we still need to notify?
 				if ( '' !== $theMessage ) {
-
+					update_option( '_testing_slack', 7 );
 					$theMessage = __( ':information_source: The following plugins have a new version:', 'dorzki-notifications-to-slack' ) . "\n" . $theMessage;
 
 					$this->slack->send_message( $theMessage );
