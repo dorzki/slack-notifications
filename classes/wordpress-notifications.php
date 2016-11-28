@@ -110,11 +110,12 @@ if ( ! class_exists( 'WPNotifications' ) ) {
 			// Force version check.
 			do_action( 'wp_update_plugins' );
 
-			$versionCheck  = get_site_transient( 'update_plugins' );
+			$versionCheck = get_site_transient( 'update_plugins' );
 
 			if ( count( $versionCheck ) > 0 ) {
 
-				$notifiedPlugins = ( ! empty( get_option( 'slack_notif_plugins_version' ) ) ) ? get_option( 'slack_notif_plugins_version' ) : array();
+				$notifiedPlugins = get_option( 'slack_notif_plugins_version' );
+				$notifiedPlugins = ( ! empty( $notifiedPlugins ) ) ? $notifiedPlugins : array();
 				$theMessage      = '';
 
 				foreach ( $versionCheck->response as $plugin => $updateData ) {

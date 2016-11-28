@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: notifications, slack, realtime, updates
 Requires at least: 4.3
 Tested up to: 4.5.3
-Stable tag: 1.0.8
+Stable tag: 1.0.9
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -57,6 +57,9 @@ Please feel free to contact me `webmaster[AT]dorzki.co.il`
 2. `Settings Screen - Part 2` Choose which notifications to get.
 
 == Changelog ==
+
+= 1.0.9 =
+* Fixed issue with old PHP versions.
 
 = 1.0.8 =
 * Fixed broken plugins notification.
