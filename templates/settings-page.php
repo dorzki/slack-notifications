@@ -4,7 +4,7 @@
  *
  * @package   Slack Notifications
  * @since     1.0.0
- * @version   1.0.7
+ * @version   1.0.10
  * @author    Dor Zuberi <me@dorzki.co.il>
  * @link      https://www.dorzki.co.il
  */
@@ -63,7 +63,7 @@ $isConfigured = ( ( ! empty( $webhook_url ) && ! empty( $channel_name ) ) );
 				</th>
 				<td>
 					<input type="text" name="slack_channel_name" id="slack_channel_name" class="regular-text" value="<?php echo esc_html( $channel_name ); ?>">
-					<p class="description" id="slack_channel_name-description"><?php esc_html_e( 'Write here the desired channel name to receive notifications, don\'t forget to include the hash symbol before the name.', 'dorzki-notifications-to-slack' ); ?></p>
+					<p class="description" id="slack_channel_name-description"><?php esc_html_e( 'Write here the desired channel name to receive notifications, you may write more than one by separating with a comma.', 'dorzki-notifications-to-slack' ); ?></p>
 				</td>
 			</tr>
 			<!-- /Channel Name -->
