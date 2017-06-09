@@ -4,7 +4,7 @@
  *
  * @package   Slack Notifications
  * @since     1.0.0
- * @version   1.0.8
+ * @version   1.0.11
  * @author    Dor Zuberi <me@dorzki.co.il>
  * @link      https://www.dorzki.co.il
  */
@@ -115,7 +115,7 @@ if ( ! class_exists( 'WPNotifications' ) ) {
 			if ( count( $versionCheck ) > 0 ) {
 
 				$notifiedPlugins = get_option( 'slack_notif_plugins_version' );
-				$notifiedPlugins = ( ! empty( $notifiedPlugins ) ) ? $notifiedPlugins : array();
+				$notifiedPlugins = ( ! empty( $notifiedPlugins ) ) ? $notifiedPlugins : [];
 				$theMessage      = '';
 
 				foreach ( $versionCheck->response as $plugin => $updateData ) {
@@ -126,7 +126,7 @@ if ( ! class_exists( 'WPNotifications' ) ) {
 					if ( ! array_key_exists( $plugin, $notifiedPlugins ) && $notifiedPlugins[ $plugin ] !== $updateData->new_version ) {
 
 						$notifiedPlugins[ $plugin ] = $updateData->new_version;
-						$theMessage .= sprintf( __( '• *%s* - v%s (current version is v%s)', 'dorzki-notifications-to-slack' ) . "\n", $pluginMeta[ 'Name' ], $updateData->new_version, $pluginMeta[ 'Version' ] );
+						$theMessage                 .= sprintf( __( '• *%s* - v%s (current version is v%s)', 'dorzki-notifications-to-slack' ) . "\n", $pluginMeta[ 'Name' ], $updateData->new_version, $pluginMeta[ 'Version' ] );
 
 					}
 				}
@@ -425,7 +425,7 @@ if ( ! class_exists( 'WPNotifications' ) ) {
 			$url    = get_permalink( $postID );
 			$author = get_the_author_meta( 'display_name', $post->post_author );
 
-			$template = sprintf( __( ':metal: The %s *<%s|%s>* was published by *%s* right now!', 'dorzki-notifications-to-slack' ), $url, $title, $author, $post->post_type );
+			$template = sprintf( __( ':metal: The %s *<%s|%s>* was published by *%s* right now!', 'dorzki-notifications-to-slack' ), $post->post_type, $url, $title, $author );
 
 			$this->slack->send_message( $template );
 
