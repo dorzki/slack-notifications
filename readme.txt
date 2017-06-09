@@ -3,7 +3,7 @@ Contributors: dorzki
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=UYSJG8CB8YN2A
 Tags: notifications, slack, realtime, updates
 Requires at least: 4.3
-Tested up to: 4.5.3
+Tested up to: 4.8
 Stable tag: 1.0.11
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
