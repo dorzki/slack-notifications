@@ -4,7 +4,7 @@
  *
  * @package   Slack Notifications
  * @since     1.0.0
- * @version   1.0.7
+ * @version   1.0.12
  * @author    Dor Zuberi <me@dorzki.co.il>
  * @link      https://www.dorzki.co.il
  */
@@ -375,9 +375,11 @@ if ( ! class_exists( 'WPSlack' ) ) {
 
 				if ( intval( get_option( 'slack_notif_new_' . $postType->name ) ) === 1 ) {
 
-					if ( has_action( 'publish_' . $postType->name, array( &$notifs, 'cpt_publish_notif' ) ) === false ) {
-						add_action( 'publish_' . $postType->name, array( &$notifs, 'cpt_publish_notif' ), 10, 2 );
-					}
+					add_action( 'auto-draft_to_publish', array( &$notifs, 'cpt_publish_notif' ) );
+					add_action( 'draft_to_publish', array( &$notifs, 'cpt_publish_notif' ) );
+					add_action( 'future_to_publish', array( &$notifs, 'cpt_publish_notif' ) );
+					add_action( 'pending_to_publish', array( &$notifs, 'cpt_publish_notif' ) );
+
 				}
 			}
 

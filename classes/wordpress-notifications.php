@@ -4,7 +4,7 @@
  *
  * @package   Slack Notifications
  * @since     1.0.0
- * @version   1.0.11
+ * @version   1.0.12
  * @author    Dor Zuberi <me@dorzki.co.il>
  * @link      https://www.dorzki.co.il
  */
@@ -419,10 +419,10 @@ if ( ! class_exists( 'WPNotifications' ) ) {
 		 *
 		 * @since   1.0.1
 		 */
-		public function cpt_publish_notif( $postID, $post ) {
+		public function cpt_publish_notif( $post ) {
 
 			$title  = $post->post_title;
-			$url    = get_permalink( $postID );
+			$url    = get_permalink( $post->ID );
 			$author = get_the_author_meta( 'display_name', $post->post_author );
 
 			$template = sprintf( __( ':metal: The %s *<%s|%s>* was published by *%s* right now!', 'dorzki-notifications-to-slack' ), $post->post_type, $url, $title, $author );
