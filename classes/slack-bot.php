@@ -68,7 +68,7 @@ if ( ! class_exists( 'SlackBot' ) ) {
 
 
 		/**
-		 * Send the notification thought the API.
+		 * Send the notification through the API.
 		 *
 		 * @param   string $theMessage the notification to send.
 		 *
@@ -116,6 +116,62 @@ if ( ! class_exists( 'SlackBot' ) ) {
 
 		}
 
+		/**
+		 * Send post notification through the API.
+		 *
+		 * @param   string $action text notification to send.
+		 * @param   string $title title of the post.
+		 * @param   string $url link to the post.
+		 * @param   string $author author of the post.
+		 * @param   string $summary summary of the post.
+		 *
+		 * @return  boolean did the message sent successfully?
+		 * @since   1.1.0
+		 */
+		public function send_post_message($action, $title, $url, $author, $summary) {
+
+			$sendValid = true;
+			foreach ( $this->slackChannel as $channel ) {
+
+				$apiResponse = wp_remote_post( $this->apiEndpoint, array(
+					'method'      => 'POST',
+					'timeout'     => 30,
+					'httpversion' => '1.0',
+					'blocking'    => true,
+					'headers'     => array(),
+					'body'        => array(
+						'payload' => wp_json_encode( array(
+							'channel'  => $channel,
+							'username' => $this->botName,
+							'icon_url' => $this->botIcon,
+							'text'     => $action,
+							'attachments' => array(
+								array(
+									'fallback' => "$title - $author",
+									'author_name' => $author,
+									'title' => $title,
+									'title_link' => $url,
+									'text' => $summary,
+								)
+							)
+						) ),
+					),
+				) );
+
+				if ( is_wp_error( $apiResponse ) ) {
+					$sendValid = false;
+				}
+
+			}
+
+			// Check if there is an error.
+			if ( ! $sendValid ) {
+				$this->display_send_error();
+				return false;
+			}
+
+			return true;
+		}
 
 		/**
 		 * Set the plugin to show an error.

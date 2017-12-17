@@ -36,6 +36,30 @@ if ( ! class_exists( 'WPNotifications' ) ) {
 
 		}
 
+		/**
+		 * Parse a post object to find some summary text.
+		 *
+		 * Uses the Excerpt first. If that doesn't exist, grabs the content
+		 * of the post, checks for a <!--more--> break, and cleans up for Slack attachment.
+		 * @param  $post the Post object to use
+		 * @return string summary of the post
+		 */
+		public function get_post_content ( $post ) {
+			$body = get_the_excerpt($post);
+			if ($body == '') {
+				$body = $post->post_content;
+				$pos = strpos($body, '<!--more');
+				if ($pos !== false) {
+					$body = substr($body, 0, $pos);
+				}
+			}
+			$body = str_replace('</p>', "\n\n", $body);
+			$body = wp_strip_all_tags($body);
+			$body = preg_replace('/\[.*?\]/', '', $body);
+			$body = preg_replace('/\n{2,}/', "\n\n", $body);
+			return $body;
+		}
+
 
 		/**
 		 * Core update check & send notification.
@@ -163,11 +187,9 @@ if ( ! class_exists( 'WPNotifications' ) ) {
 			$title  = $post->post_title;
 			$url    = get_permalink( $post->ID );
 			$author = get_the_author_meta( 'display_name', $post->post_author );
+			$excerpt = $this->get_post_content($post);
 
-			$template = sprintf( __( ':metal: The post *<%s|%s>* was published by *%s* right now!', 'dorzki-notifications-to-slack' ), $url, $title, $author );
-
-			$this->slack->send_message( $template );
-
+			$this->slack->send_post_message( __(':metal: New post right now!', 'dorzki-notifications-to-slack'), $title, $url, $author, $excerpt);
 		}
 
 
@@ -189,11 +211,15 @@ if ( ! class_exists( 'WPNotifications' ) ) {
 			$url    = get_permalink( $post->ID );
 			$author = get_the_author_meta( 'display_name', $post->post_author );
 			$date   = date( 'd-m-Y, H:i', strtotime( $post->post_date ) );
+			$excerpt = $this->get_post_content($post);
 
-			$template = sprintf( __( ':metal: The post *<%s|%s>* was scheduled to be published by *%s* on *%s*', 'dorzki-notifications-to-slack' ), $url, $title, $author, $date );
-
-			$this->slack->send_message( $template );
-
+			$this->slack->send_post_message(
+				sprintf( __( ':metal: Post scheduled to be published on *%s*', 'dorzki-notifications-to-slack'), $date),
+				$title,
+				$url,
+				$author,
+				$excerpt
+			);
 		}
 
 
@@ -214,11 +240,9 @@ if ( ! class_exists( 'WPNotifications' ) ) {
 			$title  = $post->post_title;
 			$url    = get_permalink( $post->ID );
 			$author = get_the_author_meta( 'display_name', $post->post_author );
+			$excerpt = $this->get_post_content($post);
 
-			$template = sprintf( __( ':metal: The post *<%s|%s>* by *%s* is pending approval.', 'dorzki-notifications-to-slack' ), $url, $title, $author );
-
-			$this->slack->send_message( $template );
-
+			$this->slack->send_post_message( __(':metal: Post pending approval', 'dorzki-notifications-to-slack'), $title, $url, $author, $excerpt);
 		}
 
 
@@ -239,11 +263,9 @@ if ( ! class_exists( 'WPNotifications' ) ) {
 			$title  = $post->post_title;
 			$url    = get_permalink( $post->ID );
 			$author = get_the_author_meta( 'display_name', $post->post_author );
+			$excerpt = $this->get_post_content($post);
 
-			$template = sprintf( __( ':metal: The post *<%s|%s>* by *%s* was updated.', 'dorzki-notifications-to-slack' ), $url, $title, $author );
-
-			$this->slack->send_message( $template );
-
+			$this->slack->send_post_message( __(':metal: Post updated', 'dorzki-notifications-to-slack'), $title, $url, $author, $excerpt);
 		}
 
 
