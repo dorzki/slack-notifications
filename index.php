@@ -1,2 +1,1 @@
-<?php
-// Nothing to see here
+<?php // Get the slack out of here...

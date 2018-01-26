@@ -3,56 +3,74 @@
  * Plugin Name: Slack Notifications
  * Plugin URI: https://www.dorzki.co.il
  * Description: Add Slack integration to a channel and send desired notifications as a slack bot.
- * Version: 1.0.12
+ * Version: 2.0.0
  * Author: dorzki
  * Author URI: https://www.dorzki.co.il
  * Text Domain: dorzki-notifications-to-slack
  *
- * 
- * @package   Slack Notifications
+ *
+ * @package   SlackNotifications
  * @since     1.0.0
- * @version   1.0.12
+ * @version   2.0.0
  * @author    Dor Zuberi <me@dorzki.co.il>
  * @link      https://www.dorzki.co.il
  */
 
-
-
-/**
- * PLUGIN CONSTANTS
- */
-if ( ! defined( 'PLUGIN_ROOT_URL' ) ) {
-	define( 'PLUGIN_ROOT_URL', plugin_dir_url( __FILE__ ) );
+// Block direct access to the file via url.
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
 }
 
-if ( ! defined( 'PLUGIN_ROOT_DIR' ) ) {
-	define( 'PLUGIN_ROOT_DIR', dirname( __FILE__ ) );
+// Define plugins constants
+define( 'SN_VERSION', '2.0.0' );
+define( 'SN_SLUG', 'slack-notifications' );
+define( 'SN_PATH', plugin_dir_path( __FILE__ ) );
+
+// Check if the plugin can run on this server.
+if ( ! version_compare( PHP_VERSION, '5.4', '>=' ) ) {
+	add_action( 'admin_notices', 'sn_php_version_not_supported' );
+} else if ( ! version_compare( get_bloginfo( 'version' ), '4.5', '>=' ) ) {
+	add_action( 'admin_notices', 'sn_wp_version_no_supported' );
+} else {
+	require_once( SN_PATH . 'core/plugin.php' );
 }
 
-if ( ! defined( 'PLUGIN_VERSION' ) ) {
-	define( 'PLUGIN_VERSION', '1.0.12' );
+
+/**
+ * Load plugin i18n and l10n capabilities.
+ */
+function sn_load_text_domain() {
+
+	load_plugin_textdomain( 'dorzki-notification-to-slack' );
+
+}
+
+add_action( 'plugins_loaded', 'sn_load_text_domain' );
+
+
+/**
+ * Show notice to admin if the server doesn't have the minimum required PHP version.
+ *
+ * @return string
+ */
+function sn_php_version_not_supported() {
+
+	$notice = sprintf( esc_html__( 'Slack Notifications plugin requires PHP version %s or above to work properly.', 'dorzki-notifications-to-slack' ), '5.4' );
+
+	echo "<div class='error'><p>{$notice}</p></div>";
+
 }
 
 
-
 /**
- * PLUGIN CLASSES
+ * Show notice to admin if WordPress version doesn't meet the requirements.
+ *
+ * @return string
  */
-include_once( 'classes/wordpress-notifications.php' );
-include_once( 'classes/slack-bot.php' );
-include_once( 'classes/wordpress-slack.php' );
+function sn_wp_version_no_supported() {
 
+	$notice = sprintf( esc_html__( 'Slack Notifications plugin requires WordPress version %s or above to work properly.', 'dorzki-notifications-to-slack' ), '4.5' );
 
+	echo "<div class='error'><p>{$notice}</p></div>";
 
-/**
- * PLUGIN INTIALIZATION
- */
-$wpSlack = new wpSlack();
-
-
-
-/**
- * REGISTER ACTIVATION & DEACTIVATION
- */
-register_activation_hook( __FILE__, array( &$wpSlack, 'plugin_activate' ) );
-register_deactivation_hook( __FILE__, array( &$wpSlack, 'plugin_deactivate' ) );
+}
