@@ -91,7 +91,9 @@ class Settings_Page {
 
 		}
 
+		include_once( SN_PATH . 'templates/settings-header.php' );
 		include_once( SN_PATH . "templates/{$this->template_page}.php" );
+		include_once( SN_PATH . 'templates/settings-footer.php' );
 
 	}
 

@@ -1,23 +1,11 @@
-<div class="wrap <?php echo SN_SLUG; ?>-wrapper">
+<!-- Settings Form -->
+<form action="options.php" method="post">
 
-	<!-- Page Name -->
-	<h1><?php echo esc_html( get_admin_page_title() ); ?></h1>
-	<!-- /Page Name -->
+	<?php settings_fields( SN_SLUG ); ?>
 
-	<!-- Notices -->
-	<?php settings_errors( SN_SLUG . '_notices' ); ?>
-	<!-- /Notices -->
+	<?php do_settings_sections( SN_SLUG ); ?>
 
-	<!-- Settings Form -->
-	<form action="options.php" method="post">
+	<?php submit_button( __( 'Save Settings', 'dorzki-notifications-to-slack' ) ); ?>
 
-		<?php settings_fields( SN_SLUG ); ?>
-
-		<?php do_settings_sections( SN_SLUG ); ?>
-
-		<?php submit_button( __( 'Save Settings', 'dorzki-notifications-to-slack' ) ); ?>
-
-	</form>
-	<!-- /Settings Form -->
-
-</div>
+</form>
+<!-- /Settings Form -->

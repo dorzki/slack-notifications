@@ -84,6 +84,8 @@ class Plugin {
 		include_once( SN_PATH . 'core/settings/field.php' );
 		include_once( SN_PATH . 'core/settings/settings-page.php' );
 		include_once( SN_PATH . 'core/settings/general.php' );
+		include_once( SN_PATH . 'core/settings/notifications.php' );
+
 		include_once( SN_PATH . 'core/slack-bot.php' );
 		include_once( SN_PATH . 'core/ajax.php' );
 		include_once( SN_PATH . 'core/admin.php' );

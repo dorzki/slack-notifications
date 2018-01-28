@@ -67,6 +67,7 @@ class Admin {
 	public function register_settings_pages() {
 
 		new Settings\General();
+		new Settings\Notifications();
 
 	}
 
