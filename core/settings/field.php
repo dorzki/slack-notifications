@@ -2,7 +2,7 @@
 /**
  * Plugins settings fields.
  *
- * @package     SlackNotifications
+ * @package     SlackNotifications\Settings
  * @subpackage  Field
  * @author      Dor Zuberi <webmaster@dorzki.co.il>
  * @link        https://www.dorzki.co.il
@@ -10,7 +10,7 @@
  * @version     2.0.0
  */
 
-namespace SlackNotifications;
+namespace SlackNotifications\Settings;
 
 // Block direct access to the file via url.
 if ( ! defined( 'ABSPATH' ) ) {
@@ -21,7 +21,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Class Field
  *
- * @package SlackNotifications
+ * @package SlackNotifications\Settings
  */
 class Field {
 

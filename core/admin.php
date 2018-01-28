@@ -26,21 +26,37 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Admin {
 
 	/**
-	 * @var null|Settings_Page
-	 */
-	public $settings = null;
-
-
-	/**
 	 * Admin constructor.
 	 */
 	public function __construct() {
 
-		add_action( 'admin_menu', [ $this, 'register_menu' ] );
+		add_action( 'admin_menu', [ $this, 'register_settings_menu' ] );
+		add_action( 'admin_menu', [ $this, 'remove_settings_submenu' ], 11 );
 		add_action( 'admin_enqueue_scripts', [ $this, 'register_scripts' ] );
 		add_action( 'admin_enqueue_scripts', [ $this, 'register_styles' ] );
 
-		$this->settings = new Settings_Page();
+		$this->register_settings_pages();
+
+	}
+
+
+	/**
+	 * Register the plugin's admin menu root.
+	 */
+	public function register_settings_menu() {
+
+		// Register plugin settings menu item.
+		add_menu_page( __( 'Slack Notifications', 'dorzki-notifications-to-slack' ), __( 'Slack Notifications', 'dorzki-notifications-to-slack' ), 'manage_options', SN_SLUG, null, 'dashicons-cloud', 100 );
+
+	}
+
+
+	/**
+	 * Remove the default top level plugin page.
+	 */
+	public function remove_settings_submenu() {
+
+		remove_submenu_page( SN_SLUG, SN_SLUG );
 
 	}
 
@@ -48,23 +64,20 @@ class Admin {
 	/**
 	 * Declares a new settings page for the plugin.
 	 */
-	public function register_menu() {
+	public function register_settings_pages() {
 
-		add_options_page( __( 'Slack Notifications Settings', 'dorzki-notification-to-slack' ), __( 'Slack Notifications', 'dorzki-notification-to-slack' ), 'manage_options', SN_SLUG, [
-			$this->settings,
-			'print_settings_page',
-		] );
+		new Settings\General();
 
 	}
 
 
 	/**
-	 * Load plugins scripts.
+	 * Load plugin scripts.
 	 */
 	public function register_scripts() {
 
 		// Load plugin assets only on the plugin's settings page.
-		if ( 'settings_page_' . SN_SLUG === get_current_screen()->id ) {
+		if ( - 1 !== strpos( get_current_screen()->id, SN_SLUG ) ) {
 
 			// Load WordPress media uploader scripts.
 			wp_enqueue_media();
@@ -82,10 +95,14 @@ class Admin {
 
 	}
 
+
+	/**
+	 * Load plugin styles.
+	 */
 	public function register_styles() {
 
 		// Load plugin assets only on the plugin's settings page.
-		if ( 'settings_page_' . SN_SLUG === get_current_screen()->id ) {
+		if ( - 1 !== strpos( get_current_screen()->id, SN_SLUG ) ) {
 
 			// Load plugin styles.
 			wp_enqueue_style( SN_SLUG . '-styles', SN_URL . 'assets/admin-styles.min.css', false, SN_VERSION );

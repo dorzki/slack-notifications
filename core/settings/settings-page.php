@@ -2,7 +2,7 @@
 /**
  * Plugins settings.
  *
- * @package     SlackNotifications
+ * @package     SlackNotifications\Settings
  * @subpackage  Settings_Page
  * @author      Dor Zuberi <webmaster@dorzki.co.il>
  * @link        https://www.dorzki.co.il
@@ -10,7 +10,7 @@
  * @version     2.0.0
  */
 
-namespace SlackNotifications;
+namespace SlackNotifications\Settings;
 
 // Block direct access to the file via url.
 if ( ! defined( 'ABSPATH' ) ) {
@@ -21,14 +21,34 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Class Settings_Page
  *
- * @package SlackNotifications
+ * @package SlackNotifications\Settings
  */
 class Settings_Page {
 
 	/**
+	 * @var string
+	 */
+	protected $page_title;
+
+	/**
+	 * @var string
+	 */
+	protected $menu_title;
+
+	/**
+	 * @var string
+	 */
+	protected $template_page;
+
+	/**
+	 * @var string
+	 */
+	protected $page_slug;
+
+	/**
 	 * @var array
 	 */
-	private $settings = [];
+	protected $settings = [];
 
 
 	/**
@@ -36,9 +56,23 @@ class Settings_Page {
 	 */
 	public function __construct() {
 
+		add_action( 'admin_menu', [ $this, 'register_page' ] );
 		add_action( 'admin_init', [ $this, 'register_settings' ] );
 
 		$this->generate_settings();
+
+	}
+
+
+	/**
+	 * Registers the current settings page.
+	 */
+	public function register_page() {
+
+		add_submenu_page( SN_SLUG, $this->page_title, $this->menu_title, 'manage_options', SN_SLUG . '-' . $this->page_slug, [
+			$this,
+			'print_settings_page',
+		] );
 
 	}
 
@@ -57,7 +91,7 @@ class Settings_Page {
 
 		}
 
-		include_once( SN_PATH . 'templates/settings-page.php' );
+		include_once( SN_PATH . "templates/{$this->template_page}.php" );
 
 	}
 
@@ -80,7 +114,7 @@ class Settings_Page {
 
 				register_setting( SN_SLUG, SN_FIELD_PREFIX . $field_id );
 
-				add_settings_field( SN_FIELD_PREFIX . $field_id, $field[ 'label' ], '\SlackNotifications\Field::output_field', SN_SLUG, $section_id, [
+				add_settings_field( SN_FIELD_PREFIX . $field_id, $field[ 'label' ], '\SlackNotifications\Settings\Field::output_field', SN_SLUG, $section_id, [
 					'label_for' => SN_FIELD_PREFIX . $field_id,
 					'type'      => $field[ 'type' ],
 					'options'   => ( isset( $field[ 'options' ] ) ) ? $field[ 'options' ] : null,
@@ -116,33 +150,9 @@ class Settings_Page {
 	/**
 	 * Generate plugin's settings fields.
 	 */
-	private function generate_settings() {
+	protected function generate_settings() {
 
-		$this->settings = [
-			'integration' => [
-				'title'  => __( 'Slack Integration', 'dorzki-notifications-to-slack' ),
-				'desc'   => __( 'Setup integration between WordPress and Slack.' ),
-				'fields' => [
-					'webhook'         => [
-						'label' => esc_html__( 'Webhook URL', 'dorzki-notifications-to-slack' ),
-						'desc'  => esc_html__( '', 'dorzki-notifications-to-slack' ),
-						'type'  => Field::INPUT_TEXT,
-					],
-					'default_channel' => [
-						'label' => esc_html__( 'Default Channel', 'dorzki-notifications-to-slack' ),
-						'type'  => Field::INPUT_TEXT,
-					],
-					'bot_name'        => [
-						'label' => esc_html__( 'Bot Name', 'dorzki-notifications-to-slack' ),
-						'type'  => Field::INPUT_TEXT,
-					],
-					'bot_image'       => [
-						'label' => esc_html__( 'Bot Image', 'dorzki-notifications-to-slack' ),
-						'type'  => Field::INPUT_MEDIA,
-					],
-				],
-			],
-		];
+		$this->settings = [];
 
 	}
 
