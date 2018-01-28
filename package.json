@@ -1,0 +1,28 @@
+{
+	"name": "slack-notifications",
+	"version": "2.0.0",
+	"description": "Send WordPress notifications to your Slack team channel.",
+	"main": "gulpfile.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/dorzki/Slack-Notifications.git"
+	},
+	"author": "Dor Zuberi",
+	"license": "GPL-3.0",
+	"bugs": {
+		"url": "https://github.com/dorzki/Slack-Notifications/issues"
+	},
+	"homepage": "https://github.com/dorzki/Slack-Notifications#readme",
+	"dependencies": {
+		"gulp": "^3.9.1",
+		"gulp-autoprefixer": "^4.1.0",
+		"gulp-concat": "^2.6.1",
+		"gulp-plumber": "^1.2.0",
+		"gulp-sass": "^3.1.0",
+		"gulp-sourcemaps": "^2.6.4",
+		"gulp-uglify": "^3.0.0"
+	}
+}
