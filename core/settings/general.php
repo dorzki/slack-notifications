@@ -50,22 +50,26 @@ class General extends Settings_Page {
 				'title'  => __( 'Slack Integration', 'dorzki-notifications-to-slack' ),
 				'desc'   => __( 'Setup integration between WordPress and Slack.' ),
 				'fields' => [
-					'webhook'         => [
+					'webhook'          => [
 						'label' => esc_html__( 'Webhook URL', 'dorzki-notifications-to-slack' ),
 						'desc'  => esc_html__( '', 'dorzki-notifications-to-slack' ),
 						'type'  => Field::INPUT_TEXT,
 					],
-					'default_channel' => [
+					'default_channel'  => [
 						'label' => esc_html__( 'Default Channel', 'dorzki-notifications-to-slack' ),
 						'type'  => Field::INPUT_TEXT,
 					],
-					'bot_name'        => [
+					'bot_name'         => [
 						'label' => esc_html__( 'Bot Name', 'dorzki-notifications-to-slack' ),
 						'type'  => Field::INPUT_TEXT,
 					],
-					'bot_image'       => [
+					'bot_image'        => [
 						'label' => esc_html__( 'Bot Image', 'dorzki-notifications-to-slack' ),
 						'type'  => Field::INPUT_MEDIA,
+					],
+					'test_integration' => [
+						'label' => esc_html__( 'Test Integration', 'dorzki-notifications-to-slack' ),
+						'type'  => Field::INPUT_TEST,
 					],
 				],
 			],

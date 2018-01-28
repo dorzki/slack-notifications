@@ -35,6 +35,11 @@ class Plugin {
 	 */
 	public $admin = null;
 
+	/**
+	 * @var null|Slack_Bot
+	 */
+	public $bot = null;
+
 
 	/**
 	 * Plugin constructor.
@@ -44,6 +49,9 @@ class Plugin {
 		$this->load_classes();
 
 		$this->admin = new Admin();
+		$this->bot   = Slack_Bot::get_instance();
+
+		new AJAX();
 
 	}
 
@@ -76,6 +84,8 @@ class Plugin {
 		include_once( SN_PATH . 'core/settings/field.php' );
 		include_once( SN_PATH . 'core/settings/settings-page.php' );
 		include_once( SN_PATH . 'core/settings/general.php' );
+		include_once( SN_PATH . 'core/slack-bot.php' );
+		include_once( SN_PATH . 'core/ajax.php' );
 		include_once( SN_PATH . 'core/admin.php' );
 
 	}

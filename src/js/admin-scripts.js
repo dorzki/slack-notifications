@@ -46,4 +46,41 @@
 
 	} );
 
+	// Handle integration test notification.
+	$( '.slack_test_integration' ).on( 'click', function ( e ) {
+		e.preventDefault();
+
+		var _btn = $( this );
+		var _input = _btn.next( 'input' );
+
+		_btn.removeClass( 'testing ok error' ).addClass( 'testing' );
+
+		$.ajax( {
+			url: ajaxurl,
+			method: 'POST',
+			dataType: 'json',
+			data: {
+				action: 'slack-test-integration'
+			},
+			success: function ( response ) {
+
+				_btn.removeClass( 'testing ok error' );
+
+				if ( response.success ) {
+
+					_btn.addClass( 'ok' );
+					_input.val( '1' );
+
+				} else {
+
+					_btn.addClass( 'error' );
+					_input.val( '0' );
+
+				}
+
+			}
+		} );
+
+	} );
+
 })( jQuery );

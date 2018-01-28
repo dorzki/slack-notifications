@@ -30,6 +30,7 @@ class Field {
 	 */
 	const INPUT_TEXT = 'text';
 	const INPUT_MEDIA = 'media';
+	const INPUT_TEST = 'test_integration';
 
 
 	/**
@@ -45,16 +46,23 @@ class Field {
 		}
 
 		$args[ 'classes' ][] = "field_type_{$args['type']}";
-		$args[ 'classes' ][] = 'regular-text';
 
 		switch ( $args[ 'type' ] ) {
 
 			case self::INPUT_TEXT:
+
+				$args[ 'classes' ][] = 'regular-text';
+
 				self::input_field( $args );
+
 				break;
 
 			case self::INPUT_MEDIA:
 				self::media_field( $args );
+				break;
+
+			case self::INPUT_TEST:
+				self::test_integration_field( $args );
 				break;
 
 		}
@@ -91,6 +99,26 @@ class Field {
 		echo "  <button type='button' class='remove-image'>" . esc_html__( 'Remove Image', 'dorzki-notifications-to-slack' ) . "</button>";
 		echo "</div>";
 
+		printf( "<input type='hidden' class='%s' name='%s' value='%s'>", implode( ' ', $args[ 'classes' ] ), $args[ 'label_for' ], $value );
+
+	}
+
+
+	/**
+	 * Output integration testing button.
+	 *
+	 * @param $args
+	 */
+	public static function test_integration_field( $args ) {
+
+		$webhook_defined = get_option( SN_FIELD_PREFIX . 'webhook' );
+		$value           = get_option( $args[ 'label_for' ] );
+
+		$disabled = ( ! $webhook_defined ) ? 'disabled' : '';
+
+		$args[ 'classes' ][] = ( empty( $value ) ) ? 'error' : 'ok';
+
+		printf( '<button type="button" class="slack_test_integration button %s" %s>%s</button>', implode( ' ', $args[ 'classes' ] ), $disabled, esc_html__( 'Run Test', 'dorzki-notifications-to-slack' ) );
 		printf( "<input type='hidden' class='%s' name='%s' value='%s'>", implode( ' ', $args[ 'classes' ] ), $args[ 'label_for' ], $value );
 
 	}
