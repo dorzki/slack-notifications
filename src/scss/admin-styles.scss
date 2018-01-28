@@ -1,0 +1,54 @@
+.slack-notifications-wrapper {
+
+	* {
+		box-sizing: border-box;
+	}
+
+	.preview_image_box {
+		width: 350px;
+		height: 350px;
+		border: 1px solid #dddddd;
+		background: #ffffff url('images/material-camera.svg') no-repeat center;
+		background-size: 64px;
+		transition: all .3s ease;
+		cursor: pointer;
+		position: relative;
+
+		&:hover,
+		&:focus {
+			background-color: #fdfdfd;
+		}
+
+		&.has_image {
+			img {
+				opacity: 1;
+			}
+
+			.remove-image {
+				display: block;
+			}
+		}
+
+		img {
+			opacity: 0;
+			max-width: 350px;
+			height: auto;
+			width: 100%;
+			transition: all 1s ease;
+		}
+
+		.remove-image {
+			display: none;
+			position: absolute;
+			bottom: 15px;
+			right: 15px;
+			text-indent: -9999px;
+			padding: 5px;
+			width: 32px;
+			height: 32px;
+			border: 0;
+			background: #ffffff url('images/material-clear.svg') no-repeat center;
+			cursor: pointer;
+		}
+	}
+}

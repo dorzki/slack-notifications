@@ -24,7 +24,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 // Define plugins constants
 define( 'SN_VERSION', '2.0.0' );
 define( 'SN_SLUG', 'slack-notifications' );
+define( 'SN_FIELD_PREFIX', 'slack_' );
 define( 'SN_PATH', plugin_dir_path( __FILE__ ) );
+define( 'SN_URL', plugin_dir_url( __FILE__ ) );
 
 // Check if the plugin can run on this server.
 if ( ! version_compare( PHP_VERSION, '5.4', '>=' ) ) {

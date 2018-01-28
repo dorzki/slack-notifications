@@ -57,11 +57,6 @@ class Settings_Page {
 
 		}
 
-		// Display notice if settings saved.
-		if ( isset( $_GET[ 'settings-updated' ] ) ) {
-			add_settings_error( SN_SLUG . '_notices', 'settings-updated', __( 'Settings updated successfully.', 'dorzki-notifications-to-slack' ), 'updated' );
-		}
-
 		include_once( SN_PATH . 'templates/settings-page.php' );
 
 	}
@@ -71,8 +66,6 @@ class Settings_Page {
 	 * Register plugin settings fields.
 	 */
 	public function register_settings() {
-
-		register_setting( SN_SLUG, 'slack_integration' );
 
 		// Declare sections
 		foreach ( $this->settings as $section_id => $section ) {
@@ -85,9 +78,12 @@ class Settings_Page {
 			// Declare fields
 			foreach ( $section[ 'fields' ] as $field_id => $field ) {
 
-				add_settings_field( $field_id, $field[ 'label' ], '\SlackNotifications\Field::output_field', SN_SLUG, $section_id, [
-					'label_for' => $field_id,
+				register_setting( SN_SLUG, SN_FIELD_PREFIX . $field_id );
+
+				add_settings_field( SN_FIELD_PREFIX . $field_id, $field[ 'label' ], '\SlackNotifications\Field::output_field', SN_SLUG, $section_id, [
+					'label_for' => SN_FIELD_PREFIX . $field_id,
 					'type'      => $field[ 'type' ],
+					'options'   => ( isset( $field[ 'options' ] ) ) ? $field[ 'options' ] : null,
 				] );
 
 			}
@@ -104,11 +100,11 @@ class Settings_Page {
 	 */
 	public function section_callback( $args ) {
 
-		if ( ! isset( $this->settings[ $args[ 'id' ] ] ) ) {
+		if ( ! isset( $this->settings[ $args[ 'id' ] ][ 'desc' ] ) ) {
 			return;
 		}
 
-		if ( empty( $this->settings[ $args[ 'id' ] ] ) ) {
+		if ( empty( $this->settings[ $args[ 'id' ] ][ 'desc' ] ) ) {
 			return;
 		}
 
