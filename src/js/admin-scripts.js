@@ -83,4 +83,34 @@
 
 	} );
 
+	// Handle new notification button link
+	$( 'a.page-title-action[href="#new_notification"]' ).on( 'click', function ( e ) {
+		e.preventDefault();
+
+		var _box = $( '#notification_box' ).html();
+
+		$( _box ).clone().appendTo( '.notifications-wrapper' );
+
+	} );
+
+	// Handle notifications collapsible action.
+	$( document ).on( 'click', '.notification-box .notification-header', function ( e ) {
+		e.preventDefault();
+
+		$( this ).next( '.notification-settings' ).slideToggle();
+		$( this ).parent( '.notification-box' ).toggleClass( 'open' );
+
+	} );
+
+	// Handle notification type switch
+	$( document ).on( 'change', '.notification-box select.notification-type', function () {
+
+		var _type = $( this ).val();
+		var _notif = $( this ).parents( '.notification-box' );
+
+		_notif.find( 'select.notification_options' ).hide();
+		_notif.find( 'select[name="notification_options[' + _type + '][]"]' ).show();
+
+	} );
+
 })( jQuery );

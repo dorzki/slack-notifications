@@ -48,6 +48,11 @@ class Settings_Page {
 	/**
 	 * @var array
 	 */
+	protected $header_link = [];
+
+	/**
+	 * @var array
+	 */
 	protected $settings = [];
 
 

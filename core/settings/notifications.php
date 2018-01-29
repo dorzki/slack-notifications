@@ -34,6 +34,10 @@ class Notifications extends Settings_Page {
 		$this->menu_title    = __( 'Notifications', 'dorzki-notifications-to-slack' );
 		$this->page_slug     = 'notifications';
 		$this->template_page = 'settings-notifications';
+		$this->header_link   = [
+			'label' => esc_html__( 'Add New', 'dorzki-notifications-to-slack' ),
+			'link'  => '#new_notification',
+		];
 
 		parent::__construct();
 

@@ -51,6 +51,11 @@ class Plugin {
 		$this->admin = new Admin();
 		$this->bot   = Slack_Bot::get_instance();
 
+		new Notifications\System();
+		new Notifications\User();
+		new Notifications\Post();
+		new Notifications\Page();
+		new Notifications\Comment();
 		new AJAX();
 
 	}
@@ -80,6 +85,13 @@ class Plugin {
 	 * Load plugins classes.
 	 */
 	private function load_classes() {
+
+		include_once( SN_PATH . 'core/notifications/notification-type.php' );
+		include_once( SN_PATH . 'core/notifications/system.php' );
+		include_once( SN_PATH . 'core/notifications/user.php' );
+		include_once( SN_PATH . 'core/notifications/post.php' );
+		include_once( SN_PATH . 'core/notifications/page.php' );
+		include_once( SN_PATH . 'core/notifications/comment.php' );
 
 		include_once( SN_PATH . 'core/settings/field.php' );
 		include_once( SN_PATH . 'core/settings/settings-page.php' );
