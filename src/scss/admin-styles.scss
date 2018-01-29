@@ -5,6 +5,7 @@
 	}
 
 	.preview_image_box {
+		display: inline-block;
 		width: 350px;
 		height: 350px;
 		border: 1px solid #dddddd;
@@ -13,6 +14,7 @@
 		transition: all .3s ease;
 		cursor: pointer;
 		position: relative;
+		font-size: 0;
 
 		&:hover,
 		&:focus {
@@ -20,6 +22,10 @@
 		}
 
 		&.has_image {
+			background-image: none;
+			width: auto;
+			height: auto;
+
 			img {
 				opacity: 1;
 			}
@@ -32,8 +38,8 @@
 		img {
 			opacity: 0;
 			max-width: 350px;
+			max-height: 350px;
 			height: auto;
-			width: 100%;
 			transition: all .5s ease;
 		}
 

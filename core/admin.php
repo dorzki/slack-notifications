@@ -35,6 +35,12 @@ class Admin {
 		add_action( 'admin_enqueue_scripts', [ $this, 'register_scripts' ] );
 		add_action( 'admin_enqueue_scripts', [ $this, 'register_styles' ] );
 
+		$status = get_option( SN_FIELD_PREFIX . 'test_integration' );
+
+		if ( empty( $status ) ) {
+			add_action( 'admin_notices', [ $this, 'display_connect_problem' ] );
+		}
+
 		$this->register_settings_pages();
 
 	}
@@ -109,6 +115,18 @@ class Admin {
 			wp_enqueue_style( SN_SLUG . '-styles', SN_URL . 'assets/admin-styles.min.css', false, SN_VERSION );
 
 		}
+
+	}
+
+
+	/**
+	 * Display en error to the admin if there is a connectivity issue.
+	 */
+	public function display_connect_problem() {
+
+		echo "<div class='error notice slack-connect-error'>";
+		echo "  <p>" . esc_html__( 'There is an issue with the Slack Bot, please check your configuration again.', 'dorzki-notifications-to-slack' ) . "</p>";
+		echo "</div>";
 
 	}
 
