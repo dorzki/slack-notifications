@@ -68,6 +68,12 @@ if ( isset( $notification ) && is_object( $notification ) ) {
 						   value="<?php echo esc_attr( $channel ); ?>">
 				</td>
 			</tr>
+			<tr>
+				<td colspan="2" class="remove-button">
+					<button type="button"
+							class="remove-notification button"><?php esc_attr_e( 'Remove', 'dorzki-notifications-to-slack' ); ?></button>
+				</td>
+			</tr>
 			</tbody>
 		</table>
 	</div>

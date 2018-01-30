@@ -126,5 +126,13 @@
 
 	} );
 
+	// Handle notification removal button
+	$( document ).on( 'click', '.remove-notification', function ( e ) {
+		e.preventDefault();
+
+		$( this ).parents( '.notification-box' ).remove();
+
+	} );
+
 
 })( jQuery );
