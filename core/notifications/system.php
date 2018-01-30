@@ -34,22 +34,25 @@ class System extends Notification_Type {
 		$this->object_label   = esc_html__( 'System', 'dorzki-notifications-to-slack' );
 		$this->object_options = [
 			'wordpress_update' => [
-				'label' => esc_html__( 'WordPress Update Available', 'dorzki-notifications-to-slack' ),
-				'hooks' => [
+				'label'  => esc_html__( 'WordPress Update Available', 'dorzki-notifications-to-slack' ),
+				'hooks'  => [
 					'wp_version_check' => 'wordpress_update',
 				],
+				'params' => 0,
 			],
 			'plugins_update'   => [
-				'label' => esc_html__( 'Plugin Update Available', 'dorzki-notifications-to-slack' ),
-				'hooks' => [
+				'label'  => esc_html__( 'Plugin Update Available', 'dorzki-notifications-to-slack' ),
+				'hooks'  => [
 					'wp_update_plugins' => 'plugins_update',
 				],
+				'params' => 0,
 			],
 			'themes_update'    => [
-				'label' => esc_html__( 'Theme Update Available', 'dorzki-notifications-to-slack' ),
-				'hooks' => [
+				'label'  => esc_html__( 'Theme Update Available', 'dorzki-notifications-to-slack' ),
+				'hooks'  => [
 					'wp_update_themes' => 'themes_update',
 				],
+				'params' => 0,
 			],
 		];
 

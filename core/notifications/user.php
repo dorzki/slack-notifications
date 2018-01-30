@@ -34,16 +34,20 @@ class User extends Notification_Type {
 		$this->object_label   = esc_html__( 'User', 'dorzki-notifications-to-slack' );
 		$this->object_options = [
 			'new_user'        => [
-				'label' => esc_html__( 'User Registered', 'dorzki-notifications-to-slack' ),
-				'hooks' => [
+				'label'  => esc_html__( 'User Registered', 'dorzki-notifications-to-slack' ),
+				'hooks'  => [
 					'user_register' => 'new_user',
 				],
+				'priority' => 10,
+				'params' => 1,
 			],
 			'admin_logged_in' => [
-				'label' => esc_html__( 'Administrator Logged In', 'dorzki-notifications-to-slack' ),
-				'hooks' => [
+				'label'  => esc_html__( 'Administrator Logged In', 'dorzki-notifications-to-slack' ),
+				'hooks'  => [
 					'wp_login' => 'administrator_login',
 				],
+				'priority' => 10,
+				'params' => 2,
 			],
 		];
 
