@@ -85,7 +85,7 @@ class Slack_Bot {
 
 		if ( ! empty( $attachments ) ) {
 
-			$notification[ 'attachments' ] = [
+			$notification[ 'attachments' ][ 0 ] = [
 				'fallback' => ( isset( $args[ 'plain_text' ] ) ) ? $args[ 'plain_text' ] : $message,
 				'color'    => ( isset( $args[ 'color' ] ) ) ? $args[ 'color' ] : '#000000',
 				'fields'   => [],
@@ -93,7 +93,7 @@ class Slack_Bot {
 
 			foreach ( $attachments as $attachment ) {
 
-				$notification[ 'attachments' ][ 'fields' ][] = [
+				$notification[ 'attachments' ][ 0 ][ 'fields' ][] = [
 					'title' => $attachment[ 'title' ],
 					'value' => $attachment[ 'value' ],
 					'short' => $attachment[ 'short' ],
