@@ -103,14 +103,28 @@
 	} );
 
 	// Handle notification type switch
-	$( document ).on( 'change', '.notification-box select.notification-type', function () {
+	$( document ).on( 'change', '.notification-box select', function () {
 
-		var _type = $( this ).val();
+		var _title = '';
 		var _notif = $( this ).parents( '.notification-box' );
+		var _type = _notif.find( 'select.notification-type' );
 
-		_notif.find( 'select.notification_options' ).hide();
-		_notif.find( 'select[name="notification_options[' + _type + '][]"]' ).show();
+		if ( $( this ).hasClass( 'notification-type' ) ) {
+
+			_notif.find( 'select.notification_options' ).removeClass( 'current' ).hide();
+			_notif.find( 'select[name="notification[action][' + _type.val() + '][]"]' ).addClass( 'current' ).show();
+
+		}
+
+		var _action = _notif.find( 'select[name="notification[action][' + _type.val() + '][]"]' );
+
+		_title = _type.find( 'option[value="' + _type.val() + '"]' ).text();
+		_title = '[' + _title + '] ' + _action.find( 'option[value="' + _action.val() + '"]' ).text();
+
+		_notif.find( 'h2' ).text( _title );
+		_notif.find( 'input[name="notification[title][]"]' ).val( _title );
 
 	} );
+
 
 })( jQuery );

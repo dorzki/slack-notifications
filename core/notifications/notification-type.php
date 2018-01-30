@@ -46,8 +46,7 @@ class Notification_Type {
 	 */
 	public function __construct() {
 
-		$GLOBALS[ 'slack_notifs' ][] = [
-			'id'      => $this->object_type,
+		$GLOBALS[ 'slack_notifs' ][ $this->object_type ] = [
 			'label'   => $this->object_label,
 			'options' => $this->object_options,
 		];
