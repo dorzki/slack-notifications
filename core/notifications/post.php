@@ -337,7 +337,7 @@ class Post extends Notification_Type {
 	 */
 	public function post_trashed( $post_id ) {
 
-		// Get comment
+		// Get post
 		$post = get_post( $post_id );
 
 		if ( is_wp_error( $post ) ) {

@@ -263,7 +263,7 @@ class Page extends Notification_Type {
 	 */
 	public function page_trashed( $page_id ) {
 
-		// Get comment
+		// Get page
 		$page = get_post( $page_id );
 
 		if ( is_wp_error( $page ) ) {

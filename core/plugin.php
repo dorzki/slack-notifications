@@ -35,11 +35,6 @@ class Plugin {
 	 */
 	public $admin = null;
 
-	/**
-	 * @var null|Slack_Bot
-	 */
-	public $bot = null;
-
 
 	/**
 	 * Plugin constructor.
@@ -48,15 +43,7 @@ class Plugin {
 
 		$this->load_classes();
 
-		$this->admin = new Admin();
-		$this->bot   = Slack_Bot::get_instance();
-
-		new Notifications\System();
-		new Notifications\User();
-		new Notifications\Post();
-		new Notifications\Page();
-		new Notifications\Comment();
-		new AJAX();
+		add_action( 'wp_loaded', [ $this, 'init_classes' ] );
 
 	}
 
@@ -92,6 +79,7 @@ class Plugin {
 		include_once( SN_PATH . 'core/notifications/post.php' );
 		include_once( SN_PATH . 'core/notifications/page.php' );
 		include_once( SN_PATH . 'core/notifications/comment.php' );
+		include_once( SN_PATH . 'core/notifications/cpt.php' );
 
 		include_once( SN_PATH . 'core/settings/field.php' );
 		include_once( SN_PATH . 'core/settings/settings-page.php' );
@@ -101,6 +89,24 @@ class Plugin {
 		include_once( SN_PATH . 'core/slack-bot.php' );
 		include_once( SN_PATH . 'core/ajax.php' );
 		include_once( SN_PATH . 'core/admin.php' );
+
+	}
+
+
+	/**
+	 * Initiate classes.
+	 */
+	public function init_classes() {
+
+		$this->admin = new Admin();
+
+		new Notifications\System();
+		new Notifications\User();
+		new Notifications\Post();
+		new Notifications\Page();
+		new Notifications\Comment();
+		new Notifications\CPT();
+		new AJAX();
 
 	}
 
