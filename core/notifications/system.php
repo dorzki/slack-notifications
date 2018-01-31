@@ -60,4 +60,214 @@ class System extends Notification_Type {
 
 	}
 
+
+	/**
+	 * Post notification when a new version of WordPress is available.
+	 *
+	 * @return bool
+	 */
+	public function wordpress_update() {
+
+		$version_data = get_site_transient( 'update_core' );
+
+		if ( false === $version_data ) {
+			return false;
+		}
+
+		if ( ! is_object( $version_data ) || ! isset( $version_data->updates[ 0 ] ) ) {
+			return false;
+		}
+
+		if ( 'upgrade' !== $version_data->updates[ 0 ]->response ) {
+			return false;
+		}
+
+		$saved_version = get_option( SN_FIELD_PREFIX . 'wordpress_version' );
+
+		if ( $saved_version !== $version_data->updates[ 0 ]->current ) {
+
+			update_option( SN_FIELD_PREFIX . 'wordpress_version', $version_data->updates[ 0 ]->current );
+
+			// Build notification
+			$message = __( ':warning: There is a new version available for WordPress on <%s|%s>.', 'dorzki-notifications-to-wordpress' );
+			$message = sprintf( $message, get_bloginfo( 'url' ), get_bloginfo( 'name' ) );
+
+			$attachments = [
+				[
+					'title' => esc_html__( 'Current Version', 'dorzki-notifications-to-slack' ),
+					'value' => $version_data->version_checked,
+					'short' => true,
+				],
+				[
+					'title' => esc_html__( 'New Version', 'dorzki-notifications-to-slack' ),
+					'value' => $version_data->updates[ 0 ]->current,
+					'short' => true,
+				],
+
+			];
+
+			return $this->slack_bot->send_message( $message, $attachments, [
+				'color' => '#f1c40f',
+			] );
+
+		}
+
+		return false;
+
+	}
+
+
+	/**
+	 * Post notification when there are new versions for plugins.
+	 *
+	 * @return bool
+	 */
+	public function plugins_update() {
+
+		$plugins_versions = get_site_transient( 'update_plugins' );
+
+		if ( false === $plugins_versions ) {
+			return false;
+		}
+
+		if ( ! is_object( $plugins_versions ) || ! isset( $plugins_versions->response ) ) {
+			return false;
+		}
+
+		// Get saved plugins versions notifications.
+		$saved_plugins_versions = get_option( SN_FIELD_PREFIX . 'plugins_version' );
+
+		if ( false === $saved_plugins_versions ) {
+			$saved_plugins_versions = [];
+		}
+
+		$attachments = [];
+
+		// Check if there are new versions.
+		foreach ( $plugins_versions->response as $plugin_file => $update_data ) {
+
+			if ( $plugins_versions->checked[ $plugin_file ] === $update_data->new_version ) {
+				continue;
+			}
+
+			$plugin_meta = get_plugin_data( WP_PLUGIN_DIR . '/' . $plugin_file, true, false );
+
+			if ( isset( $saved_plugins_versions[ $plugin_file ] ) && $saved_plugins_versions[ $plugin_file ] === $update_data->new_version ) {
+				continue;
+			}
+
+			$saved_plugins_versions[ $plugin_file ] = $update_data->new_version;
+
+			$attachments[] = [
+				[
+					'title' => esc_html__( 'Plugin Name', 'dorzki-notifications-to-slack' ),
+					'value' => $plugin_meta[ 'Name' ],
+					'short' => true,
+				],
+				[
+					'title' => esc_html__( 'New Version', 'dorzki-notifications-to-slack' ),
+					'value' => $update_data->new_version,
+					'short' => true,
+				],
+			];
+
+		}
+
+		update_option( SN_FIELD_PREFIX . 'plugins_version', $saved_plugins_versions );
+
+		if ( ! empty( $attachments ) ) {
+
+			// Build notification
+			$message = __( ':warning: There are new versions available for your plugins on <%s|%s>.', 'dorzki-notifications-to-slack' );
+			$message = sprintf( $message, get_bloginfo( 'url' ), get_bloginfo( 'name' ) );
+
+			$attachments[ 'multiple' ] = true;
+
+			return $this->slack_bot->send_message( $message, $attachments, [
+				'color' => '#f1c40f',
+			] );
+
+		}
+
+		return false;
+
+	}
+
+
+	/**
+	 * Post notification when there are new versions for themes.
+	 *
+	 * @return bool
+	 */
+	public function themes_update() {
+
+		$themes_versions = get_site_transient( 'update_themes' );
+
+		if ( false === $themes_versions ) {
+			return false;
+		}
+
+		if ( ! is_object( $themes_versions ) || ! isset( $themes_versions->response ) ) {
+			return false;
+		}
+
+		// Get saved themes versions notifications.
+		$saved_themes_versions = get_option( SN_FIELD_PREFIX . 'themes_version' );
+
+		if ( false === $saved_themes_versions ) {
+			$saved_themes_versions = [];
+		}
+
+		$attachments = [];
+
+		// Check if there are new versions.
+		foreach ( $themes_versions->response as $theme_dir => $update_data ) {
+
+			if ( $themes_versions->checked[ $theme_dir ] === $update_data[ 'new_version' ] ) {
+				continue;
+			}
+
+			$theme_meta = wp_get_theme( $theme_dir );
+
+			if ( isset( $saved_themes_versions[ $theme_dir ] ) && $saved_themes_versions[ $theme_dir ] === $update_data->new_version ) {
+				continue;
+			}
+
+			$saved_themes_versions[ $theme_dir ] = $update_data[ 'new_version' ];
+
+			$attachments[] = [
+				[
+					'title' => esc_html__( 'Plugin Name', 'dorzki-notifications-to-slack' ),
+					'value' => $theme_meta->get( 'Name' ),
+					'short' => true,
+				],
+				[
+					'title' => esc_html__( 'New Version', 'dorzki-notifications-to-slack' ),
+					'value' => $update_data[ 'new_version' ],
+					'short' => true,
+				],
+			];
+
+		}
+
+		update_option( SN_FIELD_PREFIX . 'themes_version', $saved_themes_versions );
+
+		if ( ! empty( $attachments ) ) {
+
+			// Build notification
+			$message = __( ':warning: There are new versions available for your themes on <%s|%s>.', 'dorzki-notifications-to-slack' );
+			$message = sprintf( $message, get_bloginfo( 'url' ), get_bloginfo( 'name' ) );
+
+			$attachments[ 'multiple' ] = true;
+
+			return $this->slack_bot->send_message( $message, $attachments, [
+				'color' => '#f1c40f',
+			] );
+
+		}
+
+		return false;
+
+	}
+
 }

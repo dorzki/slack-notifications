@@ -85,19 +85,47 @@ class Slack_Bot {
 
 		if ( ! empty( $attachments ) ) {
 
-			$notification[ 'attachments' ][ 0 ] = [
-				'fallback' => ( isset( $args[ 'plain_text' ] ) ) ? $args[ 'plain_text' ] : $message,
-				'color'    => ( isset( $args[ 'color' ] ) ) ? $args[ 'color' ] : '#000000',
-				'fields'   => [],
-			];
+			if ( isset( $attachments[ 'multiple' ] ) && $attachments[ 'multiple' ] ) {
 
-			foreach ( $attachments as $attachment ) {
+				unset( $attachments[ 'multiple' ] );
 
-				$notification[ 'attachments' ][ 0 ][ 'fields' ][] = [
-					'title' => $attachment[ 'title' ],
-					'value' => $attachment[ 'value' ],
-					'short' => $attachment[ 'short' ],
+				foreach ( $attachments as $attachment_id => $attachment ) {
+
+					$notification[ 'attachments' ][ $attachment_id ] = [
+						'fallback' => ( isset( $args[ 'plain_text' ] ) ) ? $args[ 'plain_text' ] : $message,
+						'color'    => ( isset( $args[ 'color' ] ) ) ? $args[ 'color' ] : '#000000',
+						'fields'   => [],
+					];
+
+					foreach ( $attachment as $field ) {
+
+						$notification[ 'attachments' ][ $attachment_id ][ 'fields' ][] = [
+							'title' => $field[ 'title' ],
+							'value' => $field[ 'value' ],
+							'short' => $field[ 'short' ],
+						];
+
+					}
+
+				}
+
+			} else {
+
+				$notification[ 'attachments' ][ 0 ] = [
+					'fallback' => ( isset( $args[ 'plain_text' ] ) ) ? $args[ 'plain_text' ] : $message,
+					'color'    => ( isset( $args[ 'color' ] ) ) ? $args[ 'color' ] : '#000000',
+					'fields'   => [],
 				];
+
+				foreach ( $attachments as $attachment ) {
+
+					$notification[ 'attachments' ][ 0 ][ 'fields' ][] = [
+						'title' => $attachment[ 'title' ],
+						'value' => $attachment[ 'value' ],
+						'short' => $attachment[ 'short' ],
+					];
+
+				}
 
 			}
 
