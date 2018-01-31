@@ -70,9 +70,230 @@ class Page extends Notification_Type {
 				'priority' => 10,
 				'params'   => 1,
 			],
+			'trash_page'   => [
+				'label'    => esc_html__( 'Page Moved to Trash', 'dorzki-notifications-to-slack' ),
+				'hooks'    => [
+					'trashed_post' => 'page_trashed',
+				],
+				'priority' => 10,
+				'params'   => 1,
+			],
 		];
 
 		parent::__construct();
+
+	}
+
+
+	/**
+	 * Post notification when a new page has been posted.
+	 *
+	 * @param $page
+	 *
+	 * @return bool
+	 */
+	public function page_published( $page ) {
+
+		if ( empty( $page ) || ! is_object( $page ) ) {
+			return false;
+		}
+
+		if ( 'page' !== $page->post_type ) {
+			return false;
+		}
+
+		// Build notification
+		$message = __( ':memo: The page *<%s|%s>* was published right now!', 'dorzki-notifications-to-slack' );
+		$message = sprintf( $message, get_permalink( $page->ID ), $page->post_title );
+
+		$attachments = [
+			[
+				'title' => esc_html__( 'Page Author', 'dorzki-notifications-to-slack' ),
+				'value' => get_the_author_meta( 'display_name', $page->post_author ),
+				'short' => true,
+			],
+			[
+				'title' => esc_html__( 'Published Date', 'dorzki-notifications-to-slack' ),
+				'value' => get_the_date( null, $page->ID ),
+				'short' => true,
+			],
+		];
+
+		return $this->slack_bot->send_message( $message, $attachments, [
+			'color' => '#3498db',
+		] );
+
+	}
+
+
+	/**
+	 * Post notification when a page is scheduled to be published.
+	 *
+	 * @param $page
+	 *
+	 * @return bool
+	 */
+	public function page_scheduled( $page ) {
+
+		if ( empty( $page ) || ! is_object( $page ) ) {
+			return false;
+		}
+
+		if ( 'page' !== $page->post_type ) {
+			return false;
+		}
+
+		// Build notification
+		$message = __( ':clock3: The page *<%s|%s>* was scheduled to be published on *%s*.', 'dorzki-notifications-to-slack' );
+		$message = sprintf( $message, get_permalink( $page->ID ), $page->post_title, get_the_date( null, $page->ID ) );
+
+		$attachments = [
+			[
+				'title' => esc_html__( 'Page Author', 'dorzki-notifications-to-slack' ),
+				'value' => get_the_author_meta( 'display_name', $page->post_author ),
+				'short' => true,
+			],
+			[
+				'title' => esc_html__( 'Scheduled Date', 'dorzki-notifications-to-slack' ),
+				'value' => get_the_date( null, $page->ID ),
+				'short' => true,
+			],
+			[
+				'title' => esc_html__( 'Scheduled Time', 'dorzki-notifications-to-slack' ),
+				'value' => get_the_time( null, $page->ID ),
+				'short' => true,
+			],
+		];
+
+		return $this->slack_bot->send_message( $message, $attachments, [
+			'color' => '#2980b9',
+		] );
+
+	}
+
+
+	/**
+	 * Post notification when a page is pending approval.
+	 *
+	 * @param $page
+	 *
+	 * @return bool
+	 */
+	public function page_pending( $page ) {
+
+		if ( empty( $page ) || ! is_object( $page ) ) {
+			return false;
+		}
+
+		if ( 'page' !== $page->post_type ) {
+			return false;
+		}
+
+		// Build notification
+		$message = __( ':eye: The page *<%s|%s>* is pending approval.', 'dorzki-notifications-to-slack' );
+		$message = sprintf( $message, get_permalink( $page->ID ), $page->post_title );
+
+		$attachments = [
+			[
+				'title' => esc_html__( 'Page Author', 'dorzki-notifications-to-slack' ),
+				'value' => get_the_author_meta( 'display_name', $page->post_author ),
+				'short' => true,
+			],
+			[
+				'title' => esc_html__( 'Pending Date', 'dorzki-notifications-to-slack' ),
+				'value' => get_the_date( null, $page->ID ),
+				'short' => true,
+			],
+		];
+
+		return $this->slack_bot->send_message( $message, $attachments, [
+			'color' => '#2980b9',
+		] );
+
+	}
+
+
+	/**
+	 * Post notification when a page was updated.
+	 *
+	 * @param $page
+	 *
+	 * @return bool
+	 */
+	public function page_updated( $page ) {
+
+		if ( empty( $page ) || ! is_object( $page ) ) {
+			return false;
+		}
+
+		if ( 'page' !== $page->post_type ) {
+			return false;
+		}
+
+		// Build notification
+		$message = __( ':pencil2: The page *<%s|%s>* has been updated right now.', 'dorzki-notifications-to-slack' );
+		$message = sprintf( $message, get_permalink( $page->ID ), $page->post_title );
+
+		$attachments = [
+			[
+				'title' => esc_html__( 'Page Author', 'dorzki-notifications-to-slack' ),
+				'value' => get_the_author_meta( 'display_name', $page->post_author ),
+				'short' => true,
+			],
+			[
+				'title' => esc_html__( 'Update Date', 'dorzki-notifications-to-slack' ),
+				'value' => get_the_modified_date( null, $page->ID ),
+				'short' => true,
+			],
+		];
+
+		return $this->slack_bot->send_message( $message, $attachments, [
+			'color' => '#2980b9',
+		] );
+
+	}
+
+
+	/**
+	 * Post notification when a page was trashed.
+	 *
+	 * @param $page_id
+	 *
+	 * @return bool
+	 */
+	public function page_trashed( $page_id ) {
+
+		// Get comment
+		$page = get_post( $page_id );
+
+		if ( is_wp_error( $page ) ) {
+			return false;
+		}
+
+		if ( 'page' !== $page->post_type ) {
+			return false;
+		}
+
+		// Build notification
+		$message = __( ':wastebasket: The page *<%s|%s>* was moved to trash.', 'dorzki-notifications-to-slack' );
+		$message = sprintf( $message, get_permalink( $page->ID ), $page->post_title );
+
+		$attachments = [
+			[
+				'title' => esc_html__( 'Page Author', 'dorzki-notifications-to-slack' ),
+				'value' => get_the_author_meta( 'display_name', $page->post_author ),
+				'short' => true,
+			],
+			[
+				'title' => esc_html__( 'Trashed Date', 'dorzki-notifications-to-slack' ),
+				'value' => get_the_modified_date( null, $page->ID ),
+				'short' => true,
+			],
+		];
+
+		return $this->slack_bot->send_message( $message, $attachments, [
+			'color' => '#e74c3c',
+		] );
 
 	}
 
