@@ -29,7 +29,7 @@
 		</template>
 		<!-- Notification Template -->
 
-		<?php $notifications = json_decode( get_option( SN_FIELD_PREFIX . 'notifications' ) ); ?>
+		<?php $notifications = \SlackNotifications\Notifications\Notification_Type::get_notifications(); ?>
 
 		<?php if ( is_array( $notifications ) && ! empty( $notifications ) ) : ?>
 

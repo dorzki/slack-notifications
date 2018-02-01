@@ -86,8 +86,11 @@ class Comment extends Notification_Type {
 			],
 		];
 
+		$channel = $this->get_notification_channel( __FUNCTION__ );
+
 		return $this->slack_bot->send_message( $message, $attachments, [
-			'color' => '#e67e22',
+			'color'   => '#e67e22',
+			'channel' => $channel,
 		] );
 
 	}

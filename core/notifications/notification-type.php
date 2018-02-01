@@ -30,6 +30,11 @@ class Notification_Type {
 	/**
 	 * @var string
 	 */
+	const DB_FIELD = SN_FIELD_PREFIX . 'notifications';
+
+	/**
+	 * @var string
+	 */
 	protected $object_type;
 
 	/**
@@ -47,6 +52,11 @@ class Notification_Type {
 	 */
 	protected $slack_bot = null;
 
+	/**
+	 * @var array
+	 */
+	protected $notif_channels = [];
+
 
 	/**
 	 * Notification_Type constructor.
@@ -60,7 +70,27 @@ class Notification_Type {
 			'options' => $this->object_options,
 		];
 
+		// Build notification_id => channel array
+		$notifications        = self::get_notifications();
+		$this->notif_channels = [];
+
+		foreach ( $notifications as $notification ) {
+			$this->notif_channels[ $notification->action ] = $notification->channel;
+		}
+
 		$this->run_hooks();
+
+	}
+
+
+	/**
+	 * Retrieve notifications from the database.
+	 *
+	 * @return array|mixed|object
+	 */
+	public static function get_notifications() {
+
+		return json_decode( get_option( self::DB_FIELD ) );
 
 	}
 
@@ -72,7 +102,7 @@ class Notification_Type {
 	 */
 	private function run_hooks() {
 
-		$notifications = json_decode( get_option( SN_FIELD_PREFIX . 'notifications' ) );
+		$notifications = self::get_notifications();
 
 		if ( ! is_array( $notifications ) || empty( $notifications ) ) {
 			return false;
@@ -100,6 +130,32 @@ class Notification_Type {
 		}
 
 		return true;
+
+	}
+
+
+	/**
+	 * Retrieve function channel.
+	 *
+	 * @param $func_name
+	 *
+	 * @return bool|mixed
+	 */
+	protected function get_notification_channel( $func_name ) {
+
+		foreach ( $this->object_options as $notif_id => $notif_data ) {
+
+			foreach ( $notif_data[ 'hooks' ] as $func ) {
+
+				if ( $func === $func_name ) {
+					return $this->notif_channels[ $notif_id ];
+				}
+
+			}
+
+		}
+
+		return false;
 
 	}
 

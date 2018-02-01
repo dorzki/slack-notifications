@@ -106,8 +106,11 @@ class System extends Notification_Type {
 
 			];
 
+			$channel = $this->get_notification_channel( __FUNCTION__ );
+
 			return $this->slack_bot->send_message( $message, $attachments, [
-				'color' => '#f1c40f',
+				'color'   => '#f1c40f',
+				'channel' => $channel,
 			] );
 
 		}
@@ -183,8 +186,11 @@ class System extends Notification_Type {
 
 			$attachments[ 'multiple' ] = true;
 
+			$channel = $this->get_notification_channel( __FUNCTION__ );
+
 			return $this->slack_bot->send_message( $message, $attachments, [
-				'color' => '#f1c40f',
+				'color'   => '#f1c40f',
+				'channel' => $channel,
 			] );
 
 		}
@@ -260,8 +266,11 @@ class System extends Notification_Type {
 
 			$attachments[ 'multiple' ] = true;
 
+			$channel = $this->get_notification_channel( __FUNCTION__ );
+
 			return $this->slack_bot->send_message( $message, $attachments, [
-				'color' => '#f1c40f',
+				'color'   => '#f1c40f',
+				'channel' => $channel,
 			] );
 
 		}

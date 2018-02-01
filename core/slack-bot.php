@@ -76,7 +76,6 @@ class Slack_Bot {
 	private function build_notification( $message, $attachments = [], $args = [] ) {
 
 		$notification = [
-			'channel'  => $this->default_channel,
 			'username' => $this->name,
 			'icon_url' => $this->image,
 			'text'     => $message,
@@ -137,6 +136,24 @@ class Slack_Bot {
 
 
 	/**
+	 * Parse channel string.
+	 *
+	 * @param $channel
+	 *
+	 * @return array
+	 */
+	private function parse_channels( $channel ) {
+
+		if ( empty( $channel ) ) {
+			return explode( ',', $this->default_channel );
+		}
+
+		return explode( ',', $channel );
+
+	}
+
+
+	/**
 	 * Send the notification to slack.
 	 *
 	 * @param       $message
@@ -152,24 +169,27 @@ class Slack_Bot {
 		}
 
 		$notification = $this->build_notification( $message, $attachments, $args );
+		$channels     = ( isset( $args[ 'channel' ] ) ) ? $this->parse_channels( $args[ 'channel' ] ) : $this->parse_channels( '' );
 
-		// Make an API call.
-		$response = wp_remote_request( $this->webhook, [
-			'method'      => 'POST',
-			'timeout'     => 30,
-			'httpversion' => '1.0',
-			'blocking'    => true,
-			'body'        => [
-				'payload' => wp_json_encode( $notification ),
-			],
-		] );
+		foreach ( $channels as $channel ) {
 
-		// Check if everything is ok.
-		if ( is_wp_error( $response ) ) {
+			$notification[ 'channel' ] = $channel;
 
-			update_option( SN_FIELD_PREFIX . 'test_integration', 0 );
+			// Make an API call.
+			$response = wp_remote_request( $this->webhook, [
+				'method'      => 'POST',
+				'timeout'     => 30,
+				'httpversion' => '1.0',
+				'blocking'    => true,
+				'body'        => [
+					'payload' => wp_json_encode( $notification ),
+				],
+			] );
 
-			return false;
+			// Check if everything is ok.
+			if ( is_wp_error( $response ) ) {
+				update_option( SN_FIELD_PREFIX . 'test_integration', 0 );
+			}
 
 		}
 

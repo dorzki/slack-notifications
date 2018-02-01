@@ -88,8 +88,11 @@ class User extends Notification_Type {
 			],
 		];
 
+		$channel = $this->get_notification_channel( __FUNCTION__ );
+
 		return $this->slack_bot->send_message( $message, $attachments, [
-			'color' => '#2ecc71',
+			'color'   => '#2ecc71',
+			'channel' => $channel,
 		] );
 
 	}
@@ -126,8 +129,11 @@ class User extends Notification_Type {
 			],
 		];
 
+		$channel = $this->get_notification_channel( __FUNCTION__ );
+
 		return $this->slack_bot->send_message( $message, $attachments, [
-			'color' => '#27ae60',
+			'color'   => '#27ae60',
+			'channel' => $channel,
 		] );
 
 	}

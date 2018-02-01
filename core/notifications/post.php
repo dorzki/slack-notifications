@@ -163,8 +163,11 @@ class Post extends Notification_Type {
 			],
 		];
 
+		$channel = $this->get_notification_channel( __FUNCTION__ );
+
 		return $this->slack_bot->send_message( $message, $attachments, [
-			'color' => '#3498db',
+			'color'   => '#3498db',
+			'channel' => $channel,
 		] );
 
 	}
@@ -219,8 +222,11 @@ class Post extends Notification_Type {
 			],
 		];
 
+		$channel = $this->get_notification_channel( __FUNCTION__ );
+
 		return $this->slack_bot->send_message( $message, $attachments, [
-			'color' => '#2980b9',
+			'color'   => '#2980b9',
+			'channel' => $channel,
 		] );
 
 	}
@@ -270,8 +276,11 @@ class Post extends Notification_Type {
 			],
 		];
 
+		$channel = $this->get_notification_channel( __FUNCTION__ );
+
 		return $this->slack_bot->send_message( $message, $attachments, [
-			'color' => '#2980b9',
+			'color'   => '#2980b9',
+			'channel' => $channel,
 		] );
 
 	}
@@ -321,8 +330,11 @@ class Post extends Notification_Type {
 			],
 		];
 
+		$channel = $this->get_notification_channel( __FUNCTION__ );
+
 		return $this->slack_bot->send_message( $message, $attachments, [
-			'color' => '#2980b9',
+			'color'   => '#2980b9',
+			'channel' => $channel,
 		] );
 
 	}
@@ -375,8 +387,11 @@ class Post extends Notification_Type {
 			],
 		];
 
+		$channel = $this->get_notification_channel( __FUNCTION__ );
+
 		return $this->slack_bot->send_message( $message, $attachments, [
-			'color' => '#e74c3c',
+			'color'   => '#e74c3c',
+			'channel' => $channel,
 		] );
 
 	}
