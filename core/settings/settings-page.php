@@ -166,7 +166,7 @@ class Settings_Page {
 
 		$html = sprintf( "<p id='%s'>%s</p>", $args[ 'id' ], $this->settings[ $args[ 'id' ] ][ 'desc' ] );
 
-		echo apply_filters( $html );
+		echo apply_filters( 'slack_section_output', $html );
 
 		do_action( 'slack_after_section_output', $args );
 		do_action( 'slack_after_' . $this->page_slug . '_section_output', $this );

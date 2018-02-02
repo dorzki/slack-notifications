@@ -79,7 +79,7 @@ class Field {
 
 		$value = get_option( $args[ 'label_for' ] );
 
-		$html = printf( "<input type='%s' class='%s' name='%s' value='%s'>", $args[ 'type' ], implode( ' ', $args[ 'classes' ] ), $args[ 'label_for' ], $value );
+		$html = sprintf( "<input type='%s' class='%s' name='%s' value='%s'>", $args[ 'type' ], implode( ' ', $args[ 'classes' ] ), $args[ 'label_for' ], $value );
 
 		echo apply_filters( 'slack_before_output_input_field', $html );
 

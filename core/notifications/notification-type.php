@@ -74,8 +74,10 @@ class Notification_Type {
 		$notifications        = self::get_notifications();
 		$this->notif_channels = [];
 
-		foreach ( $notifications as $notification ) {
-			$this->notif_channels[ $notification->action ] = $notification->channel;
+		if ( ! empty( $notifications ) ) {
+			foreach ( $notifications as $notification ) {
+				$this->notif_channels[ $notification->action ] = $notification->channel;
+			}
 		}
 
 		$this->run_hooks();

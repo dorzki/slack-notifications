@@ -31,7 +31,7 @@ class Comment extends Notification_Type {
 	public function __construct() {
 
 		$this->object_type    = 'comment';
-		$this->object_label   = esc_html__( 'Comment', 'dorzki-notifications-to-slack' );
+		$this->object_label   = esc_html__( 'Comments', 'dorzki-notifications-to-slack' );
 		$this->object_options = [
 			'new_comment' => [
 				'label'    => esc_html__( 'New Comment', 'dorzki-notifications-to-slack' ),

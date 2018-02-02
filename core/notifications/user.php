@@ -31,7 +31,7 @@ class User extends Notification_Type {
 	public function __construct() {
 
 		$this->object_type    = 'user';
-		$this->object_label   = esc_html__( 'User', 'dorzki-notifications-to-slack' );
+		$this->object_label   = esc_html__( 'Users', 'dorzki-notifications-to-slack' );
 		$this->object_options = [
 			'new_user'        => [
 				'label'    => esc_html__( 'User Registered', 'dorzki-notifications-to-slack' ),
