@@ -45,7 +45,7 @@ class General extends Settings_Page {
 	 */
 	public function generate_settings() {
 
-		$this->settings = [
+		$this->settings = apply_filters( 'slack_general_page_settings', [
 			'integration' => [
 				'title'  => __( 'Slack Integration', 'dorzki-notifications-to-slack' ),
 				'desc'   => __( 'Setup integration between WordPress and Slack.' ),
@@ -73,7 +73,7 @@ class General extends Settings_Page {
 					],
 				],
 			],
-		];
+		] );
 
 	}
 

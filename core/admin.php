@@ -72,8 +72,12 @@ class Admin {
 	 */
 	public function register_settings_pages() {
 
+		do_action( 'slack_before_register_pages' );
+
 		new Settings\General();
 		new Settings\Notifications();
+
+		do_action( 'slack_after_register_pages' );
 
 	}
 

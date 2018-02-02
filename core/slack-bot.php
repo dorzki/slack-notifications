@@ -130,7 +130,7 @@ class Slack_Bot {
 
 		}
 
-		return $notification;
+		return apply_filters( 'slack_after_notification_generation', $notification, $message, $attachments, $args );
 
 	}
 
@@ -145,10 +145,12 @@ class Slack_Bot {
 	private function parse_channels( $channel ) {
 
 		if ( empty( $channel ) ) {
-			return explode( ',', $this->default_channel );
+			$channels = explode( ',', $this->default_channel );
+		} else {
+			$channels = explode( ',', $channel );
 		}
 
-		return explode( ',', $channel );
+		return apply_filters( 'slack_after_parse_channels', $channels, $channel );
 
 	}
 
@@ -176,7 +178,7 @@ class Slack_Bot {
 			$notification[ 'channel' ] = $channel;
 
 			// Make an API call.
-			$response = wp_remote_request( $this->webhook, [
+			$api_call_data = apply_filters( 'slack_before_api_call', [
 				'method'      => 'POST',
 				'timeout'     => 30,
 				'httpversion' => '1.0',
@@ -185,6 +187,7 @@ class Slack_Bot {
 					'payload' => wp_json_encode( $notification ),
 				],
 			] );
+			$response      = wp_remote_request( $this->webhook, $api_call_data );
 
 			// Check if everything is ok.
 			if ( is_wp_error( $response ) ) {

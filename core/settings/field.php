@@ -79,7 +79,9 @@ class Field {
 
 		$value = get_option( $args[ 'label_for' ] );
 
-		printf( "<input type='%s' class='%s' name='%s' value='%s'>", $args[ 'type' ], implode( ' ', $args[ 'classes' ] ), $args[ 'label_for' ], $value );
+		$html = printf( "<input type='%s' class='%s' name='%s' value='%s'>", $args[ 'type' ], implode( ' ', $args[ 'classes' ] ), $args[ 'label_for' ], $value );
+
+		echo apply_filters( 'slack_before_output_input_field', $html );
 
 	}
 
@@ -94,12 +96,14 @@ class Field {
 		$value     = get_option( $args[ 'label_for' ] );
 		$has_image = ( ! empty( $value ) ) ? 'has_image' : '';
 
-		echo "<div class='preview_{$args['label_for']} preview_image_box {$has_image}'>";
-		echo "  <img src='{$value}' alt='" . esc_attr__( 'Image Preview', 'dorzki-notifications-to-slack' ) . "'>";
-		echo "  <button type='button' class='remove-image'>" . esc_html__( 'Remove Image', 'dorzki-notifications-to-slack' ) . "</button>";
-		echo "</div>";
+		$html = "<div class='preview_{$args['label_for']} preview_image_box {$has_image}'>";
+		$html .= "  <img src='{$value}' alt='" . esc_attr__( 'Image Preview', 'dorzki-notifications-to-slack' ) . "'>";
+		$html .= "  <button type='button' class='remove-image'>" . esc_html__( 'Remove Image', 'dorzki-notifications-to-slack' ) . "</button>";
+		$html .= "</div>";
 
-		printf( "<input type='hidden' class='%s' name='%s' value='%s'>", implode( ' ', $args[ 'classes' ] ), $args[ 'label_for' ], $value );
+		$html .= sprintf( "<input type='hidden' class='%s' name='%s' value='%s'>", implode( ' ', $args[ 'classes' ] ), $args[ 'label_for' ], $value );
+
+		echo apply_filters( 'slack_before_output_media_field', $html );
 
 	}
 

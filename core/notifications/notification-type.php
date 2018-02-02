@@ -148,7 +148,7 @@ class Notification_Type {
 			foreach ( $notif_data[ 'hooks' ] as $func ) {
 
 				if ( $func === $func_name ) {
-					return $this->notif_channels[ $notif_id ];
+					return apply_filters( 'slack_notification_channel', $this->notif_channels[ $notif_id ] );
 				}
 
 			}

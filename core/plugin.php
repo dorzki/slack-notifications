@@ -73,6 +73,8 @@ class Plugin {
 	 */
 	private function load_classes() {
 
+		do_action( 'slack_before_load_classes' );
+
 		include_once( SN_PATH . 'core/notifications/notification-type.php' );
 		include_once( SN_PATH . 'core/notifications/system.php' );
 		include_once( SN_PATH . 'core/notifications/user.php' );
@@ -81,6 +83,8 @@ class Plugin {
 		include_once( SN_PATH . 'core/notifications/comment.php' );
 		include_once( SN_PATH . 'core/notifications/cpt.php' );
 		include_once( SN_PATH . 'core/notifications/woocommerce.php' );
+
+		do_action( 'slack_after_load_notifications_classes' );
 
 		include_once( SN_PATH . 'core/settings/field.php' );
 		include_once( SN_PATH . 'core/settings/settings-page.php' );
@@ -91,6 +95,8 @@ class Plugin {
 		include_once( SN_PATH . 'core/ajax.php' );
 		include_once( SN_PATH . 'core/admin.php' );
 
+		do_action( 'slack_after_load_classes' );
+
 	}
 
 
@@ -99,8 +105,10 @@ class Plugin {
 	 */
 	public function init_classes() {
 
-		$this->admin = new Admin();
+		do_action( 'slack_before_init_classes' );
 
+		$this->admin = new Admin();
+		
 		new Notifications\System();
 		new Notifications\User();
 		new Notifications\Post();
@@ -109,6 +117,8 @@ class Plugin {
 		new Notifications\CPT();
 		new Notifications\WooCommerce();
 		new AJAX();
+
+		do_action( 'slack_after_init_classes' );
 
 	}
 

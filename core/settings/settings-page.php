@@ -74,10 +74,16 @@ class Settings_Page {
 	 */
 	public function register_page() {
 
+		do_action( 'slack_before_page_register', $this );
+		do_action( 'slack_before_' . $this->page_slug . '_page_register', $this );
+
 		add_submenu_page( SN_SLUG, $this->page_title, $this->menu_title, 'manage_options', SN_SLUG . '-' . $this->page_slug, [
 			$this,
 			'print_settings_page',
 		] );
+
+		do_action( 'slack_after_page_register', $this );
+		do_action( 'slack_after_' . $this->page_slug . '_page_register', $this );
 
 	}
 
@@ -96,9 +102,15 @@ class Settings_Page {
 
 		}
 
+		do_action( 'slack_before_page_output', $this );
+		do_action( 'slack_before_' . $this->page_slug . '_page_output', $this );
+
 		include_once( SN_PATH . 'templates/settings-header.php' );
 		include_once( SN_PATH . "templates/{$this->template_page}.php" );
 		include_once( SN_PATH . 'templates/settings-footer.php' );
+
+		do_action( 'slack_after_page_output', $this );
+		do_action( 'slack_after_' . $this->page_slug . '_page_output', $this );
 
 	}
 
@@ -149,7 +161,15 @@ class Settings_Page {
 			return;
 		}
 
-		printf( "<p id='%s'>%s</p>", $args[ 'id' ], $this->settings[ $args[ 'id' ] ][ 'desc' ] );
+		do_action( 'slack_before_section_output', $args );
+		do_action( 'slack_before_' . $this->page_slug . '_section_output', $this );
+
+		$html = sprintf( "<p id='%s'>%s</p>", $args[ 'id' ], $this->settings[ $args[ 'id' ] ][ 'desc' ] );
+
+		echo apply_filters( $html );
+
+		do_action( 'slack_after_section_output', $args );
+		do_action( 'slack_after_' . $this->page_slug . '_section_output', $this );
 
 	}
 
