@@ -42,7 +42,7 @@ class CPT extends Notification_Type {
 		] );
 
 		// Ignore certain CPTs.
-		$this->ignore_cpts = [
+		$this->ignore_cpts = apply_filters( 'slack_ignore_cpts', [
 			'post',
 			'page',
 			'attachment',
@@ -57,7 +57,7 @@ class CPT extends Notification_Type {
 			'shop_order_refund',
 			'shop_coupon',
 			'shop_webhook',
-		];
+		] );
 
 		$post_types = array_diff( $post_types, $this->ignore_cpts );
 
