@@ -1,41 +1,6 @@
-.gi # Created by .ignore support plugin (hsz.mobi)
-### WordPress template
-.idea/
-*.log
-.htaccess
-sitemap.xml
-sitemap.xml.gz
-wp-config.php
-wp-content/advanced-cache.php
-wp-content/backup-db/
-wp-content/backups/
-wp-content/blogs.dir/
-wp-content/cache/
-wp-content/upgrade/
-wp-content/uploads/
-wp-content/wp-cache-config.php
-.DS_Store
-assets/.DS_Store
-assets/css/.DS_Store
-assets/images/.DS_Store
-assets/js/.DS_Store
-classes/.DS_Store
-templates/.DS_Store
-tests/.DS_Store
-languages/.DS_Store
-assets/.svn/
-assets/css/.svn/
-assets/images/.svn/
-assets/js/.svn/
-classes/.svn/
-templates/.svn/
-tests/.svn/
-tests/bin/.svn/
-tests/lib/.svn/
-languages/.svn/
-#ignore code coverage results
-/log
-#ignore node_modules for grunt
-node_modules
-npm-debug.log
-
+# IntelliJ project files
+.idea
+*.iml
+out
+gen
+/node_modules/

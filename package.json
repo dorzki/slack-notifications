@@ -1,30 +1,28 @@
 {
-  "name": "Slack-Notifications",
-  "version": "1.0.0",
-  "description": "Slack communication with WordPress",
-  "main": "Gruntfile.js",
-  "directories": {
-    "test": "tests"
-  },
-  "dependencies": {
-    "grunt": "^0.4.5",
-    "grunt-contrib-jshint": "^0.11.3",
-    "grunt-phpcbf": "^0.1.0",
-    "grunt-phpcs": "^0.4.0",
-    "jshint": "^2.8.0"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/dorzki/Slack-Notifications.git"
-  },
-  "author": "Ran Bar-Zik",
-  "license": "GPL2",
-  "bugs": {
-    "url": "https://github.com/dorzki/Slack-Notifications/issues"
-  },
-  "homepage": "https://github.com/dorzki/Slack-Notifications",
-  "devDependencies": {},
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  }
+	"name": "slack-notifications",
+	"version": "2.0.0",
+	"description": "Send WordPress notifications to your Slack team channel.",
+	"main": "gulpfile.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/dorzki/Slack-Notifications.git"
+	},
+	"author": "Dor Zuberi",
+	"license": "GPL-3.0",
+	"bugs": {
+		"url": "https://github.com/dorzki/Slack-Notifications/issues"
+	},
+	"homepage": "https://github.com/dorzki/Slack-Notifications#readme",
+	"dependencies": {
+		"gulp": "^3.9.1",
+		"gulp-autoprefixer": "^4.1.0",
+		"gulp-concat": "^2.6.1",
+		"gulp-plumber": "^1.2.0",
+		"gulp-sass": "^3.1.0",
+		"gulp-sourcemaps": "^2.6.4",
+		"gulp-uglify": "^3.0.0"
+	}
 }

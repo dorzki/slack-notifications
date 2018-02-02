@@ -2,9 +2,9 @@
 Contributors: dorzki
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=UYSJG8CB8YN2A
 Tags: notifications, slack, realtime, updates
-Requires at least: 4.3
-Tested up to: 4.9
-Stable tag: 1.0.12
+Requires at least: 4.5
+Tested up to: 4.9.2
+Stable tag: 2.0.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -12,16 +12,17 @@ Get WordPress notifications to your team's Slack channel.
 
 == Description ==
 
-A light and essential plugin that notifies you via Slack API to your Slack channel on the following:
+Light and customisable WordPress plugin to integrate your site with Slack.
 
-* New WordPress Version.
-* New Plugins Updates.
-* Post Published.
-* New User Registration.
-* Admin Login Detected.
-* And more!
- 
-The plugin will be bring new notifications options on every update.
+Choose what type of notification you would like to receive:
+* WordPress Update Available
+* Plugins Updates Available
+* Administrator Login
+* New User Registration
+* New Comments
+* Nee WooCommerce Orders
+* WooCommerce Product with Low Stock
+* And much more!
 
 You can contribute by simple [Forking me on GitHub](https://github.com/dorzki/Slack-Notifications).
 
@@ -53,14 +54,20 @@ Please feel free to contact me `webmaster[AT]dorzki.co.il`
 
 == Screenshots ==
 
-1. `Settings Screen - Part 1` Configure Slack Integration settings, like WebHook url, desired channel, bot name and icon.
-2. `Settings Screen - Part 2` Choose which notifications to get.
+1. `Settings Screen` Configure Slack Integration settings, like WebHook url, desired channel, bot name and icon.
+2. `Notifications Screen` Choose which notifications to get anf configure to which channel it will be sent.
+3. `Slack Notifications - Part 1` Get notifications to you Slack channel.
+4. `Slack Notifications - Part 2` Get notifications to you Slack channel.
 
 == Changelog ==
 
+= 2.0.0 =
+* New version with new UI and better notification customization.
+* Added actions and filters.
+* Added native WooCommerce support.
+
 = 1.0.12 =
-* Fixed an issue when a CPT is being updated a notification of publication was fired, thanks to @nunas for reporting.
-*** A huge plugin update will be released soon, with new UI and new features. ***
+* Fixed an issue when a CPT is being updated a notification of publication was fired, thanks to [nunas](https://wordpress.org/support/users/nanus/) for reporting.
 
 = 1.0.11 =
 * Fixed wrong parameters order on custom post type notification.
