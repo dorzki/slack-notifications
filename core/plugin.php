@@ -80,6 +80,7 @@ class Plugin {
 		include_once( SN_PATH . 'core/notifications/page.php' );
 		include_once( SN_PATH . 'core/notifications/comment.php' );
 		include_once( SN_PATH . 'core/notifications/cpt.php' );
+		include_once( SN_PATH . 'core/notifications/woocommerce.php' );
 
 		include_once( SN_PATH . 'core/settings/field.php' );
 		include_once( SN_PATH . 'core/settings/settings-page.php' );
@@ -106,6 +107,7 @@ class Plugin {
 		new Notifications\Page();
 		new Notifications\Comment();
 		new Notifications\CPT();
+		new Notifications\WooCommerce();
 		new AJAX();
 
 	}
