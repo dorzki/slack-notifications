@@ -63,6 +63,7 @@ Please feel free to contact me `webmaster[AT]dorzki.co.il`
 
 = 2.0.1 =
 * [FEATURE] Added RTL support.
+* [HOTFIX] Fixed issue with plugin doesn't update database.
 
 = 2.0.0 =
 * New version with new UI and better notification customization.
