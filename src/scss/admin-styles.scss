@@ -225,3 +225,64 @@
 		}
 	}
 }
+
+/** RTL **/
+.rtl {
+	.slack-notifications-wrapper {
+		.preview_image_box {
+			&.has_image {
+				.remove-image {
+					right: auto;
+					left: 15px;
+				}
+			}
+		}
+
+		button.slack_test_integration {
+			background-position: center left 5px;
+
+			&:hover,
+			&:focus {
+				background-position: center left 5px;
+			}
+
+			&.testing,
+			&.ok,
+			&.error {
+				padding-right: 10px;
+				padding-left: 30px;
+			}
+		}
+
+		.notifications-wrapper {
+			.notification-box {
+				.notification-header {
+					button {
+						right: auto;
+						left: 0;
+					}
+				}
+
+				.notification-settings {
+					table {
+						th,
+						td {
+							text-align: right;
+						}
+
+						th {
+							border-right: 0;
+							border-left: 1px solid #dddddd;
+						}
+
+						td {
+							&.remove-button {
+								text-align: left;
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}
