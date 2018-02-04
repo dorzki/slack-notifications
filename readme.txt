@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: notifications, slack, realtime, updates
 Requires at least: 4.5
 Tested up to: 4.9.2
-Stable tag: 2.0.0
+Stable tag: 2.0.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -60,6 +60,9 @@ Please feel free to contact me `webmaster[AT]dorzki.co.il`
 4. `Slack Notifications - Part 2` Get notifications to you Slack channel.
 
 == Changelog ==
+
+= 2.0.1 =
+* [FEATURE] Added RTL support.
 
 = 2.0.0 =
 * New version with new UI and better notification customization.
