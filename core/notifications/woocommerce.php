@@ -333,6 +333,7 @@ class WooCommerce extends Notification_Type {
 		}
 
 		$message = sprintf( $message, get_bloginfo( 'url' ), get_bloginfo( 'name' ) );
+		$stock_quantity = $product->get_stock_quantity();
 
 		$attachments = [
 			[
@@ -352,7 +353,7 @@ class WooCommerce extends Notification_Type {
 			],
 			[
 				'title' => esc_html__( 'Stock Left', 'dorzki-notifications-to-slack' ),
-				'value' => ( ! empty( $product->get_stock_quantity() ) ) ? $product->get_stock_quantity() : 0,
+				'value' => ( ! empty( $stock_quantity ) ) ? $stock_quantity : 0,
 				'short' => true,
 			],
 		];
