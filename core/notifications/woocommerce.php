@@ -332,7 +332,8 @@ class WooCommerce extends Notification_Type {
 			$message = __( ':information_source: Product is out of stock *<%s|%s>*', 'dorzki-notifications-to-slack' );
 		}
 
-		$message = sprintf( $message, get_bloginfo( 'url' ), get_bloginfo( 'name' ) );
+		$message        = sprintf( $message, get_bloginfo( 'url' ), get_bloginfo( 'name' ) );
+		$stock_quantity = $product->get_stock_quantity();
 
 		$attachments = [
 			[
@@ -352,7 +353,7 @@ class WooCommerce extends Notification_Type {
 			],
 			[
 				'title' => esc_html__( 'Stock Left', 'dorzki-notifications-to-slack' ),
-				'value' => ( ! empty( $product->get_stock_quantity() ) ) ? $product->get_stock_quantity() : 0,
+				'value' => intval( $stock_quantity ),
 				'short' => true,
 			],
 		];
