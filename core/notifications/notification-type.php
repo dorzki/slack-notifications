@@ -30,7 +30,7 @@ class Notification_Type {
 	/**
 	 * @var string
 	 */
-	protected static $db_field = SN_FIELD_PREFIX . 'notifications';
+	protected static $db_field;
 
 	/**
 	 * @var string
@@ -62,6 +62,8 @@ class Notification_Type {
 	 * Notification_Type constructor.
 	 */
 	public function __construct() {
+
+		self::$db_field = SN_FIELD_PREFIX . 'notifications';
 
 		$this->slack_bot = Slack_Bot::get_instance();
 
