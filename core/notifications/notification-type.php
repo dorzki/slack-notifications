@@ -7,7 +7,7 @@
  * @author      Dor Zuberi <webmaster@dorzki.co.il>
  * @link        https://www.dorzki.co.il
  * @since       2.0.0
- * @version     2.0.0
+ * @version     2.0.2
  */
 
 namespace SlackNotifications\Notifications;
@@ -30,7 +30,7 @@ class Notification_Type {
 	/**
 	 * @var string
 	 */
-	const DB_FIELD = SN_FIELD_PREFIX . 'notifications';
+	protected static $db_field = SN_FIELD_PREFIX . 'notifications';
 
 	/**
 	 * @var string
@@ -92,7 +92,7 @@ class Notification_Type {
 	 */
 	public static function get_notifications() {
 
-		return json_decode( get_option( self::DB_FIELD ) );
+		return json_decode( get_option( self::$db_field ) );
 
 	}
 
