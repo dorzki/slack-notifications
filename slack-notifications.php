@@ -3,7 +3,7 @@
  * Plugin Name: Slack Notifications
  * Plugin URI: https://www.dorzki.co.il
  * Description: Add Slack integration to a channel and send desired notifications as a slack bot.
- * Version: 2.0.1
+ * Version: 2.0.2
  * Author: dorzki
  * Author URI: https://www.dorzki.co.il
  * Text Domain: dorzki-notifications-to-slack
@@ -11,7 +11,7 @@
  *
  * @package   SlackNotifications
  * @since     1.0.0
- * @version   2.0.1
+ * @version   2.0.2
  * @author    Dor Zuberi <me@dorzki.co.il>
  * @link      https://www.dorzki.co.il
  */
@@ -22,7 +22,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // Define plugins constants
-define( 'SN_VERSION', '2.0.1' );
+define( 'SN_VERSION', '2.0.2' );
 define( 'SN_SLUG', 'slack-notifications' );
 define( 'SN_FIELD_PREFIX', 'slack_' );
 define( 'SN_PATH', plugin_dir_path( __FILE__ ) );
@@ -47,7 +47,7 @@ if ( ! version_compare( PHP_VERSION, '5.4', '>=' ) ) {
  */
 function sn_load_text_domain() {
 
-	load_plugin_textdomain( 'dorzki-notification-to-slack' );
+	load_plugin_textdomain( 'dorzki-notifications-to-slack' );
 
 }
 
