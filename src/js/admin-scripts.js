@@ -134,5 +134,14 @@
 
 	} );
 
+	// Copy report data to clipboard.
+	$( '.copy-report' ).on( 'click', function ( e ) {
+		e.preventDefault();
+
+		$( '#slack_tech_data' ).select();
+
+		document.execCommand( 'copy' );
+
+	} );
 
 })( jQuery );

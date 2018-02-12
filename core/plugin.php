@@ -7,7 +7,7 @@
  * @author      Dor Zuberi <webmaster@dorzki.co.il>
  * @link        https://www.dorzki.co.il
  * @since       2.0.0
- * @version     2.0.0
+ * @version     2.0.3
  */
 
 namespace SlackNotifications;
@@ -90,6 +90,7 @@ class Plugin {
 		include_once( SN_PATH . 'core/settings/settings-page.php' );
 		include_once( SN_PATH . 'core/settings/general.php' );
 		include_once( SN_PATH . 'core/settings/notifications.php' );
+		include_once( SN_PATH . 'core/settings/support.php' );
 
 		include_once( SN_PATH . 'core/slack-bot.php' );
 		include_once( SN_PATH . 'core/ajax.php' );
@@ -108,7 +109,7 @@ class Plugin {
 		do_action( 'slack_before_init_classes' );
 
 		$this->admin = new Admin();
-		
+
 		new Notifications\System();
 		new Notifications\User();
 		new Notifications\Post();
