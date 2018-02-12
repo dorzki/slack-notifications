@@ -46,7 +46,7 @@ class User extends Notification_Type {
 				'hooks'    => [
 					'wp_login' => 'administrator_login',
 				],
-				'priority' => 10,
+				'priority' => 9,
 				'params'   => 2,
 			],
 		];
