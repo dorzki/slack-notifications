@@ -234,14 +234,6 @@
 		header,
 		.section-contents {
 			padding: 15px;
-
-			textarea {
-				display: block;
-				width: 100%;
-				height: 350px;
-				resize: none;
-				margin-bottom: 15px;
-			}
 		}
 
 		header {
@@ -251,6 +243,48 @@
 			h2 {
 				margin: 0;
 				color: #32373c;
+			}
+		}
+
+		.section-contents {
+			textarea {
+				display: block;
+				width: 100%;
+				height: 350px;
+				resize: none;
+				margin-bottom: 15px;
+				text-align: left;
+			}
+
+			button#slack_clear_logs {
+				background: #f7f7f7 url('') no-repeat center right 5px;
+				background-size: 20px;
+				transition: all .3s ease;
+
+				&:hover,
+				&:focus {
+					background-repeat: no-repeat;
+					background-size: 20px;
+					background-position: center right 5px;
+				}
+
+				&.working,
+				&.ok,
+				&.error {
+					padding-right: 30px;
+				}
+
+				&.working {
+					background-image: url('images/ajax-loader.svg');
+				}
+
+				&.ok {
+					background-image: url('images/material-tick.svg');
+				}
+
+				&.error {
+					background-image: url('images/material-error.svg');
+				}
 			}
 		}
 	}

@@ -92,6 +92,7 @@ class Plugin {
 		include_once( SN_PATH . 'core/settings/notifications.php' );
 		include_once( SN_PATH . 'core/settings/support.php' );
 
+		include_once( SN_PATH . 'core/logger.php' );
 		include_once( SN_PATH . 'core/slack-bot.php' );
 		include_once( SN_PATH . 'core/ajax.php' );
 		include_once( SN_PATH . 'core/admin.php' );
