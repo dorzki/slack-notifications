@@ -4,3 +4,4 @@
 out
 gen
 /node_modules/
+/logger-*.txt

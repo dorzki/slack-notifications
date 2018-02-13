@@ -7,7 +7,7 @@
  * @author      Dor Zuberi <webmaster@dorzki.co.il>
  * @link        https://www.dorzki.co.il
  * @since       2.0.0
- * @version     2.0.0
+ * @version     2.0.3
  */
 
 namespace SlackNotifications;
@@ -187,11 +187,22 @@ class Slack_Bot {
 					'payload' => wp_json_encode( $notification ),
 				],
 			] );
-			$response      = wp_remote_request( $this->webhook, $api_call_data );
 
-			// Check if everything is ok.
-			if ( is_wp_error( $response ) ) {
+			$response = wp_remote_request( $this->webhook, $api_call_data );
+
+			// Check if we got an error.
+			if ( is_wp_error( $response ) || 200 !== $response[ 'response' ][ 'code' ] ) {
+
+				Logger::write( [
+					'response_code'    => $response[ 'response' ][ 'code' ],
+					'response_message' => $response[ 'body' ],
+					'api_request'      => $notification,
+				] );
+
 				update_option( SN_FIELD_PREFIX . 'test_integration', 0 );
+
+				return false;
+
 			}
 
 		}

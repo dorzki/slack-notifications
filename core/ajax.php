@@ -31,6 +31,7 @@ class AJAX {
 	public function __construct() {
 
 		add_action( 'wp_ajax_slack-test-integration', [ $this, 'slack_test_integration' ] );
+		add_action( 'wp_ajax_slack-clear-logs', [ $this, 'slack_clear_logs' ] );
 
 	}
 
@@ -47,6 +48,16 @@ class AJAX {
 		$sent = $bot->send_message( $message );
 
 		return ( $sent ) ? wp_send_json_success() : wp_send_json_error();
+
+	}
+
+
+	/**
+	 * Removes logs file.
+	 */
+	public function slack_clear_logs() {
+
+		return ( Logger::clear_log_file() ) ? wp_send_json_success() : wp_send_json_error();
 
 	}
 

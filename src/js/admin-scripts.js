@@ -134,5 +134,48 @@
 
 	} );
 
+	// Copy report data to clipboard.
+	$( '.copy-report' ).on( 'click', function ( e ) {
+		e.preventDefault();
+
+		$( '#slack_tech_data' ).select();
+
+		document.execCommand( 'copy' );
+
+	} );
+
+	// Handle clear logs button.
+	$( '#slack_clear_logs' ).on( 'click', function ( e ) {
+		e.preventDefault();
+
+		var _btn = $( this );
+		var _input = _btn.prev().prev( 'textarea' );
+
+		_btn.removeClass( 'working ok error' ).addClass( 'working' );
+
+		$.ajax( {
+			url: ajaxurl,
+			method: 'POST',
+			dataType: 'json',
+			data: {
+				action: 'slack-clear-logs'
+			},
+			success: function ( response ) {
+
+				_btn.removeClass( 'working ok error' );
+
+				if ( response.success ) {
+
+					_btn.addClass( 'ok' );
+					_input.val( '' );
+
+				} else {
+					_btn.addClass( 'error' );
+				}
+
+			}
+		} );
+
+	} );
 
 })( jQuery );
