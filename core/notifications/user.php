@@ -7,7 +7,7 @@
  * @author      Dor Zuberi <webmaster@dorzki.co.il>
  * @link        https://www.dorzki.co.il
  * @since       2.0.0
- * @version     2.0.0
+ * @version     2.0.3
  */
 
 namespace SlackNotifications\Notifications;
@@ -46,7 +46,7 @@ class User extends Notification_Type {
 				'hooks'    => [
 					'wp_login' => 'administrator_login',
 				],
-				'priority' => 10,
+				'priority' => 9,
 				'params'   => 2,
 			],
 		];
