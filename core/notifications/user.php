@@ -175,7 +175,7 @@ class User extends Notification_Type {
 	public function administrator_failed_login( $username ) {
 
 		// Get user by email or username.
-		$field = ( - 1 === strpos( $username, '@' ) ) ? 'login' : 'email';
+		$field = ( false === strpos( $username, '@' ) ) ? 'login' : 'email';
 		$user  = get_user_by( $field, $username );
 
 		if ( false === $user ) {
