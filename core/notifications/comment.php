@@ -7,7 +7,7 @@
  * @author      Dor Zuberi <webmaster@dorzki.co.il>
  * @link        https://www.dorzki.co.il
  * @since       2.0.0
- * @version     2.0.0
+ * @version     2.0.4
  */
 
 namespace SlackNotifications\Notifications;
@@ -39,7 +39,7 @@ class Comment extends Notification_Type {
 					'comment_post' => 'new_comment',
 				],
 				'priority' => 10,
-				'params'   => 1,
+				'params'   => 2,
 			],
 		];
 
@@ -52,10 +52,16 @@ class Comment extends Notification_Type {
 	 * Post notification when a new comment has posted.
 	 *
 	 * @param $comment_id
+	 * @param $approved
 	 *
 	 * @return bool
 	 */
-	public function new_comment( $comment_id ) {
+	public function new_comment( $comment_id, $approved ) {
+
+		// Check if comment is spam, if so, ignore.
+		if ( 'spam' === $approved ) {
+			return false;
+		}
 
 		// Get comment
 		$comment = get_comment( $comment_id );
