@@ -7,7 +7,7 @@
  * @author      Dor Zuberi <webmaster@dorzki.co.il>
  * @link        https://www.dorzki.co.il
  * @since       2.0.0
- * @version     2.0.3
+ * @version     2.0.4
  */
 
 namespace SlackNotifications\Notifications;
@@ -52,6 +52,24 @@ class User extends Notification_Type {
 		];
 
 		parent::__construct();
+
+	}
+
+
+	/**
+	 * Retrieve user IP address.
+	 *
+	 * @return string
+	 */
+	private function get_user_ip() {
+
+		if ( ! empty( $_SERVER[ 'HTTP_CLIENT_IP' ] ) ) {
+			return $_SERVER[ 'HTTP_CLIENT_IP' ];
+		} else if ( ! empty( $_SERVER[ 'HTTP_X_FORWARDED_FOR' ] ) ) {
+			return $_SERVER[ 'HTTP_X_FORWARDED_FOR' ];
+		} else {
+			return $_SERVER[ 'REMOTE_ADDR' ];
+		}
 
 	}
 
@@ -124,7 +142,7 @@ class User extends Notification_Type {
 			],
 			[
 				'title' => esc_html__( 'Login IP', 'dorzki-notifications-to-slack' ),
-				'value' => $_SERVER[ 'REMOTE_ADDR' ],
+				'value' => $this->get_user_ip(),
 				'short' => true,
 			],
 		];
