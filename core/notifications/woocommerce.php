@@ -7,7 +7,7 @@
  * @author      Dor Zuberi <webmaster@dorzki.co.il>
  * @link        https://www.dorzki.co.il
  * @since       2.0.0
- * @version     2.0.0
+ * @version     2.0.4
  */
 
 namespace SlackNotifications\Notifications;
@@ -270,7 +270,7 @@ class WooCommerce extends Notification_Type {
 		$order = wc_get_order( $note_data[ 'order_id' ] );
 
 		// Build notification
-		$message = __( ':spiral_note_pad: An new note was added to an order on *<%s|%s>*', 'dorzki-notifications-to-slack' );
+		$message = __( ':spiral_note_pad: A new note was added to an order on *<%s|%s>*', 'dorzki-notifications-to-slack' );
 		$message = sprintf( $message, get_bloginfo( 'url' ), get_bloginfo( 'name' ) );
 
 		$attachments = [
