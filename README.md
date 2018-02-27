@@ -31,6 +31,7 @@ Soon.
 
 | Version | Changes |
 | :------ | :------ |
+| 2.0.4 | [FEATURE] Added failed administrator login notification.<br>[HOTFIX] Skip notification if a comment was marked as spam.<br>[HOTFIX] Fixed typo on new note notification. (Thanks to [Music47ell](https://wordpress.org/support/users/music47ell/))<br>[HOTFIX] Fixed wrong IP address when the server is behind load balancer. |
 | 2.0.3 | [HOTFIX] two factor collision.<br>[FEATURE] Added new support page. |
 | 2.0.2 | [HOTFIX] Fixed issue with const no accepting return value. (Thanks to [Sven Wagener](https://wordpress.org/support/users/mahype/))<br>[HOTFIX] Fixed issue with PHP 5.4. (Thanks to [Sven Wagener](https://wordpress.org/support/users/mahype/))<br>[HOTFIX] Fixed text domain.|
 | 2.0.1 | [FEATURE] Added RTL support.<br>[HOTFIX] Fixed issue with plugin doesn't update database. |

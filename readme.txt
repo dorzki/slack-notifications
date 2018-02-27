@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: notifications, slack, realtime, updates
 Requires at least: 4.5
 Tested up to: 4.9
-Stable tag: 2.0.3
+Stable tag: 2.0.4
 Requires PHP: 5.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -19,6 +19,7 @@ Choose what type of notification you would like to receive:
 * WordPress Update Available
 * Plugins Updates Available
 * Administrator Login
+* Failed Administrator Login
 * New User Registration
 * New Comments
 * Nee WooCommerce Orders
@@ -61,6 +62,12 @@ Please feel free to contact me `webmaster[AT]dorzki.co.il`
 4. `Slack Notifications - Part 2` Get notifications to you Slack channel.
 
 == Changelog ==
+
+= 2.0.4 =
+* [FEATURE] Added failed administrator login notification.
+* [HOTFIX] Skip notification if a comment was marked as spam.
+* [HOTFIX] Fixed typo on new note notification. (Thanks to [Music47ell](https://wordpress.org/support/users/music47ell/))
+* [HOTFIX] Fixed wrong IP address when the server is behind load balancer.
 
 = 2.0.3 =
 * [HOTFIX] two factor collision.
