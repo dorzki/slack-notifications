@@ -368,5 +368,4 @@ class WooCommerce extends Notification_Type {
 
 	}
 
-
 }
