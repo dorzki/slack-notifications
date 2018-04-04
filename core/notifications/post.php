@@ -7,7 +7,7 @@
  * @author      Dor Zuberi <webmaster@dorzki.co.il>
  * @link        https://www.dorzki.co.il
  * @since       2.0.0
- * @version     2.0.0
+ * @version     2.0.5
  */
 
 namespace SlackNotifications\Notifications;
@@ -307,10 +307,13 @@ class Post extends Notification_Type {
 		$message = __( ':pencil2: The post *<%s|%s>* has been updated right now.', 'dorzki-notifications-to-slack' );
 		$message = sprintf( $message, get_permalink( $post->ID ), $post->post_title );
 
+		$user_id = ( isset( $_POST[ 'user_ID' ] ) ) ? intval( $_POST[ 'user_ID' ] ) : $post->post_author;
+		$user    = get_user_by( 'id', $user_id );
+
 		$attachments = [
 			[
-				'title' => esc_html__( 'Post Author', 'dorzki-notifications-to-slack' ),
-				'value' => get_the_author_meta( 'display_name', $post->post_author ),
+				'title' => esc_html__( 'Updated By', 'dorzki-notifications-to-slack' ),
+				'value' => $user->display_name,
 				'short' => true,
 			],
 			[

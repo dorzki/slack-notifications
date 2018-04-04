@@ -7,7 +7,7 @@
  * @author      Dor Zuberi <webmaster@dorzki.co.il>
  * @link        https://www.dorzki.co.il
  * @since       2.0.0
- * @version     2.0.0
+ * @version     2.0.5
  */
 
 namespace SlackNotifications\Notifications;
@@ -51,7 +51,6 @@ class CPT extends Notification_Type {
 			'custom_css',
 			'customize_changeset',
 			'oembed_cache',
-			'product',
 			'product_variation',
 			'shop_order',
 			'shop_order_refund',
@@ -289,14 +288,17 @@ class CPT extends Notification_Type {
 
 		$cpt_obj = get_post_type_object( $cpt->post_type );
 
+		$user_id = ( isset( $_POST[ 'user_ID' ] ) ) ? intval( $_POST[ 'user_ID' ] ) : $cpt->post_author;
+		$user    = get_user_by( 'id', $user_id );
+
 		// Build notification
 		$message = __( ':pencil2: The %s *<%s|%s>* has been updated right now.', 'dorzki-notifications-to-slack' );
 		$message = sprintf( $message, $cpt_obj->labels->singular_name, get_permalink( $cpt->ID ), $cpt->post_title );
 
 		$attachments = [
 			[
-				'title' => sprintf( esc_html__( '%s Author', 'dorzki-notifications-to-slack' ), $cpt_obj->labels->singular_name ),
-				'value' => get_the_author_meta( 'display_name', $cpt->post_author ),
+				'title' => esc_html__( 'Updated By', 'dorzki-notifications-to-slack' ),
+				'value' => $user->display_name,
 				'short' => true,
 			],
 			[
