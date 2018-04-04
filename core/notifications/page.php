@@ -239,14 +239,17 @@ class Page extends Notification_Type {
 			return false;
 		}
 
+		$user_id = ( isset( $_POST[ 'user_ID' ] ) ) ? intval( $_POST[ 'user_ID' ] ) : $page->post_author;
+		$user    = get_user_by( 'id', $user_id );
+
 		// Build notification
 		$message = __( ':pencil2: The page *<%s|%s>* has been updated right now.', 'dorzki-notifications-to-slack' );
 		$message = sprintf( $message, get_permalink( $page->ID ), $page->post_title );
 
 		$attachments = [
 			[
-				'title' => esc_html__( 'Page Author', 'dorzki-notifications-to-slack' ),
-				'value' => get_the_author_meta( 'display_name', $page->post_author ),
+				'title' => esc_html__( 'Updated By', 'dorzki-notifications-to-slack' ),
+				'value' => $user->display_name,
 				'short' => true,
 			],
 			[
