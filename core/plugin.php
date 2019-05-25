@@ -83,6 +83,8 @@ class Plugin {
 		include_once( SN_PATH . 'core/notifications/comment.php' );
 		include_once( SN_PATH . 'core/notifications/cpt.php' );
 		include_once( SN_PATH . 'core/notifications/woocommerce.php' );
+		include_once( SN_PATH . 'core/notifications/cf7.php' );
+		
 
 		do_action( 'slack_after_load_notifications_classes' );
 
@@ -118,6 +120,7 @@ class Plugin {
 		new Notifications\Comment();
 		new Notifications\CPT();
 		new Notifications\WooCommerce();
+		new Notifications\Cf7();
 		new AJAX();
 
 		do_action( 'slack_after_init_classes' );
