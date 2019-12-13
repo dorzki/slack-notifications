@@ -1,93 +1,83 @@
 /**
- * Gulp File by dorzki
+ * Gulp Plugins
+ */
+const gulp = require( 'gulp' );
+const prefixer = require( 'gulp-autoprefixer' );
+const css = require( 'gulp-clean-css' );
+const cmq = require( 'gulp-group-css-media-queries' );
+const plumber = require( 'gulp-plumber' );
+const scss = require( 'gulp-sass' );
+const svgmin = require( 'gulp-svgmin' );
+const rename = require( 'gulp-rename' );
+const uglify = require( 'gulp-uglify' );
+
+
+/**
+ * Gulp Configuration
+ */
+let config = {
+	dev : {
+		scss : '__src/scss/**/*.scss',
+		js : '__src/js/**/*.js',
+		svg : '__src/svg/**/*.svg',
+	},
+	prod : {
+		base : 'assets/',
+		css : 'admin-styles.min.css',
+		js : 'admin-scripts.min.js',
+		svg : 'assets/icons/',
+	},
+};
+
+
+/**
+ * Gulp Tasks
  */
 
-// Gulp Libraries
-var gulp = require( 'gulp' );
-var autoprefixer = require( 'gulp-autoprefixer' );
-var scss = require( 'gulp-sass' );
-var concat = require( 'gulp-concat' );
-var sourcemaps = require( 'gulp-sourcemaps' );
-var uglify = require( 'gulp-uglify' );
-var plumber = require( 'gulp-plumber' );
+// Compile SCSS & Group Media Queries.
+function build_scss() {
 
-// File Paths
-var SCSS_PATH = 'src/scss/*.scss';
-var JS_PATH = 'src/js/*.js';
-var DIST = 'assets/';
+	return gulp
+		.src( config.dev.scss )
+		.pipe( plumber() )
+		.pipe( scss() )
+		.pipe( prefixer() )
+		.pipe( cmq() )
+		.pipe( css() )
+		.pipe( rename( config.prod.css ) )
+		.pipe( gulp.dest( config.prod.base ) );
 
-// Gulp Tasks
-gulp.task( 'scss', function () {
+}
 
-	var task;
+// Minify & Combine JavaScript.
+function build_js() {
 
-	console.log( '### Starting SCSS Task ###' );
-
-	task = gulp
-		.src( SCSS_PATH )
-		.pipe( plumber( function ( err ) {
-
-			console.log( '! ERROR !' );
-			console.log( err );
-
-			this.emit( 'end' );
-
-		} ) )
-		.pipe( sourcemaps.init() )
-		.pipe( autoprefixer() )
-		.pipe( scss( {
-			outputStyle: 'compressed'
-		} ) )
-		.pipe( concat( 'admin-styles.min.css' ) )
-		.pipe( sourcemaps.write( './' ) )
-		.pipe( gulp.dest( DIST ) );
-
-	console.log( '### Finished SCSS Task ###' );
-
-	return task;
-
-} );
-
-gulp.task( 'js', function () {
-
-	var task;
-
-	console.log( '### Starting JS Task ###' );
-
-	task = gulp
-		.src( JS_PATH )
-		.pipe( plumber( function ( err ) {
-
-			console.log( '! ERROR !' );
-			console.log( err );
-
-			this.emit( 'end' );
-
-		} ) )
-		.pipe( sourcemaps.init() )
+	return gulp
+		.src( config.dev.js )
+		.pipe( plumber() )
 		.pipe( uglify() )
-		.pipe( concat( 'admin-scripts.min.js' ) )
-		.pipe( sourcemaps.write( './' ) )
-		.pipe( gulp.dest( DIST ) );
+		.pipe( rename( config.prod.js ) )
+		.pipe( gulp.dest( config.prod.base ) );
 
-	console.log( '### Finished JS Task ###' );
+}
 
-	return task;
+// Minify SVG files.
+function compress_svg() {
 
-} );
+	return gulp
+		.src( config.dev.svg )
+		.pipe( plumber() )
+		.pipe( svgmin() )
+		.pipe( gulp.dest( config.prod.svg ) );
 
-gulp.task( 'watch-scss', function () {
+}
 
-	console.log( '[[[ Watching SCSS Task ]]]' );
 
-	gulp.watch( SCSS_PATH, [ 'scss' ] );
+/**
+ * Gulp Exports
+ */
+exports.scss = build_scss;
+exports.js = build_js;
+exports.svg = compress_svg;
 
-} );
-
-gulp.task( 'watch-js', function () {
-
-	console.log( '[[[ Watching JS Task ]]]' );
-
-	gulp.watch( JS_PATH, [ 'js' ] );
-
-} );
+exports.build = gulp.series( build_scss, build_js, compress_svg );

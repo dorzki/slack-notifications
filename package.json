@@ -1,29 +1,28 @@
 {
-	"name": "slack-notifications",
-	"version": "2.0.0",
-	"description": "Send WordPress notifications to your Slack team channel.",
-	"main": "gulpfile.js",
-	"scripts": {
-		"test": "echo \"Error: no test specified\" && exit 1"
-	},
-	"repository": {
-		"type": "git",
-		"url": "git+https://github.com/dorzki/Slack-Notifications.git"
-	},
-	"author": "Dor Zuberi",
-	"license": "GPL-3.0",
-	"bugs": {
-		"url": "https://github.com/dorzki/Slack-Notifications/issues"
-	},
-	"homepage": "https://github.com/dorzki/Slack-Notifications#readme",
-	"dependencies": {
-		"gulp": "^3.9.1",
-		"gulp-autoprefixer": "^4.1.0",
-		"gulp-concat": "^2.6.1",
-		"gulp-plumber": "^1.2.0",
-		"gulp-sass": "^3.2.1",
-		"gulp-sourcemaps": "^2.6.4",
-		"gulp-uglify": "^3.0.1",
-		"npm": "^6.4.1"
-	}
+  "name" : "slack-notifications",
+  "version" : "2.0.6",
+  "description" : "Send WordPress notifications to your Slack team channel.",
+  "repository" : {
+	"type" : "git",
+	"url" : "git+https://github.com/dorzki/Slack-Notifications.git"
+  },
+  "author" : "Dor Zuberi",
+  "license" : "GPL-3.0",
+  "bugs" : {
+	"url" : "https://github.com/dorzki/Slack-Notifications/issues"
+  },
+  "homepage" : "https://github.com/dorzki/Slack-Notifications#readme",
+  "devDependencies" : {
+	"gulp" : "^4.0.2",
+	"gulp-autoprefixer" : "^7.0.1",
+	"gulp-clean-css" : "^4.2.0",
+	"gulp-group-css-media-queries" : "^1.2.2",
+	"gulp-plumber" : "^1.2.1",
+	"gulp-rename" : "^2.0.0",
+	"gulp-sass" : "^4.0.2",
+	"gulp-svgmin" : "^2.2.0",
+	"gulp-uglify" : "^3.0.2",
+	"npm" : "^6.13.4",
+	"npm-check-updates" : "^4.0.1"
+  }
 }

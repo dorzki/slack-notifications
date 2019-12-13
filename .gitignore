@@ -1,7 +1,16 @@
-# IntelliJ project files
-.idea
-*.iml
-out
-gen
-/node_modules/
-/logger-*.txt
+# IDE Settings
+.idea/
+.vscode/
+
+# Node Modules
+node_modules/
+
+# Build Files
+assets/
+
+# Lock Files
+package-lock.json
+
+# General
+.DS_Store
+Thumbs.db
