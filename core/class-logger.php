@@ -2,15 +2,15 @@
 /**
  * Logger class.
  *
- * @package     SlackNotifications
+ * @package     Slack_Notifications
  * @subpackage  Logger
  * @author      Dor Zuberi <webmaster@dorzki.co.il>
  * @link        https://www.dorzki.co.il
  * @version     2.0.3
- * @since       2.0.3
+ * @since       2.0.6
  */
 
-namespace SlackNotifications;
+namespace Slack_Notifications;
 
 // Block direct access to the file via url.
 if ( ! defined( 'ABSPATH' ) ) {
@@ -34,7 +34,7 @@ class Logger {
 
 		$hash = sha1( get_bloginfo( 'url' ) );
 
-		return SN_PATH . "logger-{$hash}.txt";
+		return SLACK_NOTIFICATIONS_PATH . "logger-{$hash}.txt";
 
 	}
 
@@ -48,15 +48,18 @@ class Logger {
 
 		$hash = sha1( get_bloginfo( 'url' ) );
 
-		return SN_URL . "logger-{$hash}.txt";
+		return SLACK_NOTIFICATIONS_PATH . "logger-{$hash}.txt";
 
 	}
+
+
+	/* ------------------------------------------ */
 
 
 	/**
 	 * Format error message.
 	 *
-	 * @param $log
+	 * @param array $log Log data.
 	 *
 	 * @return bool|string
 	 */
@@ -66,28 +69,27 @@ class Logger {
 			return false;
 		}
 
-		ob_start();
-		var_export( $log[ 'api_request' ] );
-		$request = ob_get_clean();
+		$_raw = '===========================================================================' . PHP_EOL .
+				'API ERROR' . PHP_EOL .
+				'---------------------------------------------------------------------------' . PHP_EOL .
+				'Error Time: ' . date( 'd-m-Y, H:i:s' ) . PHP_EOL .
+				"Error Code: {$log['response_code']}" . PHP_EOL .
+				"API Response: {$log['response_message']}" . PHP_EOL .
+				'API Request: ' . wp_json_encode( $log['api_request'] ) . PHP_EOL .
+				'===========================================================================' . PHP_EOL . PHP_EOL;
 
-		$raw_log = "===========================================================================" . PHP_EOL .
-		           "API ERROR" . PHP_EOL .
-		           "---------------------------------------------------------------------------" . PHP_EOL .
-		           "Error Time: " . date( "d-m-Y, H:i:s" ) . PHP_EOL .
-		           "Error Code: {$log['response_code']}" . PHP_EOL .
-		           "API Response: {$log['response_message']}" . PHP_EOL .
-		           "API Request: {$request}" . PHP_EOL .
-		           "===========================================================================" . PHP_EOL . PHP_EOL;
-
-		return $raw_log;
+		return $_raw;
 
 	}
+
+
+	/* ------------------------------------------ */
 
 
 	/**
 	 * Log action to file.
 	 *
-	 * @param $log
+	 * @param array $log Raw log content.
 	 *
 	 * @return bool
 	 */
@@ -98,7 +100,7 @@ class Logger {
 		}
 
 		// Open file.
-		$fs = @fopen( self::get_file(), 'a+' );
+		$fs = fopen( self::get_file(), 'a+' );
 
 		if ( false === $fs ) {
 			return false;
@@ -106,7 +108,7 @@ class Logger {
 
 		// Prepare and write.
 		$log_data = self::prepare_log( $log );
-		$written  = @fwrite( $fs, $log_data );
+		$written  = fwrite( $fs, $log_data );
 
 		return ( false !== $written );
 
@@ -126,7 +128,7 @@ class Logger {
 			return false;
 		}
 
-		return @file_get_contents( $file );
+		return file_get_contents( $file );
 
 	}
 

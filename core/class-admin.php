@@ -2,15 +2,15 @@
 /**
  * Declare admin settings page, and plugin admin assets.
  *
- * @package     SlackNotifications
+ * @package     Slack_Notifications
  * @subpackage  Admin
  * @author      Dor Zuberi <webmaster@dorzki.co.il>
  * @link        https://www.dorzki.co.il
  * @since       2.0.0
- * @version     2.0.3
+ * @version     2.0.6
  */
 
-namespace SlackNotifications;
+namespace Slack_Notifications;
 
 // Block direct access to the file via url.
 if ( ! defined( 'ABSPATH' ) ) {
@@ -21,7 +21,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Class Admin
  *
- * @package SlackNotifications
+ * @package Slack_Notifications
  */
 class Admin {
 
@@ -35,7 +35,7 @@ class Admin {
 		add_action( 'admin_enqueue_scripts', [ $this, 'register_scripts' ] );
 		add_action( 'admin_enqueue_scripts', [ $this, 'register_styles' ] );
 
-		$status = get_option( SN_FIELD_PREFIX . 'test_integration' );
+		$status = get_option( SLACK_NOTIFICATIONS_FIELD_PREFIX . 'test_integration' );
 
 		if ( empty( $status ) ) {
 			add_action( 'admin_notices', [ $this, 'display_connect_problem' ] );
@@ -46,13 +46,16 @@ class Admin {
 	}
 
 
+	/* ------------------------------------------ */
+
+
 	/**
 	 * Register the plugin's admin menu root.
 	 */
 	public function register_settings_menu() {
 
 		// Register plugin settings menu item.
-		add_menu_page( __( 'Slack Notifications', 'dorzki-notifications-to-slack' ), __( 'Slack Notifications', 'dorzki-notifications-to-slack' ), 'manage_options', SN_SLUG, null, 'dashicons-cloud', 100 );
+		add_menu_page( __( 'Slack Notifications', 'dorzki-notifications-to-slack' ), __( 'Slack Notifications', 'dorzki-notifications-to-slack' ), 'manage_options', SLACK_NOTIFICATIONS_SLUG, null, 'dashicons-cloud', 100 );
 
 	}
 
@@ -62,7 +65,7 @@ class Admin {
 	 */
 	public function remove_settings_submenu() {
 
-		remove_submenu_page( SN_SLUG, SN_SLUG );
+		remove_submenu_page( SLACK_NOTIFICATIONS_SLUG, SLACK_NOTIFICATIONS_SLUG );
 
 	}
 
@@ -83,25 +86,32 @@ class Admin {
 	}
 
 
+	/* ------------------------------------------ */
+
+
 	/**
 	 * Load plugin scripts.
 	 */
 	public function register_scripts() {
 
 		// Load plugin assets only on the plugin's settings page.
-		if ( - 1 !== strpos( get_current_screen()->id, SN_SLUG ) ) {
+		if ( - 1 !== strpos( get_current_screen()->id, SLACK_NOTIFICATIONS_SLUG ) ) {
 
 			// Load WordPress media uploader scripts.
 			wp_enqueue_media();
 
 			// Load plugin scripts.
-			wp_enqueue_script( SN_SLUG . '-scripts', SN_URL . 'assets/admin-scripts.min.js', [ 'jquery' ], SN_VERSION, true );
+			wp_enqueue_script( SLACK_NOTIFICATIONS_SLUG . '-scripts', SLACK_NOTIFICATIONS_SLUG . 'assets/admin-scripts.min.js', [ 'jquery' ], SLACK_NOTIFICATIONS_VERSION, true );
 
 			// Allow JS strings localization.
-			wp_localize_script( SN_SLUG . '-scripts', 'sn_lang', [
-				'media_frame_title'  => __( 'Choose or upload a new image', 'dorzki-notifications-to-slack' ),
-				'media_frame_button' => __( 'Select Image', 'dorzki-notifications-to-slack' ),
-			] );
+			wp_localize_script(
+				SLACK_NOTIFICATIONS_SLUG . '-scripts',
+				'sn_lang',
+				[
+					'media_frame_title'  => __( 'Choose or upload a new image', 'dorzki-notifications-to-slack' ),
+					'media_frame_button' => __( 'Select Image', 'dorzki-notifications-to-slack' ),
+				]
+			);
 
 		}
 
@@ -114,14 +124,17 @@ class Admin {
 	public function register_styles() {
 
 		// Load plugin assets only on the plugin's settings page.
-		if ( - 1 !== strpos( get_current_screen()->id, SN_SLUG ) ) {
+		if ( - 1 !== strpos( get_current_screen()->id, SLACK_NOTIFICATIONS_SLUG ) ) {
 
 			// Load plugin styles.
-			wp_enqueue_style( SN_SLUG . '-styles', SN_URL . 'assets/admin-styles.min.css', false, SN_VERSION );
+			wp_enqueue_style( SLACK_NOTIFICATIONS_SLUG . '-styles', SLACK_NOTIFICATIONS_URL . 'assets/admin-styles.min.css', false, SLACK_NOTIFICATIONS_VERSION );
 
 		}
 
 	}
+
+
+	/* ------------------------------------------ */
 
 
 	/**
@@ -130,8 +143,8 @@ class Admin {
 	public function display_connect_problem() {
 
 		echo "<div class='error notice slack-connect-error'>";
-		echo "  <p>" . esc_html__( 'There is an issue with the Slack Bot, please check your configuration again.', 'dorzki-notifications-to-slack' ) . "</p>";
-		echo "</div>";
+		echo '  <p>' . esc_html__( 'There is an issue with the Slack Bot, please check your configuration again.', 'dorzki-notifications-to-slack' ) . '</p>';
+		echo '</div>';
 
 	}
 

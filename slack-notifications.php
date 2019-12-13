@@ -2,18 +2,17 @@
 /**
  * Plugin Name: Slack Notifications
  * Plugin URI: https://www.dorzki.co.il
- * Description: Add Slack integration to a channel and send desired notifications as a slack bot.
- * Version: 2.0.5
+ * Description: Stay up-to-date about your WordPress site directly to your Slack.
+ * Version: 2.0.6
  * Author: dorzki
  * Author URI: https://www.dorzki.co.il
  * Text Domain: dorzki-notifications-to-slack
  *
- *
- * @package   SlackNotifications
- * @since     1.0.0
- * @version   2.0.5
- * @author    Dor Zuberi <me@dorzki.co.il>
- * @link      https://www.dorzki.co.il
+ * @package Slack_Notifications
+ * @since   1.0.0
+ * @version 2.0.6
+ * @author  Dor Zuberi <me@dorzki.co.il>
+ * @link    https://www.dorzki.co.il
  */
 
 // Block direct access to the file via url.
@@ -21,21 +20,25 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-// Define plugins constants
-define( 'SN_VERSION', '2.0.5' );
-define( 'SN_SLUG', 'slack-notifications' );
-define( 'SN_FIELD_PREFIX', 'slack_' );
-define( 'SN_PATH', plugin_dir_path( __FILE__ ) );
-define( 'SN_URL', plugin_dir_url( __FILE__ ) );
+// Define plugins constants.
+define( 'SLACK_NOTIFICATIONS_VERSION', '2.0.6' );
+define( 'SLACK_NOTIFICATIONS_SLUG', 'slack-notifications' );
+define( 'SLACK_NOTIFICATIONS_FIELD_PREFIX', 'slack_' );
+define( 'SLACK_NOTIFICATIONS_PATH', plugin_dir_path( __FILE__ ) );
+define( 'SLACK_NOTIFICATIONS_URL', plugin_dir_url( __FILE__ ) );
 
 // Check if the plugin can run on this server.
 if ( ! version_compare( PHP_VERSION, '5.4', '>=' ) ) {
+
 	add_action( 'admin_notices', 'sn_php_version_not_supported' );
-} else if ( ! version_compare( get_bloginfo( 'version' ), '4.5', '>=' ) ) {
+
+} elseif ( ! version_compare( get_bloginfo( 'version' ), '4.5', '>=' ) ) {
+
 	add_action( 'admin_notices', 'sn_wp_version_no_supported' );
+
 } else {
 
-	require_once( SN_PATH . 'core/plugin.php' );
+	include_once 'core/class-plugin.php';
 
 	add_action( 'plugins_loaded', 'sn_update_plugin_db' );
 
@@ -56,28 +59,28 @@ add_action( 'plugins_loaded', 'sn_load_text_domain' );
 
 /**
  * Show notice to admin if the server doesn't have the minimum required PHP version.
- *
- * @return string
  */
 function sn_php_version_not_supported() {
 
-	$notice = sprintf( esc_html__( 'Slack Notifications plugin requires PHP version %s or above to work properly.', 'dorzki-notifications-to-slack' ), '5.4' );
+	/* translators: %s: PHP version */
+	$notice      = sprintf( esc_html__( 'Slack Notifications plugin requires PHP version %s or above to work properly.', 'dorzki-notifications-to-slack' ), '5.4' );
+	$notice_html = sprintf( '<div class="error">%s</div>', wpautop( $notice ) );
 
-	echo "<div class='error'><p>{$notice}</p></div>";
+	echo wp_kses_post( $notice_html );
 
 }
 
 
 /**
  * Show notice to admin if WordPress version doesn't meet the requirements.
- *
- * @return string
  */
 function sn_wp_version_no_supported() {
 
-	$notice = sprintf( esc_html__( 'Slack Notifications plugin requires WordPress version %s or above to work properly.', 'dorzki-notifications-to-slack' ), '4.5' );
+	/* translators: %s: WordPress version */
+	$notice      = sprintf( esc_html__( 'Slack Notifications plugin requires WordPress version %s or above to work properly.', 'dorzki-notifications-to-slac' ), '4.7' );
+	$notice_html = sprintf( '<div class="error">%s</div>', wpautop( $notice ) );
 
-	echo "<div class='error'><p>{$notice}</p></div>";
+	echo wp_kses_post( $notice_html );
 
 }
 
@@ -90,9 +93,9 @@ function sn_wp_version_no_supported() {
 function sn_update_plugin_db() {
 
 	// Get previous version.
-	$old_version = get_option( SN_FIELD_PREFIX . 'version' );
+	$old_version = get_option( SLACK_NOTIFICATIONS_FIELD_PREFIX . 'version' );
 
-	update_option( SN_FIELD_PREFIX . 'version', SN_VERSION );
+	update_option( SLACK_NOTIFICATIONS_FIELD_PREFIX . 'version', SLACK_NOTIFICATIONS_VERSION );
 
 	if ( ! empty( $old_version ) && version_compare( $old_version, '2.0.0', '>=' ) ) {
 		return false;
@@ -192,15 +195,15 @@ function sn_update_plugin_db() {
 
 	foreach ( $old_hooks as $type => $type_data ) {
 
-		foreach ( $type_data[ 'hooks' ] as $old_hook => $hook_data ) {
+		foreach ( $type_data['hooks'] as $old_hook => $hook_data ) {
 
 			if ( get_option( $old_hook ) ) {
 
 				$notifications[] = [
 					'type'    => $type,
-					'action'  => $hook_data[ 'action' ],
+					'action'  => $hook_data['action'],
 					'channel' => null,
-					'title'   => sprintf( '[%s] %s', $type_data[ 'label' ], $hook_data[ 'title' ] ),
+					'title'   => sprintf( '[%s] %s', $type_data['label'], $hook_data['title'] ),
 				];
 
 			}
@@ -208,14 +211,15 @@ function sn_update_plugin_db() {
 			delete_option( $old_hook );
 
 		}
-
 	}
 
 	// Handle custom post types.
-	$post_types = get_post_types( [
-		'public'   => true,
-		'_builtin' => false,
-	] );
+	$post_types = get_post_types(
+		[
+			'public'   => true,
+			'_builtin' => false,
+		]
+	);
 
 	foreach ( $post_types as $post_type ) {
 
@@ -223,11 +227,14 @@ function sn_update_plugin_db() {
 
 			$cpt_obj = get_post_type_object( $post_type );
 
+			/* translators: %s: Notification Category, %s: Notification Type */
+			$title = sprintf( '[%s] %s', $cpt_obj->labels->name, sprintf( esc_html__( '%s Published', 'dorzki-notifications-to-slack' ), $cpt_obj->labels->singular_name ) );
+
 			$notifications[] = [
 				'type'    => 'cpt_' . $post_type,
 				'action'  => 'new_cpt',
 				'channel' => null,
-				'title'   => sprintf( '[%s] %s', $cpt_obj->labels->name, sprintf( esc_html__( '%s Published', 'dorzki-notifications-to-slack' ), $cpt_obj->labels->singular_name ) ),
+				'title'   => $title,
 			];
 
 		}
@@ -236,7 +243,7 @@ function sn_update_plugin_db() {
 
 	}
 
-	// Clean database
+	// Clean database.
 	delete_option( 'slack_webhook_endpoint' );
 	delete_option( 'slack_channel_name' );
 	delete_option( 'slack_bot_username' );
@@ -247,13 +254,13 @@ function sn_update_plugin_db() {
 	delete_option( 'slack_notice_connectivity' );
 	delete_option( '_testing_slack' );
 
-	// Save new values
-	update_option( SN_FIELD_PREFIX . 'webhook', $webhook );
-	update_option( SN_FIELD_PREFIX . 'default_channel', $channel );
-	update_option( SN_FIELD_PREFIX . 'bot_name', $bot_name );
-	update_option( SN_FIELD_PREFIX . 'bot_image', $bot_image );
-	update_option( SN_FIELD_PREFIX . 'test_integration', '1' );
-	update_option( SN_FIELD_PREFIX . 'notifications', json_encode( $notifications ) );
+	// Save new values.
+	update_option( SLACK_NOTIFICATIONS_FIELD_PREFIX . 'webhook', $webhook );
+	update_option( SLACK_NOTIFICATIONS_FIELD_PREFIX . 'default_channel', $channel );
+	update_option( SLACK_NOTIFICATIONS_FIELD_PREFIX . 'bot_name', $bot_name );
+	update_option( SLACK_NOTIFICATIONS_FIELD_PREFIX . 'bot_image', $bot_image );
+	update_option( SLACK_NOTIFICATIONS_FIELD_PREFIX . 'test_integration', '1' );
+	update_option( SLACK_NOTIFICATIONS_FIELD_PREFIX . 'notifications', wp_json_encode( $notifications ) );
 
 	return true;
 

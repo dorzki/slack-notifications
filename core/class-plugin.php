@@ -2,15 +2,15 @@
 /**
  * Plugin base class, declares plugin functionality and capabilities.
  *
- * @package     SlackNotifications
+ * @package     Slack_Notifications
  * @subpackage  Plugin
  * @author      Dor Zuberi <webmaster@dorzki.co.il>
  * @link        https://www.dorzki.co.il
  * @since       2.0.0
- * @version     2.0.3
+ * @version     2.0.6
  */
 
-namespace SlackNotifications;
+namespace Slack_Notifications;
 
 // Block direct access to the file via url.
 if ( ! defined( 'ABSPATH' ) ) {
@@ -21,19 +21,26 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Class Plugin
  *
- * @package SlackNotifications
+ * @package Slack_Notifications
  */
 class Plugin {
 
 	/**
+	 * Plugin instance.
+	 *
 	 * @var null|Plugin
 	 */
 	public static $instance = null;
 
 	/**
+	 * Admin instance.
+	 *
 	 * @var null|Admin
 	 */
 	public $admin = null;
+
+
+	/* ------------------------------------------ */
 
 
 	/**
@@ -48,12 +55,19 @@ class Plugin {
 	}
 
 
+	/* ------------------------------------------ */
+
+
 	/**
 	 * Throws an error if trying to clone the plugin.
 	 */
 	public function __clone() {
 
-		_doing_it_wrong( __FUNCTION__, __( 'Cheatin&#8217; huh?', 'dorzki-notifications-to-slack' ), '2.0.0' );
+		_doing_it_wrong(
+			__FUNCTION__,
+			esc_html__( 'Cheatin&#8217; huh?', 'dorzki-notifications-to-slack' ),
+			'2.0.0'
+		);
 
 	}
 
@@ -63,9 +77,16 @@ class Plugin {
 	 */
 	public function __wakeup() {
 
-		_doing_it_wrong( __FUNCTION__, __( 'Cheatin&#8217; huh?', 'dorzki-notifications-to-slack' ), '2.0.0' );
+		_doing_it_wrong(
+			__FUNCTION__,
+			esc_html__( 'Cheatin&#8217; huh?', 'dorzki-notifications-to-slack' ),
+			'2.0.0'
+		);
 
 	}
+
+
+	/* ------------------------------------------ */
 
 
 	/**
@@ -75,27 +96,27 @@ class Plugin {
 
 		do_action( 'slack_before_load_classes' );
 
-		include_once( SN_PATH . 'core/notifications/notification-type.php' );
-		include_once( SN_PATH . 'core/notifications/system.php' );
-		include_once( SN_PATH . 'core/notifications/user.php' );
-		include_once( SN_PATH . 'core/notifications/post.php' );
-		include_once( SN_PATH . 'core/notifications/page.php' );
-		include_once( SN_PATH . 'core/notifications/comment.php' );
-		include_once( SN_PATH . 'core/notifications/cpt.php' );
-		include_once( SN_PATH . 'core/notifications/woocommerce.php' );
+		include_once 'core/notifications/class-notification-type.php';
+		include_once 'core/notifications/class-system.php';
+		include_once 'core/notifications/class-user.php';
+		include_once 'core/notifications/class-post.php';
+		include_once 'core/notifications/class-page.php';
+		include_once 'core/notifications/class-comment.php';
+		include_once 'core/notifications/class-cpt.php';
+		include_once 'core/notifications/class-woocommerce.php';
 
 		do_action( 'slack_after_load_notifications_classes' );
 
-		include_once( SN_PATH . 'core/settings/field.php' );
-		include_once( SN_PATH . 'core/settings/settings-page.php' );
-		include_once( SN_PATH . 'core/settings/general.php' );
-		include_once( SN_PATH . 'core/settings/notifications.php' );
-		include_once( SN_PATH . 'core/settings/support.php' );
+		include_once 'core/settings/class-field.php';
+		include_once 'core/settings/class-settings-page.php';
+		include_once 'core/settings/class-general.php';
+		include_once 'core/settings/class-notifications.php';
+		include_once 'core/settings/class-support.php';
 
-		include_once( SN_PATH . 'core/logger.php' );
-		include_once( SN_PATH . 'core/slack-bot.php' );
-		include_once( SN_PATH . 'core/ajax.php' );
-		include_once( SN_PATH . 'core/admin.php' );
+		include_once 'core/class-logger.php';
+		include_once 'core/class-slack-bot.php';
+		include_once 'core/class-ajax.php';
+		include_once 'core/class-admin.php';
 
 		do_action( 'slack_after_load_classes' );
 
@@ -125,10 +146,13 @@ class Plugin {
 	}
 
 
+	/* ------------------------------------------ */
+
+
 	/**
 	 * Attempts to retrieve plugin's instance, if doesn't exists, creates a new one.
 	 *
-	 * @return null|Plugin
+	 * @return Plugin
 	 */
 	public static function get_instance() {
 

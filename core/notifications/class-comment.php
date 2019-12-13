@@ -2,15 +2,15 @@
 /**
  * Comment notifications.
  *
- * @package     SlackNotifications\Notifications
+ * @package     Slack_Notifications\Notifications
  * @subpackage  Comment
  * @author      Dor Zuberi <webmaster@dorzki.co.il>
  * @link        https://www.dorzki.co.il
  * @since       2.0.0
- * @version     2.0.4
+ * @version     2.0.6
  */
 
-namespace SlackNotifications\Notifications;
+namespace Slack_Notifications\Notifications;
 
 // Block direct access to the file via url.
 if ( ! defined( 'ABSPATH' ) ) {
@@ -21,7 +21,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Class Comment
  *
- * @package SlackNotifications\Notifications
+ * @package Slack_Notifications\Notifications
  */
 class Comment extends Notification_Type {
 
@@ -48,11 +48,14 @@ class Comment extends Notification_Type {
 	}
 
 
+	/* ------------------------------------------ */
+
+
 	/**
 	 * Post notification when a new comment has posted.
 	 *
-	 * @param $comment_id
-	 * @param $approved
+	 * @param int    $comment_id Comment ID.
+	 * @param string $approved   Comment status.
 	 *
 	 * @return bool
 	 */
@@ -63,15 +66,16 @@ class Comment extends Notification_Type {
 			return false;
 		}
 
-		// Get comment
+		// Get comment.
 		$comment = get_comment( $comment_id );
 
 		if ( is_wp_error( $comment ) ) {
 			return false;
 		}
 
-		// Build notification
-		$message = __( ':speech_balloon: A new comment has been posted on *<%s|%s>*!', 'dorzki-notifications-to-slack' );
+		// Build notification.
+		/* translators: %1$s: Site URL, %2$s: Site Name */
+		$message = __( ':speech_balloon: A new comment has been posted on *<%1$s|%2$s>*!', 'dorzki-notifications-to-slack' );
 		$message = sprintf( $message, get_permalink( $comment->comment_post_ID ), get_the_title( $comment->comment_post_ID ) );
 
 		$attachments = [
@@ -94,10 +98,14 @@ class Comment extends Notification_Type {
 
 		$channel = $this->get_notification_channel( __FUNCTION__ );
 
-		return $this->slack_bot->send_message( $message, $attachments, [
-			'color'   => '#e67e22',
-			'channel' => $channel,
-		] );
+		return $this->slack_bot->send_message(
+			$message,
+			$attachments,
+			[
+				'color'   => '#e67e22',
+				'channel' => $channel,
+			]
+		);
 
 	}
 

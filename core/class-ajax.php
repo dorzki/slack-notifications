@@ -7,10 +7,10 @@
  * @author      Dor Zuberi <webmaster@dorzki.co.il>
  * @link        https://www.dorzki.co.il
  * @since       2.0.0
- * @version     2.0.0
+ * @version     2.0.6
  */
 
-namespace SlackNotifications;
+namespace Slack_Notifications;
 
 // Block direct access to the file via url.
 if ( ! defined( 'ABSPATH' ) ) {
@@ -21,7 +21,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Class AJAX
  *
- * @package SlackNotifications
+ * @package Slack_Notifications
  */
 class AJAX {
 
@@ -34,6 +34,9 @@ class AJAX {
 		add_action( 'wp_ajax_slack-clear-logs', [ $this, 'slack_clear_logs' ] );
 
 	}
+
+
+	/* ------------------------------------------ */
 
 
 	/**

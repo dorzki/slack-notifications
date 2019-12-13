@@ -2,15 +2,15 @@
 /**
  * Notifications settings screen.
  *
- * @package     SlackNotifications\Settings
+ * @package     Slack_Notifications\Settings
  * @subpackage  Notifications
  * @author      Dor Zuberi <webmaster@dorzki.co.il>
  * @link        https://www.dorzki.co.il
  * @since       2.0.0
- * @version     2.0.0
+ * @version     2.0.6
  */
 
-namespace SlackNotifications\Settings;
+namespace Slack_Notifications\Settings;
 
 // Block direct access to the file via url.
 if ( ! defined( 'ABSPATH' ) ) {
@@ -21,7 +21,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Class Notifications
  *
- * @package SlackNotifications\Settings
+ * @package Slack_Notifications\Settings
  */
 class Notifications extends Settings_Page {
 

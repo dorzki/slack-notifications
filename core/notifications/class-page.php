@@ -2,17 +2,19 @@
 /**
  * Page notifications.
  *
- * @package     SlackNotifications\Notifications
+ * @package     Slack_Notifications\Notifications
  * @subpackage  Page
  * @author      Dor Zuberi <webmaster@dorzki.co.il>
  * @link        https://www.dorzki.co.il
  * @since       2.0.0
- * @version     2.0.5
+ * @version     2.0.6
  */
 
-namespace SlackNotifications\Notifications;
+namespace Slack_Notifications\Notifications;
 
 // Block direct access to the file via url.
+use WP_Post;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
@@ -21,7 +23,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Class Page
  *
- * @package SlackNotifications\Notifications
+ * @package Slack_Notifications\Notifications
  */
 class Page extends Notification_Type {
 
@@ -85,10 +87,13 @@ class Page extends Notification_Type {
 	}
 
 
+	/* ------------------------------------------ */
+
+
 	/**
 	 * Post notification when a new page has been posted.
 	 *
-	 * @param $page
+	 * @param WP_Post $page Post object.
 	 *
 	 * @return bool
 	 */
@@ -102,8 +107,9 @@ class Page extends Notification_Type {
 			return false;
 		}
 
-		// Build notification
-		$message = __( ':memo: The page *<%s|%s>* was published right now!', 'dorzki-notifications-to-slack' );
+		// Build notification.
+		/* translators: %1$s: Post URL, %2$s: Post Name */
+		$message = __( ':memo: The page *<%1$s|%2$s>* was published right now!', 'dorzki-notifications-to-slack' );
 		$message = sprintf( $message, get_permalink( $page->ID ), $page->post_title );
 
 		$attachments = [
@@ -121,10 +127,14 @@ class Page extends Notification_Type {
 
 		$channel = $this->get_notification_channel( __FUNCTION__ );
 
-		return $this->slack_bot->send_message( $message, $attachments, [
-			'color'   => '#3498db',
-			'channel' => $channel,
-		] );
+		return $this->slack_bot->send_message(
+			$message,
+			$attachments,
+			[
+				'color'   => '#3498db',
+				'channel' => $channel,
+			]
+		);
 
 	}
 
@@ -132,7 +142,7 @@ class Page extends Notification_Type {
 	/**
 	 * Post notification when a page is scheduled to be published.
 	 *
-	 * @param $page
+	 * @param WP_Post $page Post object.
 	 *
 	 * @return bool
 	 */
@@ -146,8 +156,9 @@ class Page extends Notification_Type {
 			return false;
 		}
 
-		// Build notification
-		$message = __( ':clock3: The page *<%s|%s>* was scheduled to be published on *%s*.', 'dorzki-notifications-to-slack' );
+		// Build notification.
+		/* translators: %1$s: Post URL, %2$s: Post Name, $3$s: Date */
+		$message = __( ':clock3: The page *<%1$s|%2$s>* was scheduled to be published on *%3$s*.', 'dorzki-notifications-to-slack' );
 		$message = sprintf( $message, get_permalink( $page->ID ), $page->post_title, get_the_date( null, $page->ID ) );
 
 		$attachments = [
@@ -170,10 +181,14 @@ class Page extends Notification_Type {
 
 		$channel = $this->get_notification_channel( __FUNCTION__ );
 
-		return $this->slack_bot->send_message( $message, $attachments, [
-			'color'   => '#2980b9',
-			'channel' => $channel,
-		] );
+		return $this->slack_bot->send_message(
+			$message,
+			$attachments,
+			[
+				'color'   => '#2980b9',
+				'channel' => $channel,
+			]
+		);
 
 	}
 
@@ -181,7 +196,7 @@ class Page extends Notification_Type {
 	/**
 	 * Post notification when a page is pending approval.
 	 *
-	 * @param $page
+	 * @param WP_Post $page Post object.
 	 *
 	 * @return bool
 	 */
@@ -195,8 +210,9 @@ class Page extends Notification_Type {
 			return false;
 		}
 
-		// Build notification
-		$message = __( ':eye: The page *<%s|%s>* is pending approval.', 'dorzki-notifications-to-slack' );
+		// Build notification.
+		/* translators: %1$s: Post URL, %2$s: Post Name */
+		$message = __( ':eye: The page *<%1$s|%2$s>* is pending approval.', 'dorzki-notifications-to-slack' );
 		$message = sprintf( $message, get_permalink( $page->ID ), $page->post_title );
 
 		$attachments = [
@@ -214,10 +230,14 @@ class Page extends Notification_Type {
 
 		$channel = $this->get_notification_channel( __FUNCTION__ );
 
-		return $this->slack_bot->send_message( $message, $attachments, [
-			'color'   => '#2980b9',
-			'channel' => $channel,
-		] );
+		return $this->slack_bot->send_message(
+			$message,
+			$attachments,
+			[
+				'color'   => '#2980b9',
+				'channel' => $channel,
+			]
+		);
 
 	}
 
@@ -225,7 +245,7 @@ class Page extends Notification_Type {
 	/**
 	 * Post notification when a page was updated.
 	 *
-	 * @param $page
+	 * @param WP_Post $page Post object.
 	 *
 	 * @return bool
 	 */
@@ -239,11 +259,12 @@ class Page extends Notification_Type {
 			return false;
 		}
 
-		$user_id = ( isset( $_POST[ 'user_ID' ] ) ) ? intval( $_POST[ 'user_ID' ] ) : $page->post_author;
+		$user_id = ( isset( $_POST['user_ID'] ) ) ? intval( $_POST['user_ID'] ) : $page->post_author;
 		$user    = get_user_by( 'id', $user_id );
 
-		// Build notification
-		$message = __( ':pencil2: The page *<%s|%s>* has been updated right now.', 'dorzki-notifications-to-slack' );
+		// Build notification.
+		/* translators: %1$s: Post URL, %2$s: Post Name */
+		$message = __( ':pencil2: The page *<%1$s|%2$s>* has been updated right now.', 'dorzki-notifications-to-slack' );
 		$message = sprintf( $message, get_permalink( $page->ID ), $page->post_title );
 
 		$attachments = [
@@ -261,10 +282,14 @@ class Page extends Notification_Type {
 
 		$channel = $this->get_notification_channel( __FUNCTION__ );
 
-		return $this->slack_bot->send_message( $message, $attachments, [
-			'color'   => '#2980b9',
-			'channel' => $channel,
-		] );
+		return $this->slack_bot->send_message(
+			$message,
+			$attachments,
+			[
+				'color'   => '#2980b9',
+				'channel' => $channel,
+			]
+		);
 
 	}
 
@@ -272,13 +297,13 @@ class Page extends Notification_Type {
 	/**
 	 * Post notification when a page was trashed.
 	 *
-	 * @param $page_id
+	 * @param int $page_id Post ID.
 	 *
 	 * @return bool
 	 */
 	public function page_trashed( $page_id ) {
 
-		// Get page
+		// Get page.
 		$page = get_post( $page_id );
 
 		if ( is_wp_error( $page ) ) {
@@ -289,8 +314,9 @@ class Page extends Notification_Type {
 			return false;
 		}
 
-		// Build notification
-		$message = __( ':wastebasket: The page *<%s|%s>* was moved to trash.', 'dorzki-notifications-to-slack' );
+		// Build notification.
+		/* translators: %1$s: Post URL, %2$s: Post Name */
+		$message = __( ':wastebasket: The page *<%1$s|%2$s>* was moved to trash.', 'dorzki-notifications-to-slack' );
 		$message = sprintf( $message, get_permalink( $page->ID ), $page->post_title );
 
 		$attachments = [
@@ -308,10 +334,14 @@ class Page extends Notification_Type {
 
 		$channel = $this->get_notification_channel( __FUNCTION__ );
 
-		return $this->slack_bot->send_message( $message, $attachments, [
-			'color'   => '#e74c3c',
-			'channel' => $channel,
-		] );
+		return $this->slack_bot->send_message(
+			$message,
+			$attachments,
+			[
+				'color'   => '#e74c3c',
+				'channel' => $channel,
+			]
+		);
 
 	}
 

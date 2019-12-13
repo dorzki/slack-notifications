@@ -2,15 +2,15 @@
 /**
  * System notifications.
  *
- * @package     SlackNotifications\Notifications
+ * @package     Slack_Notifications\Notifications
  * @subpackage  System
  * @author      Dor Zuberi <webmaster@dorzki.co.il>
  * @link        https://www.dorzki.co.il
  * @since       2.0.0
- * @version     2.0.0
+ * @version     2.0.6
  */
 
-namespace SlackNotifications\Notifications;
+namespace Slack_Notifications\Notifications;
 
 // Block direct access to the file via url.
 if ( ! defined( 'ABSPATH' ) ) {
@@ -21,7 +21,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Class System
  *
- * @package SlackNotifications\Notifications
+ * @package Slack_Notifications\Notifications
  */
 class System extends Notification_Type {
 
@@ -61,6 +61,9 @@ class System extends Notification_Type {
 	}
 
 
+	/* ------------------------------------------ */
+
+
 	/**
 	 * Post notification when a new version of WordPress is available.
 	 *
@@ -74,22 +77,23 @@ class System extends Notification_Type {
 			return false;
 		}
 
-		if ( ! is_object( $version_data ) || ! isset( $version_data->updates[ 0 ] ) ) {
+		if ( ! is_object( $version_data ) || ! isset( $version_data->updates[0] ) ) {
 			return false;
 		}
 
-		if ( 'upgrade' !== $version_data->updates[ 0 ]->response ) {
+		if ( 'upgrade' !== $version_data->updates[0]->response ) {
 			return false;
 		}
 
-		$saved_version = get_option( SN_FIELD_PREFIX . 'wordpress_version' );
+		$saved_version = get_option( SLACK_NOTIFICATIONS_FIELD_PREFIX . 'wordpress_version' );
 
-		if ( $saved_version !== $version_data->updates[ 0 ]->current ) {
+		if ( $saved_version !== $version_data->updates[0]->current ) {
 
-			update_option( SN_FIELD_PREFIX . 'wordpress_version', $version_data->updates[ 0 ]->current );
+			update_option( SLACK_NOTIFICATIONS_FIELD_PREFIX . 'wordpress_version', $version_data->updates[0]->current );
 
-			// Build notification
-			$message = __( ':warning: There is a new version available for WordPress on <%s|%s>.', 'dorzki-notifications-to-wordpress' );
+			// Build notification.
+			/* translators: %1$s: Site URL, %2$s: Site Name */
+			$message = __( ':warning: There is a new version available for WordPress on <%1$s|%2$s>.', 'dorzki-notifications-to-wordpress' );
 			$message = sprintf( $message, get_bloginfo( 'url' ), get_bloginfo( 'name' ) );
 
 			$attachments = [
@@ -100,7 +104,7 @@ class System extends Notification_Type {
 				],
 				[
 					'title' => esc_html__( 'New Version', 'dorzki-notifications-to-slack' ),
-					'value' => $version_data->updates[ 0 ]->current,
+					'value' => $version_data->updates[0]->current,
 					'short' => true,
 				],
 
@@ -108,10 +112,14 @@ class System extends Notification_Type {
 
 			$channel = $this->get_notification_channel( __FUNCTION__ );
 
-			return $this->slack_bot->send_message( $message, $attachments, [
-				'color'   => '#f1c40f',
-				'channel' => $channel,
-			] );
+			return $this->slack_bot->send_message(
+				$message,
+				$attachments,
+				[
+					'color'   => '#f1c40f',
+					'channel' => $channel,
+				]
+			);
 
 		}
 
@@ -138,7 +146,7 @@ class System extends Notification_Type {
 		}
 
 		// Get saved plugins versions notifications.
-		$saved_plugins_versions = get_option( SN_FIELD_PREFIX . 'plugins_version' );
+		$saved_plugins_versions = get_option( SLACK_NOTIFICATIONS_FIELD_PREFIX . 'plugins_version' );
 
 		if ( false === $saved_plugins_versions ) {
 			$saved_plugins_versions = [];
@@ -164,7 +172,7 @@ class System extends Notification_Type {
 			$attachments[] = [
 				[
 					'title' => esc_html__( 'Plugin Name', 'dorzki-notifications-to-slack' ),
-					'value' => $plugin_meta[ 'Name' ],
+					'value' => $plugin_meta['Name'],
 					'short' => true,
 				],
 				[
@@ -176,22 +184,27 @@ class System extends Notification_Type {
 
 		}
 
-		update_option( SN_FIELD_PREFIX . 'plugins_version', $saved_plugins_versions );
+		update_option( SLACK_NOTIFICATIONS_FIELD_PREFIX . 'plugins_version', $saved_plugins_versions );
 
 		if ( ! empty( $attachments ) ) {
 
-			// Build notification
-			$message = __( ':warning: There are new versions available for your plugins on <%s|%s>.', 'dorzki-notifications-to-slack' );
+			// Build notification.
+			/* translators: %1$s: Site URL, %2$s: Site Name */
+			$message = __( ':warning: There are new versions available for your plugins on <%1$s|%2$s>.', 'dorzki-notifications-to-slack' );
 			$message = sprintf( $message, get_bloginfo( 'url' ), get_bloginfo( 'name' ) );
 
-			$attachments[ 'multiple' ] = true;
+			$attachments['multiple'] = true;
 
 			$channel = $this->get_notification_channel( __FUNCTION__ );
 
-			return $this->slack_bot->send_message( $message, $attachments, [
-				'color'   => '#f1c40f',
-				'channel' => $channel,
-			] );
+			return $this->slack_bot->send_message(
+				$message,
+				$attachments,
+				[
+					'color'   => '#f1c40f',
+					'channel' => $channel,
+				]
+			);
 
 		}
 
@@ -218,7 +231,7 @@ class System extends Notification_Type {
 		}
 
 		// Get saved themes versions notifications.
-		$saved_themes_versions = get_option( SN_FIELD_PREFIX . 'themes_version' );
+		$saved_themes_versions = get_option( SLACK_NOTIFICATIONS_FIELD_PREFIX . 'themes_version' );
 
 		if ( false === $saved_themes_versions ) {
 			$saved_themes_versions = [];
@@ -229,7 +242,7 @@ class System extends Notification_Type {
 		// Check if there are new versions.
 		foreach ( $themes_versions->response as $theme_dir => $update_data ) {
 
-			if ( $themes_versions->checked[ $theme_dir ] === $update_data[ 'new_version' ] ) {
+			if ( $themes_versions->checked[ $theme_dir ] === $update_data['new_version'] ) {
 				continue;
 			}
 
@@ -239,7 +252,7 @@ class System extends Notification_Type {
 				continue;
 			}
 
-			$saved_themes_versions[ $theme_dir ] = $update_data[ 'new_version' ];
+			$saved_themes_versions[ $theme_dir ] = $update_data['new_version'];
 
 			$attachments[] = [
 				[
@@ -249,29 +262,34 @@ class System extends Notification_Type {
 				],
 				[
 					'title' => esc_html__( 'New Version', 'dorzki-notifications-to-slack' ),
-					'value' => $update_data[ 'new_version' ],
+					'value' => $update_data['new_version'],
 					'short' => true,
 				],
 			];
 
 		}
 
-		update_option( SN_FIELD_PREFIX . 'themes_version', $saved_themes_versions );
+		update_option( SLACK_NOTIFICATIONS_FIELD_PREFIX . 'themes_version', $saved_themes_versions );
 
 		if ( ! empty( $attachments ) ) {
 
-			// Build notification
-			$message = __( ':warning: There are new versions available for your themes on <%s|%s>.', 'dorzki-notifications-to-slack' );
+			// Build notification.
+			/* translators: %1$s: Site URL, %2$s: Site Name */
+			$message = __( ':warning: There are new versions available for your themes on <%1$s|%2$s>.', 'dorzki-notifications-to-slack' );
 			$message = sprintf( $message, get_bloginfo( 'url' ), get_bloginfo( 'name' ) );
 
-			$attachments[ 'multiple' ] = true;
+			$attachments['multiple'] = true;
 
 			$channel = $this->get_notification_channel( __FUNCTION__ );
 
-			return $this->slack_bot->send_message( $message, $attachments, [
-				'color'   => '#f1c40f',
-				'channel' => $channel,
-			] );
+			return $this->slack_bot->send_message(
+				$message,
+				$attachments,
+				[
+					'color'   => '#f1c40f',
+					'channel' => $channel,
+				]
+			);
 
 		}
 

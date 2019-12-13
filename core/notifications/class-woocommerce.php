@@ -2,15 +2,18 @@
 /**
  * WooCommerce notifications.
  *
- * @package     SlackNotifications\Notifications
+ * @package     Slack_Notifications\Notifications
  * @subpackage  Comment
  * @author      Dor Zuberi <webmaster@dorzki.co.il>
  * @link        https://www.dorzki.co.il
  * @since       2.0.0
- * @version     2.0.4
+ * @version     2.0.6
  */
 
-namespace SlackNotifications\Notifications;
+namespace Slack_Notifications\Notifications;
+
+use WC_Order;
+use WC_Product;
 
 // Block direct access to the file via url.
 if ( ! defined( 'ABSPATH' ) ) {
@@ -21,7 +24,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Class WooCommerce
  *
- * @package SlackNotifications\Notifications
+ * @package Slack_Notifications\Notifications
  */
 class WooCommerce extends Notification_Type {
 
@@ -128,16 +131,19 @@ class WooCommerce extends Notification_Type {
 	}
 
 
+	/* ------------------------------------------ */
+
+
 	/**
 	 * Build order attachments.
 	 *
-	 * @param $order
+	 * @param WC_Order $order WooCommerce order data.
 	 *
 	 * @return array
 	 */
 	private function build_order_attachments( $order ) {
 
-		if ( ! $order instanceof \WC_Order ) {
+		if ( ! $order instanceof WC_Order ) {
 			return [];
 		}
 
@@ -155,7 +161,7 @@ class WooCommerce extends Notification_Type {
 			],
 			[
 				'title' => esc_html__( 'Order Total', 'dorzki-notifications-to-slack' ),
-				'value' => html_entity_decode( strip_tags( wc_price( $order->get_total() ) ) ),
+				'value' => html_entity_decode( wp_strip_all_tags( wc_price( $order->get_total() ) ) ),
 				'short' => true,
 			],
 			[
@@ -167,6 +173,10 @@ class WooCommerce extends Notification_Type {
 
 		foreach ( $order->get_items() as $product_data ) {
 
+			if ( ! $product_data instanceof WC_Product ) {
+				continue;
+			}
+
 			$product = $product_data->get_product();
 
 			$attachments[] = [
@@ -177,7 +187,7 @@ class WooCommerce extends Notification_Type {
 				],
 				[
 					'title' => esc_html__( 'Product Total', 'dorzki-notifications-to-slack' ),
-					'value' => html_entity_decode( strip_tags( wc_price( $product_data->get_total() ) ) ),
+					'value' => html_entity_decode( wp_strip_all_tags( wc_price( $product_data->get_total() ) ) ),
 					'short' => true,
 				],
 			];
@@ -189,10 +199,13 @@ class WooCommerce extends Notification_Type {
 	}
 
 
+	/* ------------------------------------------ */
+
+
 	/**
 	 * Post notification when a new order was submitted.
 	 *
-	 * @param $order_id
+	 * @param int $order_id WooCommerce order id number.
 	 *
 	 * @return bool
 	 */
@@ -202,21 +215,26 @@ class WooCommerce extends Notification_Type {
 			return false;
 		}
 
-		// New order
+		// Get order.
 		$order = wc_get_order( $order_id );
 
-		// Build notification
-		$message = __( ':shopping_bags: There is a new order on *<%s|%s>*!', 'dorzki-notifications-to-slack' );
+		// Build notification.
+		/* translators: %1$s: Site URL, %2$s: Site Name */
+		$message = __( ':shopping_bags: There is a new order on *<%1$s|%2$s>*!', 'dorzki-notifications-to-slack' );
 		$message = sprintf( $message, get_bloginfo( 'url' ), get_bloginfo( 'name' ) );
 
 		$attachments = $this->build_order_attachments( $order );
 
 		$channel = $this->get_notification_channel( __FUNCTION__ );
 
-		return $this->slack_bot->send_message( $message, $attachments, [
-			'color'   => '#34495e',
-			'channel' => $channel,
-		] );
+		return $this->slack_bot->send_message(
+			$message,
+			$attachments,
+			[
+				'color'   => '#34495e',
+				'channel' => $channel,
+			]
+		);
 
 	}
 
@@ -224,7 +242,7 @@ class WooCommerce extends Notification_Type {
 	/**
 	 * Post notification when an order status was changed.
 	 *
-	 * @param $order_id
+	 * @param int $order_id WooCommerce order id number.
 	 *
 	 * @return bool
 	 */
@@ -234,21 +252,26 @@ class WooCommerce extends Notification_Type {
 			return false;
 		}
 
-		// New order
+		// Get order.
 		$order = wc_get_order( $order_id );
 
-		// Build notification
-		$message = __( ':shopping_bags: An order was marked as %s on *<%s|%s>*.', 'dorzki-notifications-to-slack' );
+		// Build notification.
+		/* translators: %1$s: Order Status, %2$s: Site URL, %3$s: Site Name */
+		$message = __( ':shopping_bags: An order was marked as %1$s on *<%2$s|%3$s>*.', 'dorzki-notifications-to-slack' );
 		$message = sprintf( $message, $order->get_status(), get_bloginfo( 'url' ), get_bloginfo( 'name' ) );
 
 		$attachments = $this->build_order_attachments( $order );
 
 		$channel = $this->get_notification_channel( __FUNCTION__ );
 
-		return $this->slack_bot->send_message( $message, $attachments, [
-			'color'   => '#2c3e50',
-			'channel' => $channel,
-		] );
+		return $this->slack_bot->send_message(
+			$message,
+			$attachments,
+			[
+				'color'   => '#2c3e50',
+				'channel' => $channel,
+			]
+		);
 
 	}
 
@@ -256,7 +279,7 @@ class WooCommerce extends Notification_Type {
 	/**
 	 * Post notification when a note is added to an order.
 	 *
-	 * @param $note_data
+	 * @param array $note_data Note arguments.
 	 *
 	 * @return bool
 	 */
@@ -266,17 +289,18 @@ class WooCommerce extends Notification_Type {
 			return false;
 		}
 
-		// New order
-		$order = wc_get_order( $note_data[ 'order_id' ] );
+		// Get order.
+		$order = wc_get_order( $note_data['order_id'] );
 
-		// Build notification
-		$message = __( ':spiral_note_pad: A new note was added to an order on *<%s|%s>*', 'dorzki-notifications-to-slack' );
+		// Build notification.
+		/* translators: %1$s: Site URL, %2$s: Site Name */
+		$message = __( ':spiral_note_pad: A new note was added to an order on *<%1$s|%2$s>*', 'dorzki-notifications-to-slack' );
 		$message = sprintf( $message, get_bloginfo( 'url' ), get_bloginfo( 'name' ) );
 
 		$attachments = [
 			[
 				'title' => esc_html__( 'Order ID', 'dorzki-notifications-to-slack' ),
-				'value' => $note_data[ 'order_id' ],
+				'value' => $note_data['order_id'],
 				'short' => true,
 			],
 			[
@@ -296,18 +320,21 @@ class WooCommerce extends Notification_Type {
 			],
 			[
 				'title' => esc_html__( 'Note Content', 'dorzki-notifications-to-slack' ),
-				'value' => $note_data[ 'customer_note' ],
+				'value' => $note_data['customer_note'],
 				'short' => false,
 			],
 		];
 
-
 		$channel = $this->get_notification_channel( __FUNCTION__ );
 
-		return $this->slack_bot->send_message( $message, $attachments, [
-			'color'   => '#2c3e50',
-			'channel' => $channel,
-		] );
+		return $this->slack_bot->send_message(
+			$message,
+			$attachments,
+			[
+				'color'   => '#2c3e50',
+				'channel' => $channel,
+			]
+		);
 
 	}
 
@@ -315,7 +342,7 @@ class WooCommerce extends Notification_Type {
 	/**
 	 * Post notification when a product stock is low or out.
 	 *
-	 * @param $product
+	 * @param WC_Product $product WooCommerce product.
 	 *
 	 * @return bool
 	 */
@@ -325,11 +352,13 @@ class WooCommerce extends Notification_Type {
 			return false;
 		}
 
-		// Build notification
+		// Build notification.
 		if ( 'instock' === $product->get_stock_status() ) {
-			$message = __( ':information_source: Product stock is low on *<%s|%s>*', 'dorzki-notifications-to-slack' );
+			/* translators: %1$s: Site URL, %2$s: Site Name */
+			$message = __( ':information_source: Product stock is low on *<%1$s|%2$s>*', 'dorzki-notifications-to-slack' );
 		} else {
-			$message = __( ':information_source: Product is out of stock *<%s|%s>*', 'dorzki-notifications-to-slack' );
+			/* translators: %1$s: Site URL, %2$s: Site Name */
+			$message = __( ':information_source: Product is out of stock *<%1$s|%2$s>*', 'dorzki-notifications-to-slack' );
 		}
 
 		$message        = sprintf( $message, get_bloginfo( 'url' ), get_bloginfo( 'name' ) );
@@ -358,13 +387,16 @@ class WooCommerce extends Notification_Type {
 			],
 		];
 
-
 		$channel = $this->get_notification_channel( __FUNCTION__ );
 
-		return $this->slack_bot->send_message( $message, $attachments, [
-			'color'   => '#2c3e50',
-			'channel' => $channel,
-		] );
+		return $this->slack_bot->send_message(
+			$message,
+			$attachments,
+			[
+				'color'   => '#2c3e50',
+				'channel' => $channel,
+			]
+		);
 
 	}
 

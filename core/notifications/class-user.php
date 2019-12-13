@@ -2,17 +2,19 @@
 /**
  * User notifications.
  *
- * @package     SlackNotifications\Notifications
+ * @package     Slack_Notifications\Notifications
  * @subpackage  User
  * @author      Dor Zuberi <webmaster@dorzki.co.il>
  * @link        https://www.dorzki.co.il
  * @since       2.0.0
- * @version     2.0.4
+ * @version     2.0.6
  */
 
-namespace SlackNotifications\Notifications;
+namespace Slack_Notifications\Notifications;
 
 // Block direct access to the file via url.
+use WP_User;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
@@ -21,7 +23,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Class User
  *
- * @package SlackNotifications\Notifications
+ * @package Slack_Notifications\Notifications
  */
 class User extends Notification_Type {
 
@@ -64,6 +66,9 @@ class User extends Notification_Type {
 	}
 
 
+	/* ------------------------------------------ */
+
+
 	/**
 	 * Retrieve user IP address.
 	 *
@@ -71,21 +76,26 @@ class User extends Notification_Type {
 	 */
 	private function get_user_ip() {
 
-		if ( ! empty( $_SERVER[ 'HTTP_CLIENT_IP' ] ) ) {
-			return $_SERVER[ 'HTTP_CLIENT_IP' ];
-		} else if ( ! empty( $_SERVER[ 'HTTP_X_FORWARDED_FOR' ] ) ) {
-			return $_SERVER[ 'HTTP_X_FORWARDED_FOR' ];
+		if ( ! empty( $_SERVER['HTTP_CLIENT_IP'] ) ) {
+			return sanitize_text_field( wp_unslash( $_SERVER['HTTP_CLIENT_IP'] ) );
+		} elseif ( ! empty( $_SERVER['HTTP_X_FORWARDED_FOR'] ) ) {
+			return sanitize_text_field( wp_unslash( $_SERVER['HTTP_X_FORWARDED_FOR'] ) );
+		} elseif ( ! empty( $_SERVER['REMOTE_ADDR'] ) ) {
+			return sanitize_text_field( wp_unslash( $_SERVER['REMOTE_ADDR'] ) );
 		} else {
-			return $_SERVER[ 'REMOTE_ADDR' ];
+			return null;
 		}
 
 	}
 
 
+	/* ------------------------------------------ */
+
+
 	/**
 	 * Post notification when a new user has registered.
 	 *
-	 * @param $user_id
+	 * @param int $user_id User ID.
 	 *
 	 * @return bool
 	 */
@@ -97,8 +107,9 @@ class User extends Notification_Type {
 			return false;
 		}
 
-		// Build notification
-		$message = __( ':bust_in_silhouette: A new user just registered on <%s|%s>.', 'dorzki-notifications-to-slack' );
+		// Build notification.
+		/* translators: %1$s: Site URL, %2$s: Site Name */
+		$message = __( ':bust_in_silhouette: A new user just registered on <%1$s|%2$s>.', 'dorzki-notifications-to-slack' );
 		$message = sprintf( $message, get_bloginfo( 'url' ), get_bloginfo( 'name' ) );
 
 		$attachments = [
@@ -116,10 +127,14 @@ class User extends Notification_Type {
 
 		$channel = $this->get_notification_channel( __FUNCTION__ );
 
-		return $this->slack_bot->send_message( $message, $attachments, [
-			'color'   => '#2ecc71',
-			'channel' => $channel,
-		] );
+		return $this->slack_bot->send_message(
+			$message,
+			$attachments,
+			[
+				'color'   => '#2ecc71',
+				'channel' => $channel,
+			]
+		);
 
 	}
 
@@ -127,19 +142,20 @@ class User extends Notification_Type {
 	/**
 	 * Post notification when an administrator login was detected.
 	 *
-	 * @param $username
-	 * @param $user
+	 * @param string  $username User username.
+	 * @param WP_User $user     User object.
 	 *
 	 * @return bool
 	 */
 	public function administrator_login( $username, $user ) {
 
-		if ( ! in_array( 'administrator', $user->roles ) ) {
+		if ( ! in_array( 'administrator', $user->roles, true ) ) {
 			return false;
 		}
 
-		// Build notification
-		$message = __( ':necktie: Administrator login detected on <%s|%s>.', 'dorzki-notifications-to-slack' );
+		// Build notification.
+		/* translators: %1$s: Site URL, %2$s: Site Name */
+		$message = __( ':necktie: Administrator login detected on <%1$s|%2$s>.', 'dorzki-notifications-to-slack' );
 		$message = sprintf( $message, get_bloginfo( 'url' ), get_bloginfo( 'name' ) );
 
 		$attachments = [
@@ -157,10 +173,14 @@ class User extends Notification_Type {
 
 		$channel = $this->get_notification_channel( __FUNCTION__ );
 
-		return $this->slack_bot->send_message( $message, $attachments, [
-			'color'   => '#27ae60',
-			'channel' => $channel,
-		] );
+		return $this->slack_bot->send_message(
+			$message,
+			$attachments,
+			[
+				'color'   => '#27ae60',
+				'channel' => $channel,
+			]
+		);
 
 	}
 
@@ -168,7 +188,7 @@ class User extends Notification_Type {
 	/**
 	 * Post notification when an administrator failed login was detected.
 	 *
-	 * @param $username
+	 * @param string $username User username.
 	 *
 	 * @return bool
 	 */
@@ -182,12 +202,13 @@ class User extends Notification_Type {
 			return false;
 		}
 
-		if ( ! in_array( 'administrator', $user->roles ) ) {
+		if ( ! in_array( 'administrator', $user->roles, true ) ) {
 			return false;
 		}
 
-		// Build notification
-		$message = __( ':rotating_light: Administrator failed login detected on <%s|%s>.', 'dorzki-notifications-to-slack' );
+		// Build notification.
+		/* translators: %1$s: Site URL, %2$s: Site Name */
+		$message = __( ':rotating_light: Administrator failed login detected on <%1$s|%2$s>.', 'dorzki-notifications-to-slack' );
 		$message = sprintf( $message, get_bloginfo( 'url' ), get_bloginfo( 'name' ) );
 
 		$attachments = [
@@ -205,10 +226,14 @@ class User extends Notification_Type {
 
 		$channel = $this->get_notification_channel( __FUNCTION__ );
 
-		return $this->slack_bot->send_message( $message, $attachments, [
-			'color'   => '#e74c3c',
-			'channel' => $channel,
-		] );
+		return $this->slack_bot->send_message(
+			$message,
+			$attachments,
+			[
+				'color'   => '#e74c3c',
+				'channel' => $channel,
+			]
+		);
 
 	}
 

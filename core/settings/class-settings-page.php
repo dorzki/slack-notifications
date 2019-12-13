@@ -2,15 +2,15 @@
 /**
  * Plugins settings.
  *
- * @package     SlackNotifications\Settings
+ * @package     Slack_Notifications\Settings
  * @subpackage  Settings_Page
  * @author      Dor Zuberi <webmaster@dorzki.co.il>
  * @link        https://www.dorzki.co.il
  * @since       2.0.0
- * @version     2.0.0
+ * @version     2.0.6
  */
 
-namespace SlackNotifications\Settings;
+namespace Slack_Notifications\Settings;
 
 // Block direct access to the file via url.
 if ( ! defined( 'ABSPATH' ) ) {
@@ -21,39 +21,54 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Class Settings_Page
  *
- * @package SlackNotifications\Settings
+ * @package Slack_Notifications\Settings
  */
 class Settings_Page {
 
 	/**
+	 * Settings page title.
+	 *
 	 * @var string
 	 */
 	protected $page_title;
 
 	/**
+	 * Settings page menu title.
+	 *
 	 * @var string
 	 */
 	protected $menu_title;
 
 	/**
+	 * Settings page template file.
+	 *
 	 * @var string
 	 */
 	protected $template_page;
 
 	/**
+	 * Settings page slug.
+	 *
 	 * @var string
 	 */
 	protected $page_slug;
 
 	/**
+	 * Settings page header button link.
+	 *
 	 * @var array
 	 */
 	protected $header_link = [];
 
 	/**
+	 * Settings page arguments.
+	 *
 	 * @var array
 	 */
 	protected $settings = [];
+
+
+	/* ------------------------------------------ */
 
 
 	/**
@@ -69,6 +84,9 @@ class Settings_Page {
 	}
 
 
+	/* ------------------------------------------ */
+
+
 	/**
 	 * Registers the current settings page.
 	 */
@@ -77,10 +95,17 @@ class Settings_Page {
 		do_action( 'slack_before_page_register', $this );
 		do_action( 'slack_before_' . $this->page_slug . '_page_register', $this );
 
-		add_submenu_page( SN_SLUG, $this->page_title, $this->menu_title, 'manage_options', SN_SLUG . '-' . $this->page_slug, [
-			$this,
-			'print_settings_page',
-		] );
+		add_submenu_page(
+			SLACK_NOTIFICATIONS_SLUG,
+			$this->page_title,
+			$this->menu_title,
+			'manage_options',
+			SLACK_NOTIFICATIONS_SLUG . '-' . $this->page_slug,
+			[
+				$this,
+				'print_settings_page',
+			]
+		);
 
 		do_action( 'slack_after_page_register', $this );
 		do_action( 'slack_after_' . $this->page_slug . '_page_register', $this );
@@ -98,16 +123,16 @@ class Settings_Page {
 
 			$notice = esc_html__( 'Oops... it\'s seems like you don\'t have the permission to access this page.', 'dorzki-notifications-to-slack' );
 
-			wp_die( "<div class='error'><p>{$notice}</p></div>" );
+			wp_die( wp_kses_post( "<div class='error'><p>{$notice}</p></div>" ) );
 
 		}
 
 		do_action( 'slack_before_page_output', $this );
 		do_action( 'slack_before_' . $this->page_slug . '_page_output', $this );
 
-		include_once( SN_PATH . 'templates/settings-header.php' );
-		include_once( SN_PATH . "templates/{$this->template_page}.php" );
-		include_once( SN_PATH . 'templates/settings-footer.php' );
+		include_once 'templates/settings-header.php';
+		include_once "templates/{$this->template_page}.php";
+		include_once 'templates/settings-footer.php';
 
 		do_action( 'slack_after_page_output', $this );
 		do_action( 'slack_after_' . $this->page_slug . '_page_output', $this );
@@ -120,27 +145,38 @@ class Settings_Page {
 	 */
 	public function register_settings() {
 
-		// Declare sections
+		// Declare sections.
 		foreach ( $this->settings as $section_id => $section ) {
 
-			add_settings_section( $section_id, $section[ 'title' ], [
-				$this,
-				'section_callback',
-			], SN_SLUG );
+			add_settings_section(
+				$section_id,
+				$section['title'],
+				[
+					$this,
+					'section_callback',
+				],
+				SLACK_NOTIFICATIONS_SLUG
+			);
 
-			// Declare fields
-			foreach ( $section[ 'fields' ] as $field_id => $field ) {
+			// Declare fields.
+			foreach ( $section['fields'] as $field_id => $field ) {
 
-				register_setting( SN_SLUG, SN_FIELD_PREFIX . $field_id );
+				register_setting( SLACK_NOTIFICATIONS_SLUG, SLACK_NOTIFICATIONS_FIELD_PREFIX . $field_id );
 
-				add_settings_field( SN_FIELD_PREFIX . $field_id, $field[ 'label' ], '\SlackNotifications\Settings\Field::output_field', SN_SLUG, $section_id, [
-					'label_for' => SN_FIELD_PREFIX . $field_id,
-					'type'      => $field[ 'type' ],
-					'options'   => ( isset( $field[ 'options' ] ) ) ? $field[ 'options' ] : null,
-				] );
+				add_settings_field(
+					SLACK_NOTIFICATIONS_FIELD_PREFIX . $field_id,
+					$field['label'],
+					'\Slack_Notifications\Settings\Field::output_field',
+					SLACK_NOTIFICATIONS_SLUG,
+					$section_id,
+					[
+						'label_for' => SLACK_NOTIFICATIONS_FIELD_PREFIX . $field_id,
+						'type'      => $field['type'],
+						'options'   => ( isset( $field['options'] ) ) ? $field['options'] : null,
+					]
+				);
 
 			}
-
 		}
 
 	}
@@ -149,22 +185,22 @@ class Settings_Page {
 	/**
 	 * Prints section description if exists.
 	 *
-	 * @param $args
+	 * @param array $args Section arguments.
 	 */
 	public function section_callback( $args ) {
 
-		if ( ! isset( $this->settings[ $args[ 'id' ] ][ 'desc' ] ) ) {
+		if ( ! isset( $this->settings[ $args['id'] ]['desc'] ) ) {
 			return;
 		}
 
-		if ( empty( $this->settings[ $args[ 'id' ] ][ 'desc' ] ) ) {
+		if ( empty( $this->settings[ $args['id'] ]['desc'] ) ) {
 			return;
 		}
 
 		do_action( 'slack_before_section_output', $args );
 		do_action( 'slack_before_' . $this->page_slug . '_section_output', $args );
 
-		$html = sprintf( "<p id='%s'>%s</p>", $args[ 'id' ], $this->settings[ $args[ 'id' ] ][ 'desc' ] );
+		$html = sprintf( "<p id='%s'>%s</p>", $args['id'], $this->settings[ $args['id'] ]['desc'] );
 
 		echo apply_filters( 'slack_section_output', $html );
 
