@@ -31,6 +31,7 @@ Soon.
 
 | Version | Changes |
 | :------ | :------ |
+| 2.0.6 | [HOTFIX] Fixed CPT notification being fired for unwanted CPT. |
 | 2.0.5 | [FEATURE] On post type update the user who updated will be displayed on the notification. |
 | 2.0.4 | [FEATURE] Added failed administrator login notification.<br>[HOTFIX] Skip notification if a comment was marked as spam.<br>[HOTFIX] Fixed typo on new note notification. (Thanks to [Music47ell](https://wordpress.org/support/users/music47ell/))<br>[HOTFIX] Fixed wrong IP address when the server is behind load balancer. |
 | 2.0.3 | [HOTFIX] two factor collision.<br>[FEATURE] Added new support page. |

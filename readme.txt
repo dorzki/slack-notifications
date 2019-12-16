@@ -3,8 +3,8 @@ Contributors: dorzki
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=UYSJG8CB8YN2A
 Tags: notifications, slack, realtime, updates
 Requires at least: 4.5
-Tested up to: 4.9
-Stable tag: 2.0.5
+Tested up to: 5.3
+Stable tag: 2.0.6
 Requires PHP: 5.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -62,6 +62,9 @@ Please feel free to contact me `webmaster[AT]dorzki.co.il`
 4. `Slack Notifications - Part 2` Get notifications to you Slack channel.
 
 == Changelog ==
+
+= 2.0.6 =
+* [HOTFIX] Fixed CPT notification being fired for unwanted CPT.
 
 = 2.0.5 =
 * [FEATURE] On post type update the user who updated will be displayed on the notification.
