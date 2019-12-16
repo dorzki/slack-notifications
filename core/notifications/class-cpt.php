@@ -145,6 +145,41 @@ class CPT extends Notification_Type {
 
 
 	/**
+	 * Check if current CPT has a notification for certain event.
+	 *
+	 * @param string $post_type   Notification CPT.
+	 * @param string $action_type Notification action.
+	 *
+	 * @return bool
+	 */
+	private function has_notification( $post_type, $action_type ) {
+
+		if ( empty( $post_type ) || ! is_string( $post_type ) ) {
+			return false;
+		}
+
+		if ( empty( $action_type ) || ! is_string( $action_type ) ) {
+			return false;
+		}
+
+		$notifications = self::get_notifications();
+
+		foreach ( $notifications as $notification ) {
+
+			if ( "cpt_{$post_type}" === $notification->type && $action_type === $notification->action ) {
+				return true;
+			}
+		}
+
+		return false;
+
+	}
+
+
+	/* ------------------------------------------ */
+
+
+	/**
 	 * Post notification when a new cpt has been posted.
 	 *
 	 * @param object $cpt CPT object.
@@ -158,6 +193,10 @@ class CPT extends Notification_Type {
 		}
 
 		if ( in_array( $cpt->post_type, $this->ignore_cpts, true ) ) {
+			return false;
+		}
+
+		if ( ! $this->has_notification( $cpt->post_type, 'new_cpt' ) ) {
 			return false;
 		}
 
@@ -210,6 +249,10 @@ class CPT extends Notification_Type {
 		}
 
 		if ( in_array( $cpt->post_type, $this->ignore_cpts, true ) ) {
+			return false;
+		}
+
+		if ( ! $this->has_notification( $cpt->post_type, 'future_cpt' ) ) {
 			return false;
 		}
 
@@ -270,6 +313,10 @@ class CPT extends Notification_Type {
 			return false;
 		}
 
+		if ( ! $this->has_notification( $cpt->post_type, 'pending_cpt' ) ) {
+			return false;
+		}
+
 		$cpt_obj = get_post_type_object( $cpt->post_type );
 
 		// Build notification.
@@ -319,6 +366,10 @@ class CPT extends Notification_Type {
 		}
 
 		if ( in_array( $cpt->post_type, $this->ignore_cpts, true ) ) {
+			return false;
+		}
+
+		if ( ! $this->has_notification( $cpt->post_type, 'update_cpt' ) ) {
 			return false;
 		}
 
@@ -376,6 +427,10 @@ class CPT extends Notification_Type {
 		}
 
 		if ( in_array( $cpt->post_type, $this->ignore_cpts, true ) ) {
+			return false;
+		}
+
+		if ( ! $this->has_notification( $cpt->post_type, 'trash_cpt' ) ) {
 			return false;
 		}
 
