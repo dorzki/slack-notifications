@@ -130,9 +130,9 @@ class Settings_Page {
 		do_action( 'slack_before_page_output', $this );
 		do_action( 'slack_before_' . $this->page_slug . '_page_output', $this );
 
-		include_once 'templates/settings-header.php';
-		include_once "templates/{$this->template_page}.php";
-		include_once 'templates/settings-footer.php';
+		include_once SLACK_NOTIFICATIONS_PATH . 'templates/settings-header.php';
+		include_once SLACK_NOTIFICATIONS_PATH . "templates/{$this->template_page}.php";
+		include_once SLACK_NOTIFICATIONS_PATH . 'templates/settings-footer.php';
 
 		do_action( 'slack_after_page_output', $this );
 		do_action( 'slack_after_' . $this->page_slug . '_page_output', $this );

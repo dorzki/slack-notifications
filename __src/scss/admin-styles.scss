@@ -9,35 +9,35 @@
 	}
 
 	.preview_image_box {
-		display: inline-block;
-		width: 350px;
-		height: 350px;
-		border: 1px solid #dddddd;
-		background: #ffffff url('images/material-camera.svg') no-repeat center;
-		background-size: 64px;
-		transition: all .3s ease;
-		cursor: pointer;
-		position: relative;
-		font-size: 0;
+	  font-size: 0;
+	  position: relative;
+	  display: inline-block;
+	  width: 350px;
+	  height: 350px;
+	  cursor: pointer;
+	  transition: all .3s ease;
+	  border: 1px solid #dddddd;
+	  background: #ffffff url('icons/material-camera.svg') no-repeat center;
+	  background-size: 64px;
 
-		&:hover,
-		&:focus {
-			background-color: #fdfdfd;
+	  &:hover,
+	  &:focus {
+		background-color: #fdfdfd;
+	  }
+
+	  &.has_image {
+		width: auto;
+		height: auto;
+		background-image: none;
+
+		img {
+		  opacity: 1;
 		}
 
-		&.has_image {
-			background-image: none;
-			width: auto;
-			height: auto;
-
-			img {
-				opacity: 1;
-			}
-
-			.remove-image {
-				display: block;
-			}
+		.remove-image {
+		  display: block;
 		}
+	  }
 
 		img {
 			opacity: 0;
@@ -48,48 +48,48 @@
 		}
 
 		.remove-image {
-			display: none;
-			position: absolute;
-			bottom: 15px;
-			right: 15px;
-			text-indent: -9999px;
-			padding: 5px;
-			width: 32px;
-			height: 32px;
-			border: 0;
-			background: #ffffff url('images/material-clear.svg') no-repeat center;
-			cursor: pointer;
+		  position: absolute;
+		  right: 15px;
+		  bottom: 15px;
+		  display: none;
+		  width: 32px;
+		  height: 32px;
+		  padding: 5px;
+		  cursor: pointer;
+		  text-indent: -9999px;
+		  border: 0;
+		  background: #ffffff url('icons/material-clear.svg') no-repeat center;
 		}
 	}
 
 	button.slack_test_integration {
-		background: #f7f7f7 url('') no-repeat center right 5px;
+	  transition: all .3s ease;
+	  background: #f7f7f7 url('') no-repeat center right 5px;
+	  background-size: 20px;
+
+	  &:hover,
+	  &:focus {
+		background-repeat: no-repeat;
+		background-position: center right 5px;
 		background-size: 20px;
-		transition: all .3s ease;
+	  }
 
-		&:hover,
-		&:focus {
-			background-repeat: no-repeat;
-			background-size: 20px;
-			background-position: center right 5px;
-		}
+	  &.testing,
+	  &.ok,
+	  &.error {
+		padding-right: 30px;
+	  }
 
-		&.testing,
-		&.ok,
-		&.error {
-			padding-right: 30px;
-		}
-
-		&.testing {
-			background-image: url('images/ajax-loader.svg');
-		}
+	  &.testing {
+		background-image: url('icons/ajax-loader.svg');
+	  }
 
 		&.ok {
-			background-image: url('images/material-tick.svg');
+		  background-image: url('icons/material-tick.svg');
 		}
 
 		&.error {
-			background-image: url('images/material-error.svg');
+		  background-image: url('icons/material-error.svg');
 		}
 	}
 
@@ -226,29 +226,29 @@
 	}
 
 	.page-section {
-		margin-top: 15px;
-		background: #ffffff;
-		border: 1px solid #e5e5e5;
-		box-shadow: 0 1px 1px rgba(0, 0, 0, .04);
+	  margin-top: 15px;
+	  border: 1px solid #e5e5e5;
+	  background: #ffffff;
+	  box-shadow: 0 1px 1px rgba(0, 0, 0, .04);
 
-		header,
-		.section-contents {
-			padding: 15px;
+	  header,
+	  .section-contents {
+		padding: 15px;
+	  }
+
+	  header {
+		border-bottom: 1px solid #e1e1e1;
+		background-color: #fcfcfc;
+
+		h2 {
+		  margin: 0;
+		  color: #32373c;
 		}
+	  }
 
-		header {
-			border-bottom: 1px solid #e1e1e1;
-			background-color: #fcfcfc;
-
-			h2 {
-				margin: 0;
-				color: #32373c;
-			}
-		}
-
-		.section-contents {
-			textarea {
-				display: block;
+	  .section-contents {
+		textarea {
+		  display: block;
 				width: 100%;
 				height: 350px;
 				resize: none;
@@ -257,33 +257,33 @@
 			}
 
 			button#slack_clear_logs {
-				background: #f7f7f7 url('') no-repeat center right 5px;
+			  transition: all .3s ease;
+			  background: #f7f7f7 url('') no-repeat center right 5px;
+			  background-size: 20px;
+
+			  &:hover,
+			  &:focus {
+				background-repeat: no-repeat;
+				background-position: center right 5px;
 				background-size: 20px;
-				transition: all .3s ease;
+			  }
 
-				&:hover,
-				&:focus {
-					background-repeat: no-repeat;
-					background-size: 20px;
-					background-position: center right 5px;
-				}
+			  &.working,
+			  &.ok,
+			  &.error {
+				padding-right: 30px;
+			  }
 
-				&.working,
-				&.ok,
-				&.error {
-					padding-right: 30px;
-				}
-
-				&.working {
-					background-image: url('images/ajax-loader.svg');
-				}
+			  &.working {
+				background-image: url('icons/ajax-loader.svg');
+			  }
 
 				&.ok {
-					background-image: url('images/material-tick.svg');
+				  background-image: url('icons/material-tick.svg');
 				}
 
 				&.error {
-					background-image: url('images/material-error.svg');
+				  background-image: url('icons/material-error.svg');
 				}
 			}
 		}

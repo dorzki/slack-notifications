@@ -1,4 +1,4 @@
-<?php namespace SlackNotifications; ?>
+<?php namespace Slack_Notifications; ?>
 
 <!-- Technical Information -->
 <section class="page-section tech-info">

@@ -96,27 +96,27 @@ class Plugin {
 
 		do_action( 'slack_before_load_classes' );
 
-		include_once 'core/notifications/class-notification-type.php';
-		include_once 'core/notifications/class-system.php';
-		include_once 'core/notifications/class-user.php';
-		include_once 'core/notifications/class-post.php';
-		include_once 'core/notifications/class-page.php';
-		include_once 'core/notifications/class-comment.php';
-		include_once 'core/notifications/class-cpt.php';
-		include_once 'core/notifications/class-woocommerce.php';
+		include_once 'notifications/class-notification-type.php';
+		include_once 'notifications/class-system.php';
+		include_once 'notifications/class-user.php';
+		include_once 'notifications/class-post.php';
+		include_once 'notifications/class-page.php';
+		include_once 'notifications/class-comment.php';
+		include_once 'notifications/class-cpt.php';
+		include_once 'notifications/class-woocommerce.php';
 
 		do_action( 'slack_after_load_notifications_classes' );
 
-		include_once 'core/settings/class-field.php';
-		include_once 'core/settings/class-settings-page.php';
-		include_once 'core/settings/class-general.php';
-		include_once 'core/settings/class-notifications.php';
-		include_once 'core/settings/class-support.php';
+		include_once 'settings/class-field.php';
+		include_once 'settings/class-settings-page.php';
+		include_once 'settings/class-general.php';
+		include_once 'settings/class-notifications.php';
+		include_once 'settings/class-support.php';
 
-		include_once 'core/class-logger.php';
-		include_once 'core/class-slack-bot.php';
-		include_once 'core/class-ajax.php';
-		include_once 'core/class-admin.php';
+		include_once 'class-logger.php';
+		include_once 'class-slack-bot.php';
+		include_once 'class-ajax.php';
+		include_once 'class-admin.php';
 
 		do_action( 'slack_after_load_classes' );
 

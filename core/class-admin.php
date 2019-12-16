@@ -101,7 +101,7 @@ class Admin {
 			wp_enqueue_media();
 
 			// Load plugin scripts.
-			wp_enqueue_script( SLACK_NOTIFICATIONS_SLUG . '-scripts', SLACK_NOTIFICATIONS_SLUG . 'assets/admin-scripts.min.js', [ 'jquery' ], SLACK_NOTIFICATIONS_VERSION, true );
+			wp_enqueue_script( SLACK_NOTIFICATIONS_SLUG . '-scripts', SLACK_NOTIFICATIONS_URL . 'assets/admin-scripts.min.js', [ 'jquery' ], SLACK_NOTIFICATIONS_VERSION, true );
 
 			// Allow JS strings localization.
 			wp_localize_script(
