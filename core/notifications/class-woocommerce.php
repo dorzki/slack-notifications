@@ -173,11 +173,11 @@ class WooCommerce extends Notification_Type {
 
 		foreach ( $order->get_items() as $product_data ) {
 
-			if ( ! $product_data instanceof WC_Product ) {
+			$product = $product_data->get_product();
+
+			if ( ! $product instanceof WC_Product ) {
 				continue;
 			}
-
-			$product = $product_data->get_product();
 
 			$attachments[] = [
 				[
