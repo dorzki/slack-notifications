@@ -3,14 +3,14 @@
  * Plugin Name: Slack Notifications
  * Plugin URI: https://www.dorzki.co.il
  * Description: Stay up-to-date about your WordPress site directly to your Slack.
- * Version: 2.0.6
+ * Version: 2.0.7
  * Author: dorzki
  * Author URI: https://www.dorzki.co.il
  * Text Domain: dorzki-notifications-to-slack
  *
  * @package Slack_Notifications
  * @since   1.0.0
- * @version 2.0.6
+ * @version 2.0.7
  * @author  Dor Zuberi <me@dorzki.co.il>
  * @link    https://www.dorzki.co.il
  */
@@ -21,7 +21,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // Define plugins constants.
-define( 'SLACK_NOTIFICATIONS_VERSION', '2.0.6' );
+define( 'SLACK_NOTIFICATIONS_VERSION', '2.0.7' );
 define( 'SLACK_NOTIFICATIONS_SLUG', 'slack-notifications' );
 define( 'SLACK_NOTIFICATIONS_FIELD_PREFIX', 'slack_' );
 define( 'SLACK_NOTIFICATIONS_PATH', plugin_dir_path( __FILE__ ) );
