@@ -12,9 +12,9 @@
 
 namespace Slack_Notifications\Notifications;
 
-// Block direct access to the file via url.
 use WP_Post;
 
+// Block direct access to the file via url.
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
