@@ -47,7 +47,7 @@
 	} );
 
 	// Handle integration test notification.
-	$( '.slack_test_integration' ).on( 'click', function ( e ) {
+	$( '.webhooks-wrapper' ).on( 'click', '.slack_test_integration', function( e ) {
 		e.preventDefault();
 
 		var _btn = $( this );
@@ -55,12 +55,16 @@
 
 		_btn.removeClass( 'testing ok error' ).addClass( 'testing' );
 
+		var _wrapper = _btn.closest('.notification-form');
+		_url_field = _wrapper.find('input[name^="webhooks[url]"]');
+
 		$.ajax( {
 			url: ajaxurl,
 			method: 'POST',
 			dataType: 'json',
 			data: {
-				action: 'slack-test-integration'
+				action: 'slack-test-integration',
+				webhook_url: _url_field.val(),
 			},
 			success: function ( response ) {
 
@@ -93,6 +97,20 @@
 
 	} );
 
+	// Handle new webhook button link
+	$( 'a.page-title-action[href="#new_webhook"]' ).on( 'click', function ( e ) {
+		e.preventDefault();
+
+		var _box = $( '#webhook_box' ).html();
+
+		var _newBox = $( _box ).clone();
+
+		_newBox.appendTo( '.webhooks-wrapper' );
+		_newBox.find( '.notification-settings' ).slideToggle();
+		_newBox.toggleClass( 'open' );
+
+	} );
+
 	// Handle notifications collapsible action.
 	$( document ).on( 'click', '.notification-box .notification-header', function ( e ) {
 		e.preventDefault();
@@ -101,6 +119,13 @@
 		$( this ).parent( '.notification-box' ).toggleClass( 'open' );
 
 	} );
+
+	// Open new notification-boxes (only when there are no webhooks)
+	$( '.notification-box.new' ).each( function () {
+		$( this ).find( '.notification-settings' ).slideToggle();
+		$( this ).toggleClass( 'open' );
+
+	});
 
 	// Handle notification type switch
 	$( document ).on( 'change', '.notification-box select', function () {

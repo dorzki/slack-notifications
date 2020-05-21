@@ -7,7 +7,7 @@
  * @author      Dor Zuberi <webmaster@dorzki.co.il>
  * @link        https://www.dorzki.co.il
  * @since       2.0.0
- * @version     2.0.6
+ * @version     2.1.0
  */
 
 namespace Slack_Notifications\Settings;
@@ -55,10 +55,6 @@ class General extends Settings_Page {
 					'title'  => __( 'Slack Integration', 'dorzki-notifications-to-slack' ),
 					'desc'   => __( 'Setup integration between WordPress and Slack.' ),
 					'fields' => [
-						'webhook'          => [
-							'label' => esc_html__( 'Webhook URL', 'dorzki-notifications-to-slack' ),
-							'type'  => Field::INPUT_TEXT,
-						],
 						'default_channel'  => [
 							'label' => esc_html__( 'Default Channel', 'dorzki-notifications-to-slack' ),
 							'type'  => Field::INPUT_TEXT,
@@ -70,10 +66,6 @@ class General extends Settings_Page {
 						'bot_image'        => [
 							'label' => esc_html__( 'Bot Image', 'dorzki-notifications-to-slack' ),
 							'type'  => Field::INPUT_MEDIA,
-						],
-						'test_integration' => [
-							'label' => esc_html__( 'Test Integration', 'dorzki-notifications-to-slack' ),
-							'type'  => Field::INPUT_TEST,
 						],
 					],
 				],

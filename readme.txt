@@ -63,6 +63,9 @@ Please feel free to contact me `webmaster[AT]dorzki.co.il`
 
 == Changelog ==
 
+= 2.1.0 =
+* [FEATURE] Multiple Webhooks
+
 = 2.0.7 =
 * [HOTFIX] Fixed WooCommerce order not showing products.
 * [FEATURE] Added Contact Form 7 integration.

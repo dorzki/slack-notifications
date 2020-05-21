@@ -7,7 +7,7 @@
  * @author      Dor Zuberi <webmaster@dorzki.co.il>
  * @link        https://www.dorzki.co.il
  * @since       2.0.7
- * @version     2.0.7
+ * @version     2.1.0
  */
 
 namespace Slack_Notifications\Notifications;
@@ -122,7 +122,7 @@ class Contact_Form_7 extends Notification_Type {
 		$message = __( ':incoming_envelope: *%1$s* was submitted on *<%2$s|%3$s>*!', 'dorzki-notifications-to-slack' );
 		$message = sprintf( $message, $cf7->title(), get_bloginfo( 'url' ), get_bloginfo( 'name' ) );
 
-		$channel = $this->get_notification_channel( __FUNCTION__ );
+		[ $webhook_id, $channel ] = $this->get_notification_webhook_data( __FUNCTION__ );
 
 		return $this->slack_bot->send_message(
 			$message,
@@ -130,6 +130,7 @@ class Contact_Form_7 extends Notification_Type {
 			[
 				'color'   => '#f39c12',
 				'channel' => $channel,
+				'webhook_id' => $webhook_id,
 			]
 		);
 
