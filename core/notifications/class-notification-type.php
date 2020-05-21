@@ -7,7 +7,7 @@
  * @author      Dor Zuberi <webmaster@dorzki.co.il>
  * @link        https://www.dorzki.co.il
  * @since       2.0.0
- * @version     2.1.0
+ * @version     2.1.1
  */
 
 namespace Slack_Notifications\Notifications;
@@ -95,7 +95,13 @@ class Notification_Type {
 		if ( ! empty( $notifications ) ) {
 			foreach ( $notifications as $notification ) {
 				$this->notif_channels[ $notification->action ] = $notification->channel;
-				$this->notif_webhooks[ $notification->action ] = $notification->webhook_id;
+
+				if ( is_array( $this->notif_webhooks[ $notification->action ] ) ) {
+					$this->notif_webhooks[ $notification->action ][] = $notification->webhook_id;
+				}
+				else {
+					$this->notif_webhooks[ $notification->action ] = [ $notification->webhook_id ];
+				}
 			}
 		}
 

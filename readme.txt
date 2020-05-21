@@ -63,6 +63,9 @@ Please feel free to contact me `webmaster[AT]dorzki.co.il`
 
 == Changelog ==
 
+= 2.1.1 =
+* [FEATURE] Use multiple notifications to send to different webhooks
+
 = 2.1.0 =
 * [FEATURE] Multiple Webhooks
 

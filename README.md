@@ -31,6 +31,7 @@ Soon.
 
 | Version | Changes |
 | :------ | :------ |
+| 2.1.1 | [FEATURE] Use multiple notifications to send to different webhooks
 | 2.1.0 | [FEATURE] Multiple Webhooks
 | 2.0.7 | [HOTFIX] Fixed WooCommerce order not showing products.<br>[FEATURE] Added Contact Form 7 integration. |
 | 2.0.6 | [HOTFIX] Fixed CPT notification being fired for unwanted CPT. |

@@ -7,7 +7,7 @@
  * @author      Dor Zuberi <webmaster@dorzki.co.il>
  * @link        https://www.dorzki.co.il
  * @since       2.0.0
- * @version     2.1.0
+ * @version     2.1.1
  */
 
 namespace Slack_Notifications;
@@ -111,55 +111,59 @@ class Slack_Bot {
 
 		$notification = $this->build_notification( $message, $attachments, $args );
 		$channels     = ( isset( $args['channel'] ) ) ? $this->parse_channels( $args['channel'] ) : $this->parse_channels( '' );
-		$webhook_url  = $this->get_webhook_url( $args );
+		$webhook_urls = $this->get_webhook_urls( $args );
 
-		foreach ( $channels as $channel ) {
+		if ( ! empty ( $webhook_urls ) ) {
 
-			$notification['channel'] = $channel;
+			foreach ( $webhook_urls as $webhook_url ) {
 
-			// Make an API call.
-			$api_call_data = apply_filters(
-				'slack_before_api_call',
-				[
-					'method'      => 'POST',
-					'timeout'     => 30,
-					'httpversion' => '1.0',
-					'blocking'    => true,
-					'body'        => [
-						'payload' => wp_json_encode( $notification ),
-					],
-				]
-			);
+				foreach ( $channels as $channel ) {
 
-			if ( $webhook_url ) {
-				$response = wp_remote_request( $webhook_url, $api_call_data );
+					$notification['channel'] = $channel;
 
-				// Check if we got an error.
-				if ( is_wp_error( $response ) || 200 !== $response['response']['code'] ) {
-
-					Logger::write(
+					// Make an API call.
+					$api_call_data = apply_filters(
+						'slack_before_api_call',
 						[
-							'response_code'    => $response['response']['code'],
-							'response_message' => $response['body'],
-							'api_request'      => $notification,
+							'method'      => 'POST',
+							'timeout'     => 30,
+							'httpversion' => '1.0',
+							'blocking'    => true,
+							'body'        => [
+								'payload' => wp_json_encode( $notification ),
+							],
 						]
 					);
 
-					update_option( SLACK_NOTIFICATIONS_FIELD_PREFIX . 'test_integration', 0 );
+					$response = wp_remote_request( $webhook_url, $api_call_data );
 
-					return false;
+					// Check if we got an error.
+					if ( is_wp_error( $response ) || 200 !== $response['response']['code'] ) {
 
+						Logger::write(
+							[
+								'response_code'    => $response['response']['code'],
+								'response_message' => $response['body'],
+								'api_request'      => $notification,
+							]
+						);
+
+						update_option( SLACK_NOTIFICATIONS_FIELD_PREFIX . 'test_integration', 0 );
+
+						return false;
+
+					}
 				}
 			}
-			else {
-				Logger::write(
-					[
-						'response_message' => __( 'Webhook url is not defined', 'dorzki-notifications-to-slack' ),
-						'api_request'      => json_encode( $notification ),
-					]
-				);
-			}
+		}
+		else {
 
+			Logger::write(
+				[
+					'response_message' => __( 'Webhook url is not defined', 'dorzki-notifications-to-slack' ),
+					'api_request'      => json_encode( $notification ),
+				]
+			);
 		}
 
 		update_option( SLACK_NOTIFICATIONS_FIELD_PREFIX . 'test_integration', 1 );
@@ -259,14 +263,36 @@ class Slack_Bot {
 
 	}
 
-	private function get_webhook_url( $args ) {
+	/**
+	 * Return all webhooks urls using their ids or urls
+	 *
+	 * @param array $args Contains either `webhook_id` (single or array) or `webhook_url`
+	 *
+	 * @return array
+	 */
+	private function get_webhook_urls( $args ) {
 
 		if ( isset( $args['webhook_id'] ) ) {
-			$webhook = $this->webhooks[ $args['webhook_id'] ];
-			return $webhook->url;
+
+			if ( is_array( $args['webhook_id'] ) ) {
+
+				return array_map( function( $webhook_id ) {
+					$webhook = $this->webhooks[  $webhook_id  ];
+					return $webhook->url;
+				}, array_unique( $args['webhook_id'] ) );
+
+			}
+			else {
+
+				$webhook = $this->webhooks[ $args['webhook_id'] ];
+				return $webhook->url;
+
+			}
 		}
 		else if ( isset( $args['webhook_url'] ) ) {
-			return $args['webhook_url'];
+
+			return [ $args['webhook_url'] ];
+
 		}
 
 		return false;
