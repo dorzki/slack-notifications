@@ -1,6 +1,6 @@
 <?php
 $title = __( 'New Notification', 'dorzki-notifications-to-slack' );
-$type  = $action = $channel = null;
+$type  = $action = $channel = $webhook_id = null;
 
 if ( isset( $notification ) && is_object( $notification ) ) {
 
@@ -8,6 +8,7 @@ if ( isset( $notification ) && is_object( $notification ) ) {
 	$type    = $notification->type;
 	$action  = $notification->action;
 	$channel = $notification->channel;
+	$webhook_id = $notification->webhook_id;
 
 }
 ?>
@@ -59,6 +60,20 @@ if ( isset( $notification ) && is_object( $notification ) ) {
 						</select>
 
 					<?php endforeach; ?>
+				</td>
+			</tr>
+			<tr>
+				<th scope="row"><?php esc_html_e( 'Webhook', 'dorzki-notifications-to-slack' ); ?></th>
+				<td>
+
+					<select name="notification[webhook_id][]" class="notification-webhook">
+
+						<?php foreach ( $GLOBALS['slack_webhooks'] as $webhook ) : ?>
+							<option
+									value="<?php echo esc_attr( $webhook->id ); ?>" <?php selected( $webhook_id, $webhook->id ); ?>><?php echo esc_html( $webhook->title ); ?></option>
+						<?php endforeach; ?>
+
+					</select>
 				</td>
 			</tr>
 			<tr>

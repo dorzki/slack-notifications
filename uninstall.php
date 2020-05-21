@@ -22,6 +22,7 @@ delete_option( SLACK_NOTIFICATIONS_FIELD_PREFIX . 'default_channel' );
 delete_option( SLACK_NOTIFICATIONS_FIELD_PREFIX . 'bot_name' );
 delete_option( SLACK_NOTIFICATIONS_FIELD_PREFIX . 'bot_image' );
 delete_option( SLACK_NOTIFICATIONS_FIELD_PREFIX . 'text_integration' );
+delete_option( SLACK_NOTIFICATIONS_FIELD_PREFIX . 'webhooks' );
 delete_option( SLACK_NOTIFICATIONS_FIELD_PREFIX . 'notifications' );
 delete_option( SLACK_NOTIFICATIONS_FIELD_PREFIX . 'wordpress_version' );
 delete_option( SLACK_NOTIFICATIONS_FIELD_PREFIX . 'plugins_version' );

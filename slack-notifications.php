@@ -3,14 +3,14 @@
  * Plugin Name: Slack Notifications
  * Plugin URI: https://www.dorzki.co.il
  * Description: Stay up-to-date about your WordPress site directly to your Slack.
- * Version: 2.0.7
+ * Version: 2.1.1
  * Author: dorzki
  * Author URI: https://www.dorzki.co.il
  * Text Domain: dorzki-notifications-to-slack
  *
  * @package Slack_Notifications
  * @since   1.0.0
- * @version 2.0.7
+ * @version 2.1.0
  * @author  Dor Zuberi <me@dorzki.co.il>
  * @link    https://www.dorzki.co.il
  */
@@ -21,7 +21,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // Define plugins constants.
-define( 'SLACK_NOTIFICATIONS_VERSION', '2.0.7' );
+define( 'SLACK_NOTIFICATIONS_VERSION', '2.1.1' );
 define( 'SLACK_NOTIFICATIONS_SLUG', 'slack-notifications' );
 define( 'SLACK_NOTIFICATIONS_FIELD_PREFIX', 'slack_' );
 define( 'SLACK_NOTIFICATIONS_PATH', plugin_dir_path( __FILE__ ) );
@@ -77,7 +77,7 @@ function sn_php_version_not_supported() {
 function sn_wp_version_no_supported() {
 
 	/* translators: %s: WordPress version */
-	$notice      = sprintf( esc_html__( 'Slack Notifications plugin requires WordPress version %s or above to work properly.', 'dorzki-notifications-to-slac' ), '4.7' );
+	$notice      = sprintf( esc_html__( 'Slack Notifications plugin requires WordPress version %s or above to work properly.', 'dorzki-notifications-to-slack' ), '4.7' );
 	$notice_html = sprintf( '<div class="error">%s</div>', wpautop( $notice ) );
 
 	echo wp_kses_post( $notice_html );
@@ -95,11 +95,21 @@ function sn_update_plugin_db() {
 	// Get previous version.
 	$old_version = get_option( SLACK_NOTIFICATIONS_FIELD_PREFIX . 'version' );
 
+	// Update version to 2.0.0
+	if ( empty ( $old_version ) || version_compare( $old_version, '2.0.0', '<' ) ) {
+		sn_update_plugin_db_200();
+	}
+
+	// Update version to 2.1.0
+	if ( empty ( $old_version ) || version_compare( $old_version, '2.1.0', '<' ) ) {
+		sn_update_plugin_db_210();
+	}
+
 	update_option( SLACK_NOTIFICATIONS_FIELD_PREFIX . 'version', SLACK_NOTIFICATIONS_VERSION );
 
-	if ( ! empty( $old_version ) && version_compare( $old_version, '2.0.0', '>=' ) ) {
-		return false;
-	}
+}
+
+function sn_update_plugin_db_200() {
 
 	$webhook   = get_option( 'slack_webhook_endpoint' );
 	$channel   = get_option( 'slack_channel_name' );
@@ -261,6 +271,44 @@ function sn_update_plugin_db() {
 	update_option( SLACK_NOTIFICATIONS_FIELD_PREFIX . 'bot_image', $bot_image );
 	update_option( SLACK_NOTIFICATIONS_FIELD_PREFIX . 'test_integration', '1' );
 	update_option( SLACK_NOTIFICATIONS_FIELD_PREFIX . 'notifications', wp_json_encode( $notifications ) );
+
+	return true;
+
+}
+
+/**
+ * Update a single webhook to the new `webhooks` option and update
+ * all previous notifications to use the new webhook
+ */
+function sn_update_plugin_db_210() {
+
+	$webhook = get_option( SLACK_NOTIFICATIONS_FIELD_PREFIX . 'webhook' );
+	$notifications = json_decode( get_option( SLACK_NOTIFICATIONS_FIELD_PREFIX . 'notifications' ) );
+
+	if ( empty( $webhook ) ) {
+		return false;
+	}
+
+	// Create a new webhook from the previously defined webhook
+	$webhook_id = Slack_Notifications\Webhook::random_id();
+	$webhooks = [];
+	$webhooks[] = [
+		'id' => $webhook_id,
+		'title' => __( 'Default Webhook', 'dorzki-notifications-to-slack' ),
+		'url' => $webhook,
+	];
+
+	// Update all notifications to use the new webhook
+	foreach ($notifications as $i => $notification) {
+		$notifications[$i]->webhook_id = $webhook_id;
+	}
+
+	// Delete previous webhook option
+	delete_option( SLACK_NOTIFICATIONS_FIELD_PREFIX . 'webhook' );
+
+	update_option( SLACK_NOTIFICATIONS_FIELD_PREFIX . 'webhooks', wp_json_encode( $webhooks ) );
+	update_option( SLACK_NOTIFICATIONS_FIELD_PREFIX . 'notifications', wp_json_encode( $notifications ) );
+
 
 	return true;
 

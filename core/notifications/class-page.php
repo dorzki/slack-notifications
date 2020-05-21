@@ -7,7 +7,7 @@
  * @author      Dor Zuberi <webmaster@dorzki.co.il>
  * @link        https://www.dorzki.co.il
  * @since       2.0.0
- * @version     2.0.6
+ * @version     2.1.0
  */
 
 namespace Slack_Notifications\Notifications;
@@ -125,7 +125,7 @@ class Page extends Notification_Type {
 			],
 		];
 
-		$channel = $this->get_notification_channel( __FUNCTION__ );
+		[ $webhook_id, $channel ] = $this->get_notification_webhook_data( __FUNCTION__ );
 
 		return $this->slack_bot->send_message(
 			$message,
@@ -133,6 +133,7 @@ class Page extends Notification_Type {
 			[
 				'color'   => '#3498db',
 				'channel' => $channel,
+				'webhook_id' => $webhook_id,
 			]
 		);
 
@@ -179,7 +180,7 @@ class Page extends Notification_Type {
 			],
 		];
 
-		$channel = $this->get_notification_channel( __FUNCTION__ );
+		[ $webhook_id, $channel ] = $this->get_notification_webhook_data( __FUNCTION__ );
 
 		return $this->slack_bot->send_message(
 			$message,
@@ -187,6 +188,7 @@ class Page extends Notification_Type {
 			[
 				'color'   => '#2980b9',
 				'channel' => $channel,
+				'webhook_id' => $webhook_id,
 			]
 		);
 
@@ -228,7 +230,7 @@ class Page extends Notification_Type {
 			],
 		];
 
-		$channel = $this->get_notification_channel( __FUNCTION__ );
+		[ $webhook_id, $channel ] = $this->get_notification_webhook_data( __FUNCTION__ );
 
 		return $this->slack_bot->send_message(
 			$message,
@@ -236,6 +238,7 @@ class Page extends Notification_Type {
 			[
 				'color'   => '#2980b9',
 				'channel' => $channel,
+				'webhook_id' => $webhook_id,
 			]
 		);
 
@@ -280,7 +283,7 @@ class Page extends Notification_Type {
 			],
 		];
 
-		$channel = $this->get_notification_channel( __FUNCTION__ );
+		[ $webhook_id, $channel ] = $this->get_notification_webhook_data( __FUNCTION__ );
 
 		return $this->slack_bot->send_message(
 			$message,
@@ -288,6 +291,7 @@ class Page extends Notification_Type {
 			[
 				'color'   => '#2980b9',
 				'channel' => $channel,
+				'webhook_id' => $webhook_id,
 			]
 		);
 
@@ -332,7 +336,7 @@ class Page extends Notification_Type {
 			],
 		];
 
-		$channel = $this->get_notification_channel( __FUNCTION__ );
+		[ $webhook_id, $channel ] = $this->get_notification_webhook_data( __FUNCTION__ );
 
 		return $this->slack_bot->send_message(
 			$message,
@@ -340,6 +344,7 @@ class Page extends Notification_Type {
 			[
 				'color'   => '#e74c3c',
 				'channel' => $channel,
+				'webhook_id' => $webhook_id,
 			]
 		);
 

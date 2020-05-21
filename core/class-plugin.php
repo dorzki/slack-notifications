@@ -7,7 +7,7 @@
  * @author      Dor Zuberi <webmaster@dorzki.co.il>
  * @link        https://www.dorzki.co.il
  * @since       2.0.0
- * @version     2.0.7
+ * @version     2.1.0
  */
 
 namespace Slack_Notifications;
@@ -111,9 +111,11 @@ class Plugin {
 		include_once 'settings/class-field.php';
 		include_once 'settings/class-settings-page.php';
 		include_once 'settings/class-general.php';
+		include_once 'settings/class-webhooks.php';
 		include_once 'settings/class-notifications.php';
 		include_once 'settings/class-support.php';
 
+		include_once 'class-webhook.php';
 		include_once 'class-logger.php';
 		include_once 'class-slack-bot.php';
 		include_once 'class-ajax.php';
@@ -143,6 +145,8 @@ class Plugin {
 		new Notifications\Contact_Form_7();
 
 		new AJAX();
+
+		new Webhook();
 
 		do_action( 'slack_after_init_classes' );
 

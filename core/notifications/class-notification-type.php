@@ -7,7 +7,7 @@
  * @author      Dor Zuberi <webmaster@dorzki.co.il>
  * @link        https://www.dorzki.co.il
  * @since       2.0.0
- * @version     2.0.6
+ * @version     2.1.1
  */
 
 namespace Slack_Notifications\Notifications;
@@ -90,10 +90,18 @@ class Notification_Type {
 		// Build notification_id => channel array.
 		$notifications        = self::get_notifications();
 		$this->notif_channels = [];
+		$this->notif_webhooks = [];
 
 		if ( ! empty( $notifications ) ) {
 			foreach ( $notifications as $notification ) {
 				$this->notif_channels[ $notification->action ] = $notification->channel;
+
+				if ( is_array( $this->notif_webhooks[ $notification->action ] ) ) {
+					$this->notif_webhooks[ $notification->action ][] = $notification->webhook_id;
+				}
+				else {
+					$this->notif_webhooks[ $notification->action ] = [ $notification->webhook_id ];
+				}
 			}
 		}
 
@@ -174,6 +182,26 @@ class Notification_Type {
 		}
 
 		return false;
+
+	}
+
+	protected function get_notification_webhook_data( $func_name ) {
+
+		foreach ( $this->object_options as $notif_id => $notif_data ) {
+
+			foreach ( $notif_data['hooks'] as $func ) {
+
+				if ( $func === $func_name ) {
+
+					$webhook_id = apply_filters( 'slack_notification_webhook_id', $this->notif_webhooks[ $notif_id ], $func_name );
+					$channel = apply_filters( 'slack_notification_channel', $this->notif_channels[ $notif_id ], $func_name );
+
+					return [ $webhook_id, $channel ];
+				}
+			}
+		}
+
+		return null;
 
 	}
 

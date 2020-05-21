@@ -7,7 +7,7 @@
  * @author      Dor Zuberi <webmaster@dorzki.co.il>
  * @link        https://www.dorzki.co.il
  * @since       2.0.0
- * @version     2.0.6
+ * @version     2.1.0
  */
 
 namespace Slack_Notifications;
@@ -48,7 +48,12 @@ class AJAX {
 
 		$message = __( ':pizza: Mmmmmmm.... Pizzzzzzzzzzzzzzzzzzzzzzza!!!', 'dorzki-notifications-to-slack' );
 
-		$sent = $bot->send_message( $message );
+		$args = [];
+		if ( !empty( $_POST ) && $_POST[ 'webhook_url' ] ) {
+			$args['webhook_url'] = $_POST['webhook_url'];
+		}
+
+		$sent = $bot->send_message( $message, [], $args );
 
 		return ( $sent ) ? wp_send_json_success() : wp_send_json_error();
 

@@ -11,6 +11,7 @@ if ( isset( $_POST['save_notifications'] ) ) {
 			'action'  => $_POST['notification']['action'][ $notification_type ][ $notification_id ],
 			'channel' => $_POST['notification']['channel'][ $notification_id ],
 			'title'   => $_POST['notification']['title'][ $notification_id ],
+			'webhook_id' => $_POST['notification']['webhook_id'][ $notification_id ],
 		];
 
 	}

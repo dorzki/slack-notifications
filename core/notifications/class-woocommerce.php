@@ -7,7 +7,7 @@
  * @author      Dor Zuberi <webmaster@dorzki.co.il>
  * @link        https://www.dorzki.co.il
  * @since       2.0.0
- * @version     2.0.6
+ * @version     2.1.0
  */
 
 namespace Slack_Notifications\Notifications;
@@ -225,7 +225,7 @@ class WooCommerce extends Notification_Type {
 
 		$attachments = $this->build_order_attachments( $order );
 
-		$channel = $this->get_notification_channel( __FUNCTION__ );
+		[ $webhook_id, $channel ] = $this->get_notification_webhook_data( __FUNCTION__ );
 
 		return $this->slack_bot->send_message(
 			$message,
@@ -233,6 +233,7 @@ class WooCommerce extends Notification_Type {
 			[
 				'color'   => '#34495e',
 				'channel' => $channel,
+				'webhook_id' => $webhook_id,
 			]
 		);
 
@@ -262,7 +263,7 @@ class WooCommerce extends Notification_Type {
 
 		$attachments = $this->build_order_attachments( $order );
 
-		$channel = $this->get_notification_channel( __FUNCTION__ );
+		[ $webhook_id, $channel ] = $this->get_notification_webhook_data( __FUNCTION__ );
 
 		return $this->slack_bot->send_message(
 			$message,
@@ -270,6 +271,7 @@ class WooCommerce extends Notification_Type {
 			[
 				'color'   => '#2c3e50',
 				'channel' => $channel,
+				'webhook_id' => $webhook_id,
 			]
 		);
 
@@ -325,7 +327,7 @@ class WooCommerce extends Notification_Type {
 			],
 		];
 
-		$channel = $this->get_notification_channel( __FUNCTION__ );
+		[ $webhook_id, $channel ] = $this->get_notification_webhook_data( __FUNCTION__ );
 
 		return $this->slack_bot->send_message(
 			$message,
@@ -333,6 +335,7 @@ class WooCommerce extends Notification_Type {
 			[
 				'color'   => '#2c3e50',
 				'channel' => $channel,
+				'webhook_id' => $webhook_id,
 			]
 		);
 
@@ -387,7 +390,7 @@ class WooCommerce extends Notification_Type {
 			],
 		];
 
-		$channel = $this->get_notification_channel( __FUNCTION__ );
+		[ $webhook_id, $channel ] = $this->get_notification_webhook_data( __FUNCTION__ );
 
 		return $this->slack_bot->send_message(
 			$message,
@@ -395,6 +398,7 @@ class WooCommerce extends Notification_Type {
 			[
 				'color'   => '#2c3e50',
 				'channel' => $channel,
+				'webhook_id' => $webhook_id,
 			]
 		);
 

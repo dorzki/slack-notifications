@@ -7,7 +7,7 @@
  * @author      Dor Zuberi <webmaster@dorzki.co.il>
  * @link        https://www.dorzki.co.il
  * @since       2.0.0
- * @version     2.0.6
+ * @version     2.1.0
  */
 
 namespace Slack_Notifications;
@@ -78,6 +78,7 @@ class Admin {
 		do_action( 'slack_before_register_pages' );
 
 		new Settings\General();
+		new Settings\Webhooks();
 		new Settings\Notifications();
 		new Settings\Support();
 
