@@ -1,11 +1,10 @@
 === Slack Notifications by dorzki ===
 Contributors: dorzki
-Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=UYSJG8CB8YN2A
 Tags: notifications, slack, realtime, updates
 Requires at least: 4.5
 Tested up to: 5.3
-Stable tag: 2.0.7
-Requires PHP: 5.4
+Stable tag: 2.1.0
+Requires PHP: 5.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 

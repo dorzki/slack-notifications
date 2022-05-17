@@ -2,14 +2,19 @@
 .idea/
 .vscode/
 
-# Node Modules
-node_modules/
+# 3rd Party Modules
+/node_modules/
+/vendor/
 
 # Build Files
 assets/
 
 # Lock Files
-package-lock.json
+/package-lock.json
+/composer.lock
+
+# Sensitive Files
+.env
 
 # General
 .DS_Store
