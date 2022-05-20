@@ -1,0 +1,33 @@
+{
+	"name": "dorzki/slack-notifications",
+	"description": "Get notified and monitor your WordPress site with Slack notifications.",
+	"type": "wordpress-plugin",
+	"license": "GPL-3.0",
+	"authors": [
+		{
+			"name": "Dor Zuberi",
+			"email": "admin@dorzki.io"
+		}
+	],
+	"minimum-stability": "stable",
+	"scripts": {
+		"lint": "phpcs --standard=phpcs.xml ./"
+	},
+	"require": {
+		"php": "^7.1",
+		"ext-json": "*"
+	},
+	"require-dev": {
+		"dealerdirect/phpcodesniffer-composer-installer": "*",
+		"wp-coding-standards/wpcs": "^2.3",
+		"wp-cli/wp-cli": "^2.6"
+	},
+	"config": {
+		"platform": {
+			"php": "7.1"
+		},
+		"allow-plugins": {
+			"dealerdirect/phpcodesniffer-composer-installer": true
+		}
+	}
+}

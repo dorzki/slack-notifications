@@ -1,7 +1,7 @@
 {
 	"name": "slack-notifications",
 	"version": "2.1.0",
-	"description": "Send WordPress notifications to your Slack team channel.",
+	"description": "Get notified and monitor your WordPress site with Slack notifications.",
 	"repository": {
 		"type": "git",
 		"url": "git+https://github.com/dorzki/slack-notifications.git"
@@ -11,5 +11,8 @@
 	"bugs": {
 		"url": "https://github.com/dorzki/slack-notifications/issues"
 	},
-	"homepage": "https://github.com/dorzki/slack-notifications#readme"
+	"homepage": "https://github.com/dorzki/slack-notifications#readme",
+	"devDependencies": {
+		"@wordpress/env": "^4.6.0"
+	}
 }

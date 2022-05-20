@@ -1,14 +1,14 @@
 === Slack Notifications by dorzki ===
 Contributors: dorzki
 Tags: notifications, slack, realtime, updates
-Requires at least: 4.5
-Tested up to: 5.3
+Requires at least: 5.3
+Tested up to: 6.0
 Stable tag: 2.1.0
-Requires PHP: 5.6
-License: GPLv2 or later
-License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Requires PHP: 7.1
+License: GPLv3 or later
+License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
-Get WordPress notifications to your team's Slack channel.
+Get notified and monitor your WordPress site with Slack notifications.
 
 == Description ==
 
