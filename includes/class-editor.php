@@ -5,7 +5,7 @@
  * @package    dorzki\SlackNotifications
  * @author     Dor Zuberi <admin@dorzki.io>
  * @copyright  2022 dorzki
- * @version    1.0.0
+ * @version    2.1.0
  */
 
 namespace dorzki\SlackNotifications;
@@ -51,7 +51,7 @@ class Editor {
 	 * @return void
 	 * @throws Duplication_Exception
 	 *
-	 * @since 1.0.0
+	 * @since 2.1.0
 	 */
 	private function load_blocks() {
 		$this->register_block(
@@ -114,7 +114,7 @@ class Editor {
 	 * @return void
 	 * @throws Duplication_Exception
 	 *
-	 * @since 1.0.0
+	 * @since 2.1.0
 	 */
 	public function register_block( string $id, string $name, string $block ) : void {
 		if ( empty( $id ) || empty( $name ) || empty( $block ) ) {

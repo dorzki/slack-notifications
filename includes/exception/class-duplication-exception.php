@@ -1,11 +1,11 @@
 <?php
 /**
- * Duplication Exception
+ * Exceptions -> Duplication Exception
  *
  * @package    dorzki\SlackNotifications\Exception
  * @author     Dor Zuberi <admin@dorzki.io>
  * @copyright  2022 dorzki
- * @version    1.0.0
+ * @version    2.1.0
  */
 
 namespace dorzki\SlackNotifications\Exception;

@@ -1,11 +1,11 @@
 <?php
 /**
- * Plain Text
+ * Blocks -> Texts -> Plain Text
  *
  * @package    dorzki\SlackNotifications\Block\Text
  * @author     Dor Zuberi <admin@dorzki.io>
  * @copyright  2022 dorzki
- * @version    1.0.0
+ * @version    2.1.0
  */
 
 namespace dorzki\SlackNotifications\Block\Text;

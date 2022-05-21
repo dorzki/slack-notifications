@@ -1,5 +1,6 @@
 === Slack Notifications by dorzki ===
 Contributors: dorzki
+Donate link: https://www.buymeacoffee.com/dorzki
 Tags: notifications, slack, realtime, updates
 Requires at least: 5.3
 Tested up to: 6.0

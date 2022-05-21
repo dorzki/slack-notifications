@@ -2,10 +2,10 @@
 /**
  * Plugin
  *
- * @package   dorzki\SlackNotifications
- * @author    Dor Zuberi <admin@dorzki.io>
- * @copyright 2022 dorzki
- * @version   1.0.0
+ * @package    dorzki\SlackNotifications\Enum
+ * @author     Dor Zuberi <admin@dorzki.io>
+ * @copyright  2022 dorzki
+ * @version    2.1.0
  */
 
 namespace dorzki\SlackNotifications;
@@ -19,9 +19,15 @@ defined( 'ABSPATH' ) || exit;
  * @package dorzki\SlackNotifications
  */
 final class Plugin {
+	const VERSION = '2.1.0';
+	const SLUG    = 'slack-notifications';
+
+
 	/** @var Plugin */
 	private static $instance;
 
+	/** @var Admin */
+	private $admin;
 	/** @var Editor */
 	private $editor;
 
@@ -32,7 +38,8 @@ final class Plugin {
 	public function __construct() {
 		$this->autoload();
 
-		$this->set_editor( new Editor() );
+		$this->admin  = new Admin();
+		$this->editor = new Editor();
 	}
 
 
@@ -41,7 +48,7 @@ final class Plugin {
 	 *
 	 * @return void
 	 *
-	 * @since 1.0.0
+	 * @since 2.1.0
 	 */
 	private function autoload() : void {
 		require_once DSN_PATH . 'includes/class-autoloader.php';
@@ -55,7 +62,7 @@ final class Plugin {
 	 *
 	 * @return Plugin
 	 *
-	 * @since 1.0.0
+	 * @since 2.1.0
 	 */
 	public static function get_instance() : Plugin {
 		if ( is_null( self::$instance ) ) {
@@ -67,19 +74,17 @@ final class Plugin {
 
 
 	/**
+	 * @return Admin
+	 */
+	public function get_admin() : Admin {
+		return $this->admin;
+	}
+
+	/**
 	 * @return Editor
 	 */
 	public function get_editor() : Editor {
 		return $this->editor;
-	}
-
-	/**
-	 * @param Editor $editor
-	 *
-	 * @return void
-	 */
-	public function set_editor( Editor $editor ) : void {
-		$this->editor = $editor;
 	}
 }
 

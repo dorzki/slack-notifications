@@ -1,11 +1,11 @@
 <?php
 /**
- * Text Group Block
+ * Blocks -> Text Group
  *
- * @package   dorzki\SlackNotifications\Block
- * @author    Dor Zuberi <admin@dorzki.io>
- * @copyright 2022 dorzki
- * @version   1.0.0
+ * @package    dorzki\SlackNotifications\Enum
+ * @author     Dor Zuberi <admin@dorzki.io>
+ * @copyright  2022 dorzki
+ * @version    2.1.0
  */
 
 namespace dorzki\SlackNotifications\Block;

@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: Slack Notifications
- * Plugin URI: https://www.dorzki.io
+ * Plugin URI: https://slack-notifications.app
  * Description: Get notified and monitor your WordPress site with Slack notifications.
  * Version: 2.1.0
  * Author: dorzki
@@ -16,6 +16,10 @@ defined( 'ABSPATH' ) || exit;
 
 if ( ! defined( 'DSN_PATH' ) ) {
 	define( 'DSN_PATH', plugin_dir_path( __FILE__ ) );
+}
+
+if ( ! defined( 'DSN_TEMPLATES_PATH' ) ) {
+	define( 'DSN_TEMPLATES_PATH', trailingslashit( plugin_dir_path( __FILE__ ) . 'templates' ) );
 }
 
 
@@ -35,7 +39,7 @@ add_action( 'plugins_loaded', 'dsn_load_textdomain' );
  *
  * @return void
  *
- * @since 1.0.0
+ * @since 2.1.0
  */
 function dsn_load_textdomain() : void {
 	load_plugin_textdomain( 'dorzki-notifications-to-slack' );
@@ -46,7 +50,7 @@ function dsn_load_textdomain() : void {
  *
  * @return void
  *
- * @since 1.0.0
+ * @since 2.1.0
  */
 function dsn_incompatible_php_version() : void {
 
@@ -68,7 +72,7 @@ function dsn_incompatible_php_version() : void {
  *
  * @return void
  *
- * @since 1.0.0
+ * @since 2.1.0
  */
 function dsn_incompatible_wp_version() : void {
 

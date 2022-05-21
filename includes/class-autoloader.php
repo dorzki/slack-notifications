@@ -2,10 +2,10 @@
 /**
  * Autoloader
  *
- * @package   dorzki\SlackNotifications
- * @author    Dor Zuberi <admin@dorzki.io>
- * @copyright 2022 dorzki
- * @version   1.0.0
+ * @package    dorzki\SlackNotifications\Enum
+ * @author     Dor Zuberi <admin@dorzki.io>
+ * @copyright  2022 dorzki
+ * @version    2.1.0
  */
 
 namespace dorzki\SlackNotifications;
@@ -37,7 +37,7 @@ class Autoloader {
 	 *
 	 * @return void
 	 *
-	 * @since 1.0.0
+	 * @since 2.1.0
 	 */
 	public function autoload( string $class ) : void {
 		if ( false === strpos( $class, self::DOMAIN ) ) {
@@ -49,8 +49,11 @@ class Autoloader {
 		$namespace_parts = explode( '\\', $class );
 
 		$file_name = array_pop( $namespace_parts );
-
 		$file_name = "class-{$file_name}.php";
+		if ( count( $namespace_parts ) > 0 ) {
+			$file_name = "/{$file_name}";
+		}
+
 		$file_path = implode( DIRECTORY_SEPARATOR, $namespace_parts ) . $file_name;
 		$file_path = str_replace( '_', '-', strtolower( $file_path ) );
 		$file_path = DSN_PATH . "includes/{$file_path}";
@@ -66,7 +69,7 @@ class Autoloader {
 	 *
 	 * @return void
 	 *
-	 * @since 1.0.0
+	 * @since 2.1.0
 	 */
 	public static function init() : Autoloader {
 		return new self();

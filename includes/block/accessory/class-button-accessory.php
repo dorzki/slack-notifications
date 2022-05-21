@@ -1,11 +1,11 @@
 <?php
 /**
- * Button Accessory
+ * Blocks -> Accessories -> Button
  *
  * @package    dorzki\SlackNotifications\Block\Accessory
  * @author     Dor Zuberi <admin@dorzki.io>
  * @copyright  2022 dorzki
- * @version    1.0.0
+ * @version    2.1.0
  */
 
 namespace dorzki\SlackNotifications\Block\Accessory;
