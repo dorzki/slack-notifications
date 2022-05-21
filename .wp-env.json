@@ -1,0 +1,11 @@
+{
+	"core": "WordPress/WordPress#5.3",
+	"config": {
+		"WP_DEBUG": true,
+		"DISALLOW_FILE_EDIT": true
+	},
+	"plugins": [
+		"."
+	],
+	"phpVersion": "7.1"
+}

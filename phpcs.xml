@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<ruleset name="WordPress.dorzki">
+    <description>dorzki Coding Standard</description>
+
+    <exclude-pattern>src/</exclude-pattern>
+    <exclude-pattern>assets/</exclude-pattern>
+    <exclude-pattern>vendor/</exclude-pattern>
+    <exclude-pattern>node_modules/</exclude-pattern>
+
+    <rule ref="WordPress-Extra">
+        <exclude name="Generic.Arrays.DisallowShortArraySyntax.Found"/>
+    </rule>
+</ruleset>
