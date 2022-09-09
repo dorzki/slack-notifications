@@ -160,17 +160,31 @@ class Post extends Notification_Type {
 				'value' => get_the_date( null, $post->ID ),
 				'short' => true,
 			],
-			[
-				'title' => esc_html__( 'Post Categories', 'dorzki-notifications-to-slack' ),
-				'value' => $this->get_post_terms( $post, 'category' ),
-				'short' => false,
-			],
-			[
-				'title' => esc_html__( 'Post Tags', 'dorzki-notifications-to-slack' ),
-				'value' => $this->get_post_terms( $post, 'post_tag' ),
-				'short' => false,
-			],
 		];
+
+		if ( $format = get_post_format($post) ) {
+			$attachments[] =  [
+				'title' => esc_html__( 'Post Format', 'dorzki-notifications-to-slack' ),
+				'value' => ucwords($format),
+				'short' => true,
+			];
+		}
+
+		if ( $categories = $this->get_post_terms( $post, 'category' ) ) {
+			$attachments[] = [
+				'title' => esc_html__( 'Post Categories', 'dorzki-notifications-to-slack' ),
+				'value' => $categories,
+				'short' => false,
+			];
+		}
+
+		if ( $tags = $this->get_post_terms( $post, 'post_tag' ) ) {
+			$attachments[] = [
+				'title' => esc_html__( 'Post Tags', 'dorzki-notifications-to-slack' ),
+				'value' => $tags,
+				'short' => false,
+			];
+		}
 
 		$channel = $this->get_notification_channel( __FUNCTION__ );
 
@@ -224,17 +238,31 @@ class Post extends Notification_Type {
 				'value' => get_the_time( null, $post->ID ),
 				'short' => true,
 			],
-			[
-				'title' => esc_html__( 'Post Categories', 'dorzki-notifications-to-slack' ),
-				'value' => $this->get_post_terms( $post, 'category' ),
-				'short' => false,
-			],
-			[
-				'title' => esc_html__( 'Post Tags', 'dorzki-notifications-to-slack' ),
-				'value' => $this->get_post_terms( $post, 'post_tag' ),
-				'short' => false,
-			],
 		];
+
+		if ( $format = get_post_format($post) ) {
+			$attachments[] =  [
+				'title' => esc_html__( 'Post Format', 'dorzki-notifications-to-slack' ),
+				'value' => ucwords($format),
+				'short' => true,
+			];
+		}
+
+		if ( $categories = $this->get_post_terms( $post, 'category' ) ) {
+			$attachments[] = [
+				'title' => esc_html__( 'Post Categories', 'dorzki-notifications-to-slack' ),
+				'value' => $categories,
+				'short' => false,
+			];
+		}
+
+		if ( $tags = $this->get_post_terms( $post, 'post_tag' ) ) {
+			$attachments[] = [
+				'title' => esc_html__( 'Post Tags', 'dorzki-notifications-to-slack' ),
+				'value' => $tags,
+				'short' => false,
+			];
+		}
 
 		$channel = $this->get_notification_channel( __FUNCTION__ );
 
@@ -283,17 +311,31 @@ class Post extends Notification_Type {
 				'value' => get_the_date( null, $post->ID ),
 				'short' => true,
 			],
-			[
-				'title' => esc_html__( 'Post Categories', 'dorzki-notifications-to-slack' ),
-				'value' => $this->get_post_terms( $post, 'category' ),
-				'short' => false,
-			],
-			[
-				'title' => esc_html__( 'Post Tags', 'dorzki-notifications-to-slack' ),
-				'value' => $this->get_post_terms( $post, 'post_tag' ),
-				'short' => false,
-			],
 		];
+
+		if ( $format = get_post_format($post) ) {
+			$attachments[] =  [
+				'title' => esc_html__( 'Post Format', 'dorzki-notifications-to-slack' ),
+				'value' => ucwords($format),
+				'short' => true,
+			];
+		}
+
+		if ( $categories = $this->get_post_terms( $post, 'category' ) ) {
+			$attachments[] = [
+				'title' => esc_html__( 'Post Categories', 'dorzki-notifications-to-slack' ),
+				'value' => $categories,
+				'short' => false,
+			];
+		}
+
+		if ( $tags = $this->get_post_terms( $post, 'post_tag' ) ) {
+			$attachments[] = [
+				'title' => esc_html__( 'Post Tags', 'dorzki-notifications-to-slack' ),
+				'value' => $tags,
+				'short' => false,
+			];
+		}
 
 		$channel = $this->get_notification_channel( __FUNCTION__ );
 
@@ -345,17 +387,31 @@ class Post extends Notification_Type {
 				'value' => get_the_modified_date( null, $post->ID ),
 				'short' => true,
 			],
-			[
-				'title' => esc_html__( 'Post Categories', 'dorzki-notifications-to-slack' ),
-				'value' => $this->get_post_terms( $post, 'category' ),
-				'short' => false,
-			],
-			[
-				'title' => esc_html__( 'Post Tags', 'dorzki-notifications-to-slack' ),
-				'value' => $this->get_post_terms( $post, 'post_tag' ),
-				'short' => false,
-			],
 		];
+
+		if ( $format = get_post_format($post) ) {
+			$attachments[] =  [
+				'title' => esc_html__( 'Post Format', 'dorzki-notifications-to-slack' ),
+				'value' => ucwords($format),
+				'short' => true,
+			];
+		}
+
+		if ( $categories = $this->get_post_terms( $post, 'category' ) ) {
+			$attachments[] = [
+				'title' => esc_html__( 'Post Categories', 'dorzki-notifications-to-slack' ),
+				'value' => $categories,
+				'short' => false,
+			];
+		}
+
+		if ( $tags = $this->get_post_terms( $post, 'post_tag' ) ) {
+			$attachments[] = [
+				'title' => esc_html__( 'Post Tags', 'dorzki-notifications-to-slack' ),
+				'value' => $tags,
+				'short' => false,
+			];
+		}
 
 		$channel = $this->get_notification_channel( __FUNCTION__ );
 
@@ -407,17 +463,31 @@ class Post extends Notification_Type {
 				'value' => get_the_modified_date( null, $post->ID ),
 				'short' => true,
 			],
-			[
-				'title' => esc_html__( 'Post Categories', 'dorzki-notifications-to-slack' ),
-				'value' => $this->get_post_terms( $post, 'category' ),
-				'short' => false,
-			],
-			[
-				'title' => esc_html__( 'Post Tags', 'dorzki-notifications-to-slack' ),
-				'value' => $this->get_post_terms( $post, 'post_tag' ),
-				'short' => false,
-			],
 		];
+
+		if ( $format = get_post_format($post) ) {
+			$attachments[] =  [
+				'title' => esc_html__( 'Post Format', 'dorzki-notifications-to-slack' ),
+				'value' => ucwords($format),
+				'short' => true,
+			];
+		}
+
+		if ( $categories = $this->get_post_terms( $post, 'category' ) ) {
+			$attachments[] = [
+				'title' => esc_html__( 'Post Categories', 'dorzki-notifications-to-slack' ),
+				'value' => $categories,
+				'short' => false,
+			];
+		}
+
+		if ( $tags = $this->get_post_terms( $post, 'post_tag' ) ) {
+			$attachments[] = [
+				'title' => esc_html__( 'Post Tags', 'dorzki-notifications-to-slack' ),
+				'value' => $tags,
+				'short' => false,
+			];
+		}
 
 		$channel = $this->get_notification_channel( __FUNCTION__ );
 
