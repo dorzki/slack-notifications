@@ -7,7 +7,7 @@
  * @author      Dor Zuberi <webmaster@dorzki.co.il>
  * @link        https://www.dorzki.co.il
  * @since       2.0.0
- * @version     2.0.7
+ * @version     2.0.8
  */
 
 namespace Slack_Notifications;
@@ -105,6 +105,7 @@ class Plugin {
 		include_once 'notifications/class-cpt.php';
 		include_once 'notifications/class-woocommerce.php';
 		include_once 'notifications/class-contact-form-7.php';
+        include_once 'notifications/class-everest-forms.php';
 
 		do_action( 'slack_after_load_notifications_classes' );
 
@@ -141,6 +142,7 @@ class Plugin {
 		new Notifications\CPT();
 		new Notifications\WooCommerce();
 		new Notifications\Contact_Form_7();
+        new Notifications\Everest_Forms();
 
 		new AJAX();
 

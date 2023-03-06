@@ -7,7 +7,7 @@
  * @author      Dor Zuberi <webmaster@dorzki.co.il>
  * @link        https://www.dorzki.co.il
  * @since       2.0.0
- * @version     2.0.6
+ * @version     2.0.8
  */
 
 namespace Slack_Notifications\Notifications;
@@ -94,7 +94,9 @@ class System extends Notification_Type {
 			// Build notification.
 			/* translators: %1$s: Site URL, %2$s: Site Name */
 			$message = __( ':warning: There is a new version available for WordPress on <%1$s|%2$s>.', 'dorzki-notifications-to-wordpress' );
-			$message = sprintf( $message, get_bloginfo( 'url' ), get_bloginfo( 'name' ) );
+			$message = sprintf( $message,
+                admin_url( 'update-core.php' ),
+                get_bloginfo( 'name' ) );
 
 			$attachments = [
 				[
@@ -191,7 +193,9 @@ class System extends Notification_Type {
 			// Build notification.
 			/* translators: %1$s: Site URL, %2$s: Site Name */
 			$message = __( ':warning: There are new versions available for your plugins on <%1$s|%2$s>.', 'dorzki-notifications-to-slack' );
-			$message = sprintf( $message, get_bloginfo( 'url' ), get_bloginfo( 'name' ) );
+			$message = sprintf( $message,
+                admin_url( 'plugins.php?s=' . $plugin_meta['Name'] ),
+                get_bloginfo( 'name' ) );
 
 			$attachments['multiple'] = true;
 
@@ -276,7 +280,9 @@ class System extends Notification_Type {
 			// Build notification.
 			/* translators: %1$s: Site URL, %2$s: Site Name */
 			$message = __( ':warning: There are new versions available for your themes on <%1$s|%2$s>.', 'dorzki-notifications-to-slack' );
-			$message = sprintf( $message, get_bloginfo( 'url' ), get_bloginfo( 'name' ) );
+			$message = sprintf( $message,
+                admin_url( 'themes.php?search=' . $theme_meta->get( 'Name' ) ),
+                get_bloginfo( 'name' ) );
 
 			$attachments['multiple'] = true;
 
