@@ -7,7 +7,7 @@
  * @author      Dor Zuberi <webmaster@dorzki.co.il>
  * @link        https://www.dorzki.co.il
  * @since       2.0.0
- * @version     2.0.6
+ * @version     2.0.8
  */
 
 namespace Slack_Notifications\Notifications;
@@ -221,7 +221,9 @@ class WooCommerce extends Notification_Type {
 		// Build notification.
 		/* translators: %1$s: Site URL, %2$s: Site Name */
 		$message = __( ':shopping_bags: There is a new order on *<%1$s|%2$s>*!', 'dorzki-notifications-to-slack' );
-		$message = sprintf( $message, get_bloginfo( 'url' ), get_bloginfo( 'name' ) );
+		$message = sprintf( $message,
+            admin_url( 'post.php?action=edit&post=' . $order_id ),
+            get_bloginfo( 'name' ) );
 
 		$attachments = $this->build_order_attachments( $order );
 
@@ -258,7 +260,9 @@ class WooCommerce extends Notification_Type {
 		// Build notification.
 		/* translators: %1$s: Order Status, %2$s: Site URL, %3$s: Site Name */
 		$message = __( ':shopping_bags: An order was marked as %1$s on *<%2$s|%3$s>*.', 'dorzki-notifications-to-slack' );
-		$message = sprintf( $message, $order->get_status(), get_bloginfo( 'url' ), get_bloginfo( 'name' ) );
+		$message = sprintf( $message, $order->get_status(),
+            admin_url( 'post.php?action=edit&post=' . $order_id ),
+            get_bloginfo( 'name' ) );
 
 		$attachments = $this->build_order_attachments( $order );
 
@@ -295,7 +299,9 @@ class WooCommerce extends Notification_Type {
 		// Build notification.
 		/* translators: %1$s: Site URL, %2$s: Site Name */
 		$message = __( ':spiral_note_pad: A new note was added to an order on *<%1$s|%2$s>*', 'dorzki-notifications-to-slack' );
-		$message = sprintf( $message, get_bloginfo( 'url' ), get_bloginfo( 'name' ) );
+		$message = sprintf( $message,
+            admin_url( 'post.php?action=edit&post=' . $note_data['order_id'] ),
+            get_bloginfo( 'name' ) );
 
 		$attachments = [
 			[
@@ -361,7 +367,10 @@ class WooCommerce extends Notification_Type {
 			$message = __( ':information_source: Product is out of stock *<%1$s|%2$s>*', 'dorzki-notifications-to-slack' );
 		}
 
-		$message        = sprintf( $message, get_bloginfo( 'url' ), get_bloginfo( 'name' ) );
+		$message        = sprintf( $message,
+            admin_url( 'post.php?action=edit&post=' . $product->get_id() ),
+            get_bloginfo( 'name' ) );
+
 		$stock_quantity = $product->get_stock_quantity();
 
 		$attachments = [

@@ -7,7 +7,7 @@
  * @author      Dor Zuberi <webmaster@dorzki.co.il>
  * @link        https://www.dorzki.co.il
  * @since       2.0.0
- * @version     2.0.6
+ * @version     2.0.8
  */
 
 namespace Slack_Notifications\Notifications;
@@ -110,7 +110,9 @@ class User extends Notification_Type {
 		// Build notification.
 		/* translators: %1$s: Site URL, %2$s: Site Name */
 		$message = __( ':bust_in_silhouette: A new user just registered on <%1$s|%2$s>.', 'dorzki-notifications-to-slack' );
-		$message = sprintf( $message, get_bloginfo( 'url' ), get_bloginfo( 'name' ) );
+		$message = sprintf( $message,
+            admin_url( 'user-edit.php?user_id=' . $user_id ),
+            get_bloginfo( 'name' ) );
 
 		$attachments = [
 			[
@@ -156,7 +158,9 @@ class User extends Notification_Type {
 		// Build notification.
 		/* translators: %1$s: Site URL, %2$s: Site Name */
 		$message = __( ':necktie: Administrator login detected on <%1$s|%2$s>.', 'dorzki-notifications-to-slack' );
-		$message = sprintf( $message, get_bloginfo( 'url' ), get_bloginfo( 'name' ) );
+		$message = sprintf( $message,
+            admin_url( 'user-edit.php?user_id=' . $user->ID ),
+            get_bloginfo( 'name' ) );
 
 		$attachments = [
 			[
@@ -209,7 +213,9 @@ class User extends Notification_Type {
 		// Build notification.
 		/* translators: %1$s: Site URL, %2$s: Site Name */
 		$message = __( ':rotating_light: Administrator failed login detected on <%1$s|%2$s>.', 'dorzki-notifications-to-slack' );
-		$message = sprintf( $message, get_bloginfo( 'url' ), get_bloginfo( 'name' ) );
+		$message = sprintf( $message,
+            admin_url( 'user-edit.php?user_id=' . $user->ID ),
+            get_bloginfo( 'name' ) );
 
 		$attachments = [
 			[

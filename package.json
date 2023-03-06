@@ -1,6 +1,6 @@
 {
   "name" : "slack-notifications",
-  "version" : "2.0.6",
+  "version" : "2.0.8",
   "description" : "Send WordPress notifications to your Slack team channel.",
   "repository" : {
 	"type" : "git",

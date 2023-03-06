@@ -1,4 +1,3 @@
-
 # Slack Notifications by [dorzki](https://www.dorzki.co.il)
 Light and customisable WordPress plugin to integrate your site with Slack.
 
@@ -8,7 +7,7 @@ Choose what type of notification you would like to receive:
 * Administrator Login
 * New User Registration
 * New Comments
-* Nee WooCommerce Orders
+* New WooCommerce Orders
 * WooCommerce Product with Low Stock
 * And much more!
 
@@ -31,6 +30,7 @@ Soon.
 
 | Version | Changes |
 | :------ | :------ |
+| 2.0.8 | [FEATURE] Added Everest Forms integration.<br>[FEATURE] Changed links to items. |
 | 2.0.7 | [HOTFIX] Fixed WooCommerce order not showing products.<br>[FEATURE] Added Contact Form 7 integration. |
 | 2.0.6 | [HOTFIX] Fixed CPT notification being fired for unwanted CPT. |
 | 2.0.5 | [FEATURE] On post type update the user who updated will be displayed on the notification. |
